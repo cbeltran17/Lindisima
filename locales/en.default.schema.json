@@ -1,0 +1,413 @@
+{
+  "sections": {
+    "newsletter": {
+      "name": "Newsletter",
+      "title": {
+        "label": "Heading"
+      },
+      "text": {
+        "label": "Text"
+      },
+      "image": {
+        "label": "Image"
+      },
+      "desktop_alignment": {
+        "label": "Desktop image alignment",
+        "option_1": "Left",
+        "option_2": "Right"
+      },
+      "mobile_alignment": {
+        "label": "Mobile image alignment",
+        "option_1": "Top",
+        "option_2": "Bottom"
+      },
+      "presets": {
+        "category": "Promotional",
+        "name": "Newsletter"
+      }
+    },
+    "map": {
+      "name": "Map",
+      "section_height": {
+        "label": "Section height",
+        "option_1": "Small",
+        "option_2": "Medium",
+        "option_3": "Large"
+      },
+      "header_1": {
+        "content": "Text"
+      },
+      "title": {
+        "label": "Heading"
+      },
+      "content": {
+        "label": "Address and hours"
+      },
+      "text_alignment": {
+        "label": "Text alignment"
+      },
+      "layout": {
+        "label": "Desktop layout",
+        "group_1": "Outside",
+        "group_2": "Overlay",
+        "option_1": "Left top",
+        "option_2": "Left center",
+        "option_3": "Left bottom",
+        "option_4": "Right top",
+        "option_5": "Right center",
+        "option_6": "Right bottom",
+        "option_7": "Top left",
+        "option_8": "Top center",
+        "option_9": "Top right",
+        "option_10": "Center left",
+        "option_11": "Center",
+        "option_12": "Center right",
+        "option_13": "Bottom left",
+        "option_14": "Bottom center",
+        "option_15": "Bottom right"
+      },
+      "layout_mobile": {
+        "label": "Mobile layout",
+        "option_1": "Above map",
+        "option_2": "Below map"
+      },
+      "header_2": {
+        "content": "Map"
+      },
+      "address": {
+        "label": "Map address"
+      },
+      "api_key": {
+        "label": "Google Maps API key",
+        "info": "You’ll need to enable both [Google Maps](https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key) and [Geocoding](https://developers.google.com/maps/documentation/geocoding/get-api-key) API keys to display the map."
+      },
+      "enable_custom_colors": {
+        "label": "Use custom map colors"
+      },
+      "foreground_color": {
+        "label": "Map foreground color"
+      },
+      "background_color": {
+        "label": "Map background color"
+      },
+      "zoom": {
+        "label": "Map zoom level"
+      },
+      "image": {
+        "label": "Image",
+        "info": "This image is displayed when the map is not used or cannot be loaded"
+      },
+      "header_3": {
+        "content": "Overlay"
+      },
+      "overlay_color": {
+        "label": "Color"
+      },
+      "opacity": {
+        "label": "Opacity"
+      },
+      "presets": {
+        "category": "Store information",
+        "name": "Map"
+      }
+    },
+    "image_with_text_overlay": {
+      "name": "Image with text overlay",
+      "section_height": {
+        "label": "Section height",
+        "option_1": "Small",
+        "option_2": "Medium",
+        "option_3": "Large",
+        "option_4": "Original aspect ratio"
+      },
+      "header_1": {
+        "content": "Image"
+      },
+      "image": {
+        "label": "Image"
+      },
+      "header_2": {
+        "content": "Overlay"
+      },
+      "title": {
+        "label": "Heading"
+      },
+      "text": {
+        "label": "Text"
+      },
+      "content_position": {
+        "label": "Content position",
+        "option_1": "Top left",
+        "option_2": "Top center",
+        "option_3": "Top right",
+        "option_4": "Center left",
+        "option_5": "Center center",
+        "option_6": "Center right",
+        "option_7": "Bottom left",
+        "option_8": "Bottom center",
+        "option_9": "Bottom right"
+      },
+      "color": {
+        "label": "Text color"
+      },
+      "overlay_background": {
+        "label": "Background color"
+      },
+      "overlay_opacity": {
+        "label": "Background color opacity"
+      },
+      "link": {
+        "label": "Link"
+      },
+      "button_text": {
+        "label": "Button text"
+      },
+      "presets": {
+        "category": "Image",
+        "name": "Image with text overlay"
+      }
+    },
+    "product": {
+      "blocks": {
+        "form": {
+          "show_gift_card_recipient_form": {
+            "label": "Show recipient information form for gift card products",
+            "info": "Gift card products can optionally be sent direct to a recipient along with a personal message. [Learn more](https://help.shopify.com/en/manual/online-store/themes/customizing-themes/add-gift-card-recipient-fields)"
+          }
+        },
+        "complementary_products": {
+          "name": "Complementary products",
+          "settings": {
+            "paragraph": {
+              "content": "To select complementary products, add the Search & Discovery app. [Learn more](https://shopify.dev/themes/product-merchandising/recommendations)"
+            },
+            "heading": {
+              "label": "Heading"
+            },
+            "product_recommendation_limit": {
+              "label": "Maximum products to show"
+            },
+            "products_per_slide": {
+              "label": "Number of products per page"
+            }
+          }
+        }
+      }
+    },
+    "age_gate": {
+      "name": "Page age gate",
+      "minimum_age": {
+        "label": "Minimum age required to access page"
+      },
+      "presets": {
+        "name": "Page age gate",
+        "category": "Layout"
+      }
+    }
+  },
+  "settings_schema": {
+    "age_gate": {
+      "name": "Age gate",
+      "enable_site_wide": {
+        "label": "Enable site-wide"
+      },
+      "minimum_age": {
+        "label": "Minimum age required to access site"
+      },
+      "heading": {
+        "label": "Heading"
+      },
+      "description": {
+        "label": "Description"
+      },
+      "show_logo": {
+        "label": "Show logo",
+        "info": "Visit [brand settings](/admin/settings/branding) to edit logo."
+      }
+    }
+  },
+  "flex_pdp": {
+    "section": {
+      "high_variant": {
+        "name": "Product: 250+ variants",
+        "settings": {
+          "padding": {
+            "label": "Padding",
+            "options": {
+              "none": {
+                "label": "None"
+              },
+              "top": {
+                "label": "Top"
+              },
+              "bottom": {
+                "label": "Bottom"
+              },
+              "both": {
+                "label": "Both"
+              }
+            }
+          }
+        },
+        "presets": {
+          "high_variant": {
+            "name": "Product (250+ Variants)"
+          }
+        }
+      }
+    },
+    "blocks": {
+      "buy_buttons": {
+        "name": "Buy buttons",
+        "settings": {
+          "show_dynamic_checkout": {
+            "label": "Show accelerated checkout button",
+            "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/en/manual/online-store/dynamic-checkout)"
+          }
+        },
+        "presets": {
+          "buy_buttons": {
+            "name": "Buy buttons"
+          }
+        }
+      },
+      "description": {
+        "name": "Description"
+      },
+      "divider": {
+        "name": "Divider"
+      },
+      "gift_recipient": {
+        "name": "Gift recipient",
+        "settings": {
+          "content": "Renders the gift recipient form for the product."
+        }
+      },
+      "installments": {
+        "name": "Payment installments",
+        "settings": {
+          "content": "To display payment installments, your store needs to support Shop Pay Installments. [Learn more](https://help.shopify.com/en/manual/payments/shop-pay-installments)."
+        }
+      },
+      "inventory": {
+        "name": "Inventory",
+        "settings": {
+          "content": "Renders the inventory status for the product based on the inventory threshold, including low stock warning and incoming inventory.",
+          "inventory_threshold": {
+            "label": "Low inventory threshold"
+          }
+        }
+      },
+      "media_gallery": {
+        "name": "Media gallery",
+        "settings": {
+          "image_aspect_ratio": {
+            "label": "Aspect ratio",
+            "options": {
+              "initial": {
+                "label": "Natural"
+              },
+              "portrait": {
+                "label": "Portrait"
+              },
+              "square": {
+                "label": "Square"
+              },
+              "landscape": {
+                "label": "Landscape"
+              }
+            }
+          },
+          "enable_video_looping": {
+            "label": "Video looping"
+          },
+          "enable_video_autoplay": {
+            "label": "Autoplay video",
+            "info": "Autoplayed videos are muted for accessibility."
+          }
+        }
+      },
+      "media_grid": {
+        "name": "Media grid",
+        "settings": {
+          "image_aspect_ratio": {
+            "label": "Aspect ratio",
+            "options": {
+              "initial": {
+                "label": "Natural"
+              },
+              "portrait": {
+                "label": "Portrait"
+              },
+              "square": {
+                "label": "Square"
+              },
+              "landscape": {
+                "label": "Landscape"
+              }
+            }
+          },
+          "enable_video_looping": {
+            "label": "Video looping"
+          },
+          "enable_video_autoplay": {
+            "label": "Autoplay video",
+            "info": "Autoplayed videos are muted for accessibility."
+          }
+        }
+      },
+      "pick_up": {
+        "name": "Pickup availability",
+        "settings": {
+          "content": "Shows retail availability when local pickup is enabled. [Learn more](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)."
+        }
+      },
+      "policies": {
+        "name": "Policies",
+        "settings": {
+          "content": "Shows if tax is included in the price and links to your shipping policy (if set). [Learn how to set up tax-inclusive pricing](https://help.shopify.com/en/manual/taxes) and [learn how to add a shipping policy](https://help.shopify.com/en/manual/fulfillment/setup/shipping-profiles#create-a-shipping-policy)."
+        }
+      },
+      "price": {
+        "name": "Price"
+      },
+      "quantity_picker": {
+        "name": "Quantity picker",
+        "settings": {
+          "show_inventory_status": {
+            "label": "Show inventory status"
+          },
+          "inventory_threshold": {
+            "label": "Low stock threshold"
+          }
+        }
+      },
+      "sku": {
+        "name": "SKU"
+      },
+      "title": {
+        "name": "Title"
+      },
+      "variant_picker": {
+        "name": "Variant picker",
+        "settings": {
+          "variant_selector_type": {
+            "label": "Style",
+            "options": {
+              "radio": {
+                "label": "Buttons"
+              },
+              "select": {
+                "label": "Dropdowns"
+              }
+            },
+            "info": "Show product options as buttons and swatches or dropdowns. [Learn how to set up color swatches](https://help.shopify.com/en/manual/custom-data/metafields/category-metafields/using-category-metafields)."
+          }
+        }
+      },
+      "vendor": {
+        "name": "Vendor"
+      }
+    }
+  }
+}

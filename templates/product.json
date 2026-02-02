@@ -1,0 +1,83 @@
+{
+  "wrapper": "div.product-section",
+  "sections": {
+    "main": {
+      "type": "product",
+      "blocks": {
+        "vendor": {
+          "type": "vendor",
+          "settings": {}
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "form": {
+          "type": "form",
+          "settings": {}
+        },
+        "50a0828c-24fe-483d-bdd6-ffe922b8a26c": {
+          "type": "tabs",
+          "settings": {
+            "show_product_description": true,
+            "tab_heading_1": "How to use",
+            "tab_heading_2": "Ingredients",
+            "tab_heading_3": "",
+            "tab_text_3": ""
+          }
+        },
+        "description": {
+          "type": "description",
+          "disabled": true,
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "price",
+        "form",
+        "50a0828c-24fe-483d-bdd6-ffe922b8a26c",
+        "description"
+      ],
+      "settings": {
+        "enable_cart_redirection": false,
+        "show_payment_button": true,
+        "images_layout": "slideshow",
+        "enable_zoom": false,
+        "enable_video_autoplay": false,
+        "enable_video_looping": false
+      }
+    },
+    "recommendations": {
+      "type": "static-product-recommendations",
+      "settings": {
+        "show_product_recommendations": true,
+        "product_recommendations_heading": "You may also like",
+        "related_products_position_right": false
+      }
+    },
+    "1634913777acb08a07": {
+      "type": "pxs-image-with-text-overlay",
+      "settings": {
+        "section_height": "medium",
+        "title": "Give the gift of great skin",
+        "text": "<p>Browse our best-selling face and body sets</p>",
+        "content_position": "center-center",
+        "color": "#ffffff",
+        "overlay_background": "#000000",
+        "overlay_opacity": 15,
+        "button_text": "Shop Now"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "recommendations",
+    "1634913777acb08a07"
+  ]
+}

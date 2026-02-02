@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "article",
+      "settings": {
+        "share-buttons": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

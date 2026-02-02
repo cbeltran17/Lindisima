@@ -1,0 +1,53 @@
+{
+  "sections": {
+    "1634913302f4c0aaad": {
+      "type": "pxs-image-with-text-overlay",
+      "settings": {
+        "section_height": "original",
+        "title": "",
+        "text": "",
+        "content_position": "center-center",
+        "color": "#ffffff",
+        "overlay_background": "#000000",
+        "overlay_opacity": 0,
+        "link": "",
+        "button_text": ""
+      }
+    },
+    "16349133547a86ae30": {
+      "type": "home-message",
+      "blocks": {
+        "16349133547a86ae30-0": {
+          "type": "rich-text",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "16349133547a86ae30-0"
+      ],
+      "settings": {
+        "border": false,
+        "heading": "WE BRING YOU PRODUCTS THAT ARE SAFE, NON-TOXIC, AND HIGHLY EFFECTIVE. WE BELIEVE IN TANGIBLE RESULTS YOU CAN SEE AND FEEL, AND WE BELIEVE IN THE POWER OF NATURE TO BRING THESE RESULTS."
+      }
+    },
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {}
+    },
+    "163491328431f143ba": {
+      "type": "home-products",
+      "settings": {
+        "title": "Shop Our Best Sellers",
+        "product-columns": 3,
+        "product-rows": 1
+      }
+    }
+  },
+  "order": [
+    "1634913302f4c0aaad",
+    "16349133547a86ae30",
+    "main",
+    "163491328431f143ba"
+  ]
+}

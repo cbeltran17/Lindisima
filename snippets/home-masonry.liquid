@@ -1,0 +1,42 @@
+{%- assign feature_count = section.blocks.size -%}
+{%- assign featureIndex = 0 -%}
+
+{%- if feature_count == 0 -%}
+  {%- assign feature_count = 6 -%}
+{%- endif -%}
+
+<div
+  class="
+    home-masonry
+    home-masonry-feature-count-{{ feature_count }}
+    home-masonry-layout-{{ section.settings.layout }}
+    {% if section.settings.gutters %}
+      home-masonry-gutters
+    {% endif %}
+    {% if section.settings.hover %}
+      home-masonry-hover
+    {% endif %}
+    {% if section.settings.hover-animation %}
+      home-masonry-hover-animation
+    {% endif %}
+  "
+>
+  {%- unless section.blocks.size == 0 -%}
+    {%- for block in section.blocks -%}
+      {%-
+        render 'home-masonry-feature',
+        block: block,
+        onboarding: false,
+        feature_index: forloop.index,
+      -%}
+    {%- endfor -%}
+  {%- else -%}
+    {%- for i in (1..feature_count) -%}
+      {%-
+        render 'home-masonry-feature',
+        feature_index: i,
+        onboarding: true
+      -%}
+    {%- endfor -%}
+  {%- endunless -%}
+</div>

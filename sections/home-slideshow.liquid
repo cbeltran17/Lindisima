@@ -1,0 +1,199 @@
+<script
+  type="application/json"
+  data-section-type="dynamic-slideshow"
+  data-section-id="{{ section.id }}"
+  data-section-data
+>
+{
+    "autoplay": {{ section.settings.autoplay }},
+    "autoplayDelay": {{ section.settings.autoplay_delay }},
+    "autoplayHoverPause": {{ section.settings.autoplay-hover-pause }}
+  }
+</script>
+
+{%- assign slideIndex = 0 -%}
+{%- assign slide_count = section.blocks.size -%}
+
+<section
+  class="home-slideshow home-slideshow-layout-{{ section.settings.layout }}"
+  data-slideshow
+  data-slideshow-layout="{{ section.settings.layout }}"
+  data-slideshow-slides="{{ slide_count }}"
+>
+  {%- unless section.blocks.size == 0 -%}
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+      {%- when 'slide' -%}
+        {%- assign slideIndex = slideIndex | plus: 1 -%}
+        {%- assign lifestyleIndex = slideIndex | modulo: 2 | plus: 1 -%}
+        {%- assign lifestyleImage = 'lifestyle-' | append: lifestyleIndex -%}
+          {%- capture image -%}
+            {{ lifestyleImage | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endcapture -%}
+
+        {%-
+          render 'home-slideshow-slide',
+          block: block,
+          slideIndex: slideIndex,
+          onboard_image: image,
+        -%}
+      {%- endcase -%}
+    {%- endfor -%}
+  {%- else -%}
+    {%- for i in (1..slide_count) -%}
+      {%- assign slideIndex = slideIndex | plus: 1 -%}
+      {%- assign lifestyleIndex = slideIndex | modulo: 2 | plus: 1 -%}
+      {%- assign lifestyleImage = 'lifestyle-' | append: lifestyleIndex -%}
+      {%- capture image -%}
+          <canvas class="home-slideshow-svg-ie11-fix" width="50" height="19"></canvas>
+          {{ lifestyleImage | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endcapture -%}
+      {%- capture contentAlignment -%}
+        {%- cycle 'left', 'center', 'right' -%}
+      {%- endcapture -%}
+
+      {%-
+        render 'home-slideshow-slide',
+        slideIndex: slideIndex,
+        contentAlignment: contentAlignment,
+        onboard_image: image,
+      -%}
+    {%- endfor -%}
+  {%- endunless -%}
+
+  <style>
+    #shopify-section-{{ section.id }} .home-slideshow .flickity-prev-next-button .arrow {
+      fill: {{ section.settings.controls-color | default: '#000' }};
+    }
+
+    #shopify-section-{{ section.id }} .home-slideshow .flickity-page-dots .dot {
+      background: {{ section.settings.controls-color | default: '#000' }};
+    }
+  </style>
+</section>
+
+{% schema %}
+{
+  "name": "Slideshow",
+  "class": "shopify-section--slideshow",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "content-width",
+          "label": "Content width"
+        },
+        {
+          "value": "full-width",
+          "label": "Full width"
+        }
+      ],
+      "default": "full-width"
+    },
+    {
+      "type": "color",
+      "id": "controls-color",
+      "label": "Controls",
+      "default": "#000"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-rotate slides",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Rotation interval",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "sec",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay-hover-pause",
+      "label": "Pause auto-rotate on hover",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "2880 x 1280px recommended"
+        },
+        {
+          "type": "text_alignment",
+          "id": "content-alignment",
+          "label": "Text alignment",
+          "default": "center"
+        },
+        {
+          "type": "color",
+          "id": "overlay-color",
+          "label": "Overlay text",
+          "default": "#262626"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Slide"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Introduce customers to your shop with lifestyle imagery and product photography"
+        },
+        {
+          "type": "text",
+          "id": "cta",
+          "label": "Button",
+          "default": "Button"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Image",
+      "name": "Slideshow",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  }
+}
+
+{% endschema %}

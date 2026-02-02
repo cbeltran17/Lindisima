@@ -1,0 +1,69 @@
+{% comment %}
+  @param context {String}
+    The search form context
+{% endcomment %}
+
+<form
+  class="
+    search-form
+    {% if context %}
+      search-form--{{ context }}
+    {% endif %}
+  "
+  action="{{ routes.search_url }}"
+  method="get"
+  role="search"
+  data-search-form
+>
+  <div class="search-form__field">
+    <input
+      class="search-form__input input"
+      type="text"
+      name="q"
+      value="{{ search.terms | escape }}"
+      placeholder="{{ 'general.search.header' | t }}"
+      aria-label="{{ 'general.search.header' | t }}"
+      {% if section.settings.enable_predictive_search %}
+        autocorrect="off"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+      {% endif %}
+      data-search-input
+    >
+
+    <input
+      type="hidden"
+      class="input"
+      name="options[prefix]"
+      value="last"
+    >
+
+    <button
+      class="search-form__submit-button"
+      type="submit"
+      aria-label="{{ 'general.search.submit' | t }}"
+    >
+      {%
+        render 'icons',
+        id: 'search',
+      %}
+    </button>
+  </div>
+
+  {% if section.settings.enable_predictive_search %}
+    <div
+      class="search-form__results-container"
+      data-search-results-container
+      data-loading="false"
+    >
+      <div class="search-form__results-container-loading-state">
+        {%
+          render 'icons',
+          id: 'spinner',
+        %}
+      </div>
+      <div class="search-form__results" data-search-results></div>
+    </div>
+  {% endif %}
+</form>

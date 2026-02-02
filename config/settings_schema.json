@@ -1,0 +1,508 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Grid",
+    "theme_author": "Pixel Union",
+    "theme_version": "7.1.0",
+    "theme_documentation_url": "https://support.pixelunion.net/hc/en-us/sections/360003950473-Grid",
+    "theme_support_url": "https://support.pixelunion.net/hc/en-us/requests/new"
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  },
+  {
+    "name": "t:settings_schema.age_gate.name",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_age_gate_site_wide",
+        "label": "t:settings_schema.age_gate.enable_site_wide.label",
+        "default": false
+      },
+      {
+        "type": "number",
+        "id": "age_gate_site_wide_min_age",
+        "label": "t:settings_schema.age_gate.minimum_age.label",
+        "default": 18
+      },
+      {
+        "type": "text",
+        "id": "age_gate_heading",
+        "label": "t:settings_schema.age_gate.heading.label",
+        "default": "Age Verification"
+      },
+      {
+        "type": "text",
+        "id": "age_gate_description",
+        "label": "t:settings_schema.age_gate.description.label",
+        "default": "Please enter your date of birth for full access."
+      },
+      {
+        "type": "checkbox",
+        "id": "show_age_gate_logo",
+        "label": "t:settings_schema.age_gate.show_logo.label",
+        "default": true,
+        "info": "t:settings_schema.age_gate.show_logo.info"
+      }
+    ]
+  },
+  {
+    "name": "Color",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Background"
+      },
+      {
+        "type": "color",
+        "id": "background-color",
+        "label": "Background"
+      },
+      {
+        "type": "image_picker",
+        "id": "body-background-image",
+        "label": "Background image",
+        "info": "200 x 200px recommended"
+      },
+      {
+        "type": "header",
+        "content": "General"
+      },
+      {
+        "type": "color",
+        "id": "body-text-color",
+        "label": "Text"
+      },
+      {
+        "type": "color",
+        "id": "accent-color",
+        "label": "Accent"
+      },
+      {
+        "type": "color",
+        "id": "heading-color",
+        "label": "Heading"
+      },
+      {
+        "type": "color",
+        "id": "meta-color",
+        "label": "Meta text"
+      },
+      {
+        "type": "color",
+        "id": "border-color",
+        "label": "Border"
+      },
+      {
+        "type": "color",
+        "id": "product-badge-background-color",
+        "label": "Sale\/sold out badges and discounts"
+      },
+      {
+        "type": "header",
+        "content": "Buttons"
+      },
+      {
+        "type": "color",
+        "id": "button-color",
+        "label": "Primary button text"
+      },
+      {
+        "type": "color",
+        "id": "secondary-button-background",
+        "label": "Secondary button background"
+      },
+      {
+        "type": "color",
+        "id": "secondary-button-color",
+        "label": "Secondary button text"
+      },
+      {
+        "type": "header",
+        "content": "Header"
+      },
+      {
+        "type": "color",
+        "id": "header-tools-color",
+        "label": "Header tools"
+      },
+      {
+        "type": "color",
+        "id": "header-tools-background-color",
+        "label": "Header tools background"
+      },
+      {
+        "type": "color",
+        "id": "navigation-color",
+        "label": "Navigation"
+      },
+      {
+        "type": "header",
+        "content": "Dropdowns\/table headers"
+      },
+      {
+        "type": "color",
+        "id": "form-select-background",
+        "label": "Background"
+      },
+      {
+        "type": "color",
+        "id": "form-select-color",
+        "label": "Text"
+      },
+      {
+        "type": "color",
+        "id": "form-select-border-color",
+        "label": "Border",
+        "info": "This option only applies to dropdown menus."
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "select",
+        "id": "font-base-size",
+        "label": "Base size",
+        "default": "14px",
+        "options": [
+          {
+            "value": "14px",
+            "label": "Small"
+          },
+          {
+            "value": "16px",
+            "label": "Medium"
+          },
+          {
+            "value": "18px",
+            "label": "Large"
+          }
+        ]
+      },
+      {
+        "type": "font_picker",
+        "label": "Body font",
+        "id": "font_body",
+        "default": "helvetica_n4"
+      },
+      {
+        "type": "header",
+        "content": "Headings"
+      },
+      {
+        "type": "font_picker",
+        "label": "Heading font",
+        "id": "font_heading",
+        "default": "helvetica_n4"
+      },
+      {
+        "type": "checkbox",
+        "id": "heading-font-small-caps",
+        "label": "Capitalize"
+      },
+      {
+        "type": "header",
+        "content": "Navigation"
+      },
+      {
+        "type": "font_picker",
+        "label": "Navigation font",
+        "id": "font_navigation",
+        "default": "helvetica_n4"
+      },
+      {
+        "type": "checkbox",
+        "id": "navigation-font-small-caps",
+        "label": "Capitalize"
+      },
+      {
+        "type": "header",
+        "content": "Captions"
+      },
+      {
+        "type": "font_picker",
+        "label": "Caption font",
+        "id": "font_meta",
+        "default": "helvetica_n4"
+      },
+      {
+        "type": "checkbox",
+        "id": "meta-font-small-caps",
+        "label": "Capitalize"
+      },
+      {
+        "type": "header",
+        "content": "Buttons"
+      },
+      {
+        "type": "font_picker",
+        "label": "Button font",
+        "id": "font_button",
+        "default": "helvetica_n4"
+      },
+      {
+        "type": "checkbox",
+        "id": "button-font-small-caps",
+        "label": "Capitalize"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Accounts"
+      },
+      {
+        "type": "text",
+        "id": "social-behance-link",
+        "label": "Behance",
+        "info": "https://behance.net/"
+      },
+      {
+        "type": "text",
+        "id": "social-clubhouse-link",
+        "label": "Clubhouse",
+        "info": "https://www.clubhouse.com/"
+      },
+      {
+        "type": "text",
+        "id": "social-discord-link",
+        "label": "Discord",
+        "info": "https://discord.com/"
+      },
+      {
+        "type": "text",
+        "id": "social-dribbble-link",
+        "label": "Dribbble",
+        "info": "https://dribbble.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social-email-link",
+        "label": "Email address"
+      },
+      {
+        "type": "text",
+        "id": "social-facebook-link",
+        "label": "Facebook",
+        "info": "https://www.facebook.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social-flickr-link",
+        "label": "Flickr",
+        "info": "https://flickr.com/"
+      },
+      {
+        "type": "text",
+        "id": "social-houzz-link",
+        "label": "Houzz",
+        "info": "https://www.houzz.com/"
+      },
+      {
+        "type": "text",
+        "id": "social-instagram-link",
+        "label": "Instagram",
+        "info": "https://instagram.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social-kickstarter-link",
+        "label": "Kickstarter",
+        "info": "https://www.kickstarter.com/"
+      },
+      {
+        "type": "text",
+        "id": "social-linkedin-link",
+        "label": "LinkedIn",
+        "info": "https://www.linkedin.com/company/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social-medium-link",
+        "label": "Medium",
+        "info": "https://medium.com/"
+      },
+      {
+        "type": "text",
+        "id": "social-messenger-link",
+        "label": "Messenger",
+        "info": "https://www.messenger.com/"
+      },
+      {
+        "type": "text",
+        "id": "social-opensea-link",
+        "label": "OpenSea",
+        "info": "https://opensea.io/"
+      },
+      {
+        "type": "text",
+        "id": "social-pinterest-link",
+        "label": "Pinterest",
+        "info": "https://www.pinterest.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social-reddit-link",
+        "label": "Reddit",
+        "info": "https://www.reddit.com/r/shopify/"
+      },
+      {
+        "type": "text",
+        "id": "social-rss-link",
+        "label": "RSS",
+        "info": "https://www.shopify.com/content-services/feeds/ecommerce.atom"
+      },
+      {
+        "type": "text",
+        "id": "social-snapchat-link",
+        "label": "Snapchat",
+        "info": "https://www.snapchat.com/"
+      },
+      {
+        "type": "text",
+        "id": "social-spotify-link",
+        "label": "Spotify",
+        "info": "https://www.spotify.com/"
+      },
+      {
+        "type": "text",
+        "id": "social-tiktok-link",
+        "label": "TikTok",
+        "info": "https://tiktok.com/@shopify"
+      },
+      {
+        "type": "text",
+        "id": "social-tumblr-link",
+        "label": "Tumblr",
+        "info": "https://shopify.tumblr.com"
+      },
+      {
+        "type": "text",
+        "id": "social-twitch-link",
+        "label": "Twitch",
+        "info": "https://www.twitch.tv/"
+      },
+      {
+        "type": "text",
+        "id": "social-x-link",
+        "label": "X",
+        "info": "https://x.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social-vimeo-link",
+        "label": "Vimeo",
+        "info": "https://vimeo.com/"
+      },
+      {
+        "type": "text",
+        "id": "social-whatsapp-link",
+        "label": "WhatsApp",
+        "info": "https://www.whatsapp.com/"
+      },
+      {
+        "type": "text",
+        "id": "social-youtube-link",
+        "label": "YouTube",
+        "info": "https://www.youtube.com/user/shopify"
+      },
+      {
+        "type": "header",
+        "content": "Sharing"
+      },
+      {
+        "type": "checkbox",
+        "id": "share-widget-facebook",
+        "label": "Share on Facebook"
+      },
+      {
+        "type": "checkbox",
+        "id": "share-widget-x",
+        "label": "Share on X"
+      },
+      {
+        "type": "checkbox",
+        "id": "share-widget-pinterest",
+        "label": "Pin on Pinterest"
+      },
+      {
+        "type": "checkbox",
+        "id": "share-widget-fancy",
+        "label": "Add to Fancy"
+      },
+      {
+        "type": "checkbox",
+        "id": "share-widget-email",
+        "label": "Enable email"
+      }
+    ]
+  },
+  {
+    "name": "Product cards",
+    "settings": [
+      {
+        "type": "select",
+        "id": "product_hover",
+        "label": "Overlay / hover interaction",
+        "options": [
+          {
+            "value": "quick-shop",
+            "label": "Quick shop"
+          },
+          {
+            "value": "image-flip",
+            "label": "Secondary image"
+          },
+          {
+            "value": "stock-level",
+            "label": "Stock level indicator"
+          },
+          {
+            "value": "none",
+            "label": "None"
+          }
+        ],
+        "default": "quick-shop"
+      },
+      {
+        "type": "range",
+        "id": "product_stock_level_threshold",
+        "label": "Show warning when stock is equal to or less than:",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "default": 1
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show vendor name",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "product_badges",
+        "label": "Show 'on sale' \/ 'sold out' badges",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "product_badges_icons",
+        "label": "Use icons for 'on sale' \/ 'sold out' badges",
+        "default": false
+      }
+    ]
+  }
+]

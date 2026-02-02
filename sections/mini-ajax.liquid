@@ -1,0 +1,12 @@
+<template data-data>
+  {
+    "itemsSubtotalPrice": {{ cart.items_subtotal_price | money | json }},
+    "totalDiscount": {{ cart.total_discount | money | json }},
+    "totalPrice": {{ cart.total_price | money | json }},
+    "itemCount": {{ cart.item_count }}
+  }
+</template>
+
+<template data-html="miniCart">
+  {% render 'mini-cart' %}
+</template>

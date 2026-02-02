@@ -1,0 +1,127 @@
+<nav class="navigation navigation-mobile navigation-has-mega-nav" data-navigation-content>
+  <ul class="navigation-menu">
+    {% for link in linklists[section.settings.menu].links %}
+      {% assign first_tier_link = link %}
+      {% assign uses_blocks = true %}
+      {% comment %}Inject is-dropdown-or-meganav begin{% endcomment %}
+      {% comment %}
+        A helper snippet for detecting if a link has a mega nav
+        or dropdown associated with it.
+      
+        @param first_tier_link
+      
+        @param uses_blocks
+      {% endcomment %}
+      
+      {% assign is_dropdown = false %}
+      {% assign is_meganav = true %}
+      
+      {% if first_tier_link.links == blank %}
+        {% assign is_meganav = false %}
+      {% else %}
+        {% assign is_dropdown = true %}
+      {% endif %}
+      
+      {% for second_tier_link in first_tier_link.links %}
+        {% if second_tier_link.links == blank %}
+          {% assign is_meganav = false %}
+        {% else %}
+          {% assign is_dropdown = true %}
+        {% endif %}
+      {% endfor %}
+      
+      {% if is_meganav %}
+        {% assign is_dropdown = false %}
+      {% endif %}
+      
+      {% if uses_blocks %}
+        {% assign found_mega_item_handle = false %}
+        {% if section != blank and section.blocks != blank %}
+          {% for block in section.blocks %}
+            {% if block.type == 'mega_menu' %}
+              {% assign menu_item_handle = block.settings.menu_item | handle %}
+              {% if first_tier_link.handle == menu_item_handle %}
+                {% assign found_mega_item_handle = true %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      
+        {% if found_mega_item_handle %}
+          {% if is_dropdown %}
+            {% assign is_meganav = true %}
+            {% assign is_dropdown = false %}
+          {% endif %}
+        {% elsif found_mega_item_handle == false %}
+          {% if is_meganav %}
+            {% assign is_meganav = false %}
+            {% assign is_dropdown = true %}
+          {% endif %}
+        {% else %}
+          {% if is_meganav %}
+            {% assign is_meganav = false %}
+            {% assign is_dropdown = true %}
+          {% endif %}
+        {% endif %}
+      {% endif %}
+      {% comment %}Inject is-dropdown-or-meganav end{% endcomment %}
+
+
+      <li
+        class="{% if is_dropdown %}has-dropdown{% elsif is_meganav %}has-mega-nav{% endif %}"
+        {% if is_meganav %}data-mega-nav="true"{% endif %}
+      >
+        <a
+          id="mobile-navigation-{{ link.handle }}"
+          class="navigation-menu-link"
+          href="{{ link.url }}"
+          {% if is_dropdown or is_meganav %}aria-haspopup{% endif %}
+        >
+          {{ link.title }}
+          {% if is_dropdown or is_meganav %}
+            <span
+              class="navigation-submenu-toggle"
+              tabIndex="0"
+              role="button"
+              aria-controls="navigation-{{ link.handle }}"
+              aria-expanded="false"
+              aria-label="{{ 'general.accessibility.toggle' | t }}"
+              data-subnav-toggle
+            >
+              {{- arrow_right -}}
+            </span>
+          {% endif %}
+        </a>
+
+        {% if is_dropdown %}
+          {% assign direction = 'right' %}
+          {% assign halfway = linklists[section.settings.menu].links.size | divided_by: 2 %}
+          {% if forloop.index0 > halfway %}
+            {% assign direction = 'left' %}
+          {% endif %}
+
+          {%- render 'mobile-dropdown', direction: direction, link: link -%}
+        {% elsif is_meganav %}
+          {%- render 'mega-nav', link: link -%}
+        {% endif %}
+      </li>
+    {% endfor %}
+
+    {% if shop.customer_accounts_enabled %}
+      {% if customer %}
+        <li class="mobile-link">
+          <a href="{{ routes.account_url }}">
+            {{ 'layout.header.my_account' | t }}
+          </a>
+        </li>
+        <li class="mobile-link">
+          {{ 'layout.header.logout' | t | customer_logout_link }}
+        </li>
+      {% else %}
+        <li class="mobile-link">
+          <a class="customer-login-link" href="{{ routes.account_login_url }}">{{ 'layout.header.account' | t }}</a>
+        </li>
+      {% endif %}
+    {% endif %}
+  </ul>
+</nav>

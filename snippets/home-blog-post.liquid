@@ -1,0 +1,55 @@
+{%- assign article = article | default: nil -%}
+
+{% if article %}
+  {%- assign title = article.title | default: '' -%}
+  {%- assign excerpt = article.excerpt_or_content | strip_html | truncatewords: 65 -%}
+  {%- assign publishedAt = article.published_at | time_tag: '%b %d, %Y' -%}
+  {%- assign url = article.url | default: '' -%}
+  {%- if article.image -%}
+    {%- capture image -%}
+      {%
+        render 'rimg',
+        img: article.image,
+        alt: article.title,
+        size: '1024x1024',
+        lazy: true
+      %}
+    {%- endcapture -%}
+  {%- endif -%}
+{% else %}
+  {%- assign title = 'onboarding.home_blog.post_title' | t -%}
+  {%- assign excerpt = 'onboarding.home_blog.post_excerpt' | t -%}
+  {%- assign publishedAt = 'now' | time_tag: '%b %d, %Y' -%}
+  {%- assign url = '' -%}
+  {%- assign image = 'image' | placeholder_svg_tag: 'placeholder-svg' -%}
+{% endif %}
+
+<article class="home-blog-post">
+  <p class="home-blog-post-date">
+    <a href="{{ url }}">
+      {{ publishedAt }}
+    </a>
+  </p>
+
+  <h2 class="home-blog-post-title">
+    <a href="{{ url }}">
+      {{- title -}}
+    </a>
+  </h2>
+
+  {%- if image -%}
+    <a
+      class="home-blog-post-image"
+      href="{{ url }}"
+      aria-label="{{ title }}"
+    >
+      {{- image -}}
+    </a>
+  {%- endif -%}
+
+  <p class="home-blog-post-excerpt">{{ excerpt }}</p>
+
+  <p class="home-blog-post-read-more">
+    <a href="{{ url }}">{{ 'blogs.article_item.read_more' | t }}</a>
+  </p>
+</article>

@@ -1,0 +1,99 @@
+{% if section.settings.show_product_recommendations %}
+  {% assign product_limit = 4 %}
+  {% assign product_limit_masonry = 4 %}
+
+  <script
+    type="application/json"
+    data-section-type="static-product-recommendations"
+    data-section-id="{{ section.id }}"
+    data-section-data
+  >
+    {
+      "productId": {{ product.id | json }},
+      "positionRight": {{ section.settings.related_products_position_right | json }}
+    }
+  </script>
+
+  <section
+    class="product-recommendations-wrapper--section"
+    data-product-recommendations-section
+    data-product-hover="{{ settings.product_hover }}"
+  >
+  </section>
+
+  {% if recommendations.products_count > 0 %}
+    <template data-html="common">
+      {%- unless section.settings.product_recommendations_heading == blank -%}
+        <h2 class="section-title">{{ section.settings.product_recommendations_heading }}</h2>
+      {%- endunless  -%}
+
+      <div
+        class="product-recommendations rows-of-4"
+        data-masonry-products
+      >
+      </div>
+    </template>
+
+    <template data-html="below">
+      <div class="product-grid-masonry-sizer" data-masonry-products-sizer></div>
+
+      {% for product in recommendations.products limit: product_limit_masonry %}
+        {% assign product_attributes = blank %}
+
+        {% if forloop.index > product_limit %}
+          {% assign product_attributes = 'data-masonry-only' %}
+        {% endif %}
+
+        {%
+          render 'product-list-item',
+          product: product,
+          product_attributes: product_attributes,
+        %}
+      {% endfor %}
+    </template>
+
+    <template data-html="right">
+      {% for product in recommendations.products limit: product_limit %}
+        <a title="{{ product.title }}" href="{{ product.url }}">
+          {%
+            render 'rimg',
+            img: product.featured_media.preview_image,
+            alt: product.title,
+            size: '480x480',
+            lazy: true,
+          %}
+        </a>
+      {% endfor %}
+    </template>
+  {% endif %}
+{% endif %}
+
+{% schema %}
+{
+  "name": "Related products",
+  "class": "static-product-recommendations",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_product_recommendations",
+      "label": "Show dynamic recommendations",
+      "info": "Dynamic recommendations change and improve with time. [Learn more](https://help.shopify.com/en/themes/development/recommended-products)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "product_recommendations_heading",
+      "label": "Heading",
+      "default": "You may also like"
+    },
+    {
+      "type": "checkbox",
+      "id": "related_products_position_right",
+      "label": "Display related products to the right of product info",
+      "default": false,
+      "info": "Only works with slideshow and list product image layouts"
+    }
+  ]
+}
+
+{% endschema %}

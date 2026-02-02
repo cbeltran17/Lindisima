@@ -1,0 +1,29 @@
+{
+  "sections": {
+    "main": {
+      "type": "page-contact",
+      "settings": {}
+    },
+    "1634914363c9428bd7": {
+      "type": "pxs-map",
+      "settings": {
+        "section_height": "medium",
+        "title": "Location",
+        "text_alignment": "center",
+        "layout": "overlay-center-center",
+        "layout_mobile": "below",
+        "api_key": "",
+        "enable_custom_colors": false,
+        "foreground_color": "#292929",
+        "background_color": "#ffffff",
+        "zoom": 2,
+        "overlay_color": "#000000",
+        "opacity": 10
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1634914363c9428bd7"
+  ]
+}

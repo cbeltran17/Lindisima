@@ -1,0 +1,209 @@
+{
+  "sections": {
+    "home_masonry": {
+      "type": "home-masonry",
+      "blocks": {
+        "block_1": {
+          "type": "image_feature",
+          "settings": {
+            "title": "Shop Body",
+            "subheading": "",
+            "color": "white",
+            "mobile": true,
+            "show_overlay": false,
+            "overlay_color": "#000000",
+            "opacity": 1
+          }
+        },
+        "block_2": {
+          "type": "image_feature",
+          "settings": {
+            "title": "Shop Serums",
+            "subheading": "",
+            "color": "white",
+            "mobile": true,
+            "show_overlay": false,
+            "overlay_color": "#000000",
+            "opacity": 50
+          }
+        },
+        "block_3": {
+          "type": "image_feature",
+          "settings": {
+            "title": "Shop Toner & Masks",
+            "subheading": "",
+            "color": "white",
+            "mobile": true,
+            "show_overlay": false,
+            "overlay_color": "#000000",
+            "opacity": 15
+          }
+        },
+        "block_4": {
+          "type": "image_feature",
+          "settings": {
+            "title": "Shop Dryness",
+            "subheading": "",
+            "color": "white",
+            "mobile": true,
+            "show_overlay": false,
+            "overlay_color": "#000000",
+            "opacity": 100
+          }
+        },
+        "block_5": {
+          "type": "image_feature",
+          "settings": {
+            "title": "Shop Face",
+            "subheading": "",
+            "color": "white",
+            "mobile": true,
+            "show_overlay": false,
+            "overlay_color": "#000000",
+            "opacity": 50
+          }
+        }
+      },
+      "block_order": [
+        "block_1",
+        "block_2",
+        "block_3",
+        "block_4",
+        "block_5"
+      ],
+      "settings": {
+        "layout": "full-width",
+        "gutters": true,
+        "hover": true,
+        "hover-animation": true
+      }
+    },
+    "home_products-1": {
+      "type": "home-products",
+      "settings": {
+        "title": "Browse Our Newest Arrivals",
+        "product-columns": 3,
+        "product-rows": 1
+      }
+    },
+    "home_products-2": {
+      "type": "home-products",
+      "settings": {
+        "title": "You Might Also Like...",
+        "product-columns": 4,
+        "product-rows": 1
+      }
+    },
+    "home_image_with_text_overlay": {
+      "type": "pxs-image-with-text-overlay",
+      "settings": {
+        "section_height": "original",
+        "title": "100% Jade Gua Sha",
+        "text": "<p>Improve the elasticity of your skin and reduce the appearance of fine lines with this ancient <br/>tool, while attracting luck and prosperity everywhere life takes you<strong>!</strong></p>",
+        "content_position": "center-center",
+        "color": "#ffffff",
+        "overlay_background": "#000000",
+        "overlay_opacity": 10,
+        "button_text": "Shop Now"
+      }
+    },
+    "home_product": {
+      "type": "home-product",
+      "blocks": {
+        "204ade9d-9c3b-4554-87aa-d454b0538034": {
+          "type": "vendor",
+          "settings": {}
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "form": {
+          "type": "form",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "204ade9d-9c3b-4554-87aa-d454b0538034",
+        "title",
+        "price",
+        "form",
+        "description"
+      ],
+      "settings": {
+        "enable_cart_redirection": false,
+        "show_payment_button": true,
+        "images_layout": "slideshow",
+        "enable_zoom": true,
+        "enable_video_autoplay": false,
+        "enable_video_looping": false
+      }
+    },
+    "home_testimonials": {
+      "type": "home-testimonials",
+      "blocks": {
+        "testimonial-block-1": {
+          "type": "testimonial",
+          "settings": {}
+        },
+        "testimonial-block-2": {
+          "type": "testimonial",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "testimonial-block-1",
+        "testimonial-block-2"
+      ],
+      "settings": {
+        "title": "",
+        "per_row": 2,
+        "style": "filled"
+      }
+    },
+    "home_map": {
+      "type": "pxs-map",
+      "settings": {
+        "section_height": "small",
+        "title": "Local Curbside Pickup",
+        "content": "<p>After placing your order, we will contact you with a time and date to pick up your order anywhere from Monday-Friday!</p><p><span style=\"text-decoration:underline\"><strong>Contact us with any questions</strong></span></p>",
+        "text_alignment": "center",
+        "layout": "overlay-center-center",
+        "layout_mobile": "below",
+        "api_key": "",
+        "enable_custom_colors": false,
+        "foreground_color": "#292929",
+        "background_color": "#ffffff",
+        "zoom": 1,
+        "overlay_color": "#000000",
+        "opacity": 10
+      }
+    },
+    "home_blog": {
+      "type": "home-blog",
+      "settings": {
+        "title": "",
+        "number_of_columns": 3,
+        "number_of_rows": 1
+      }
+    }
+  },
+  "order": [
+    "home_masonry",
+    "home_products-1",
+    "home_products-2",
+    "home_image_with_text_overlay",
+    "home_product",
+    "home_testimonials",
+    "home_map",
+    "home_blog"
+  ]
+}

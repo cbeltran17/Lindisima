@@ -1,0 +1,202 @@
+{% comment %}
+@param images_layout
+  Image layout setting - masonry, slideshow or list
+@param use_masonry
+@param product
+@param variant
+@param selected_media
+@param enable_zoom
+{% endcomment %}
+
+<div
+  class="
+    product-images
+    product-gallery
+    {% if images_layout == 'masonry' %}
+      product-images-masonry
+      product-images-masonry-{{ product.media.size }}
+    {% endif %}
+    "
+  {% if images_layout == 'masonry' and product.media.size > 1 %}
+    data-masonry-gallery
+  {% endif %}
+  data-product-gallery
+  data-product-gallery-layout="{{ images_layout }}"
+  {% if enable_zoom %}data-product-gallery-image-zoom{% endif %}
+>
+  {% if images_layout == 'masonry' and product.media.size > 1 %}
+    <div class="product-image-masonry-sizer" data-masonry-image-sizer></div>
+  {% endif %}
+    <div
+      class="
+        product-gallery--viewport
+        {% if images_layout == 'slideshow' and product.media.size > 1 %}product-gallery--viewport--has-navigation{% endif %}
+      "
+      data-product-gallery-viewport
+    >
+      {% assign models = product.media | where: 'media_type', 'model' %}
+      {%- if models.size > 0 -%}
+        <script>
+          window.ShopifyXR=window.ShopifyXR||function(){(ShopifyXR.q=ShopifyXR.q||[]).push(arguments)}
+          ShopifyXR('addModels', {{ models | json }});
+        </script>
+      {%- endif -%}
+      {% assign first_model = models | first %}
+      {% for media in product.media %}
+
+        {% assign use_large_image = false %}
+        {% if product.media.size == 2 %}
+          {% assign use_large_image = true %}
+        {% elsif forloop.first and use_masonry %}
+          {% assign use_large_image = true %}
+        {% endif %}
+
+        {% if media.media_type == 'model' %}
+          {% assign model = media %}
+        {% else %}
+          {% assign model = first_model %}
+        {% endif %}
+
+        {% if model %}
+          {% capture model_view_button %}
+            <button
+              class="product-gallery--viewinyourspace"
+              data-shopify-xr
+              data-shopify-model3d-id="{{ model.id }}"
+              data-shopify-title="{{ product.title }}"
+              data-shopify-xr-hidden
+              data-viewinyourspace
+            >
+              {% render 'icons', id: 'ar' %}
+              {{ 'products.media.view_in_your_space' | t }}
+            </button>
+          {% endcapture %}
+        {% endif %}
+
+        <figure
+          class="product-gallery--viewport--figure {% if use_large_image %}product-image-wide{% endif %}"
+          tabindex="-1"
+          {% if images_layout != 'list' %}
+            {% if selected_media.id != media.id %}
+              aria-hidden="true"
+            {% else %}
+              aria-hidden="false"
+            {% endif %}
+          {% endif %}
+          data-product-gallery-figure="{{ forloop.index0 }}"
+          {% if images_layout == 'slideshow' %}
+            data-product-gallery-selected="{%- if selected_media.id == media.id -%}true{%- else -%}false{%- endif -%}"
+          {% endif %}
+          data-media="{{ media.id }}"
+          data-media-type="{{ media.media_type }}"
+          >
+          <div class="product-gallery--media-wrapper">
+            {% case media.media_type %}
+            {% when 'image' %}
+              {%- capture data_attr -%}
+                {% if enable_zoom %}data-image-zoom="{{ media.id }}"{% endif %}
+              {%- endcapture -%}
+              {%
+                render 'rimg'
+                img: media.preview_image,
+                size: '1024x1024',
+                attr: data_attr,
+                lazy: true,
+              %}
+              {% if enable_zoom %}
+                <div class="product-zoom" data-product-zoom-id="{{ media.id }}"></div>
+              {% endif %}
+            {% when 'model' %}
+              {{ media | model_viewer_tag: image_size: '1024x', reveal: 'interaction' , toggleable: true, interaction-prompt-threshold: 0 }}
+            {% when 'video' %}
+              {{ media | media_tag: image_size: '1024x' }}
+            {% when 'external_video' %}
+              {{ media | media_tag: image_size: '1024x' }}
+            {% else %}
+              {{ media | media_tag }}
+            {% endcase %}
+          </div>
+          {% if images_layout == 'slideshow' %}
+            {{ model_view_button }}
+          {% endif %}
+        </figure>
+        {% if images_layout == 'list' %}
+            {{ model_view_button }}
+        {% endif %}
+      {% else %}
+        <figure
+          class="product-gallery--viewport--figure"
+          data-product-gallery-selected="true"
+        >
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </figure>
+      {% endfor %}
+
+    </div>
+
+    {% if images_layout == 'slideshow' and product.media.size > 1 %}
+      <div class="product-gallery-navigation-outer-wrapper">
+        {% if product.media.size > 4 %}
+          <span class="product-thumbnails-navigation-previous">&#xe601;</span>
+        {% endif %}
+        <div class="product-gallery--navigation-wrapper">
+          <div
+             class="product-gallery--navigation {% if product.media.size > 4 %}has-side-scroll{% endif %}"
+            data-product-gallery-navigation
+          >
+            {% for media in product.media %}
+              <button
+                class="
+                  product-gallery--media-thumbnail
+                  product-gallery--{{ media.media_type }}-thumbnail
+                "
+                type="button"
+                tab-index="0"
+                aria-label="{{ media.alt }} {{ 'general.accessibility.nav_product_thumbnail' | t }}"
+                data-product-gallery-thumbnail="{{ forloop.index0 }}"
+                data-product-gallery-selected="{%- if selected_media.id == media.id -%}true{%- else -%}false{%- endif -%}"
+                data-media="{{ media.id }}"
+                data-media-type="{{ media.media_type }}"
+              >
+                {%
+                  render 'rimg'
+                  img: media.preview_image,
+                  size: '100x100',
+                  lazy: true
+                %}
+                {% case media.media_type %}
+                {% when 'model' %}
+                  {% render 'icons', id:'model-thumb' %}
+                {% when 'video' %}
+                  {% render 'icons', id: 'play-thumb' %}
+                {% when 'external_video' %}
+                  {% render 'icons', id: 'play-thumb' %}
+                {% endcase %}
+              </button>
+            {% endfor %}
+          </div>
+        </div>
+        {% if product.media.size > 4 %}
+          <span class="product-thumbnails-navigation-next">&#xe600;</span>
+        {% endif %}
+      </div>
+    {% endif %}
+</div>
+{% if images_layout == 'masonry' and product.media.size > 1 %}
+  <div class="mobile-slider-nav-wrapper">
+    {{ model_view_button }}
+    <div data-mobile-slider-navigation>
+      <button class="mobile-slider-prev-next" data-mobile-slider-button="prev">
+        {% render 'icons', id: 'prev-button' %}
+      </button>
+      <ol data-mobile-slider-dots>
+        {% for media in product.media %}
+          <li class='dot' aria-label="Page dot {{ forloop.index0 }}" data-mobile-slider-dot data-slide-dot-index="{{ forloop.index0 }}"></li>
+        {% endfor %}
+      </ol>
+      <button class="mobile-slider-prev-next" data-mobile-slider-button="next">
+        {% render 'icons', id: 'next-button' %}
+      </button>
+    </div>
+  </div>
+{% endif %}

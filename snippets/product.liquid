@@ -1,0 +1,100 @@
+{% assign use_masonry = false %}
+{% assign link_to = link_to | default: nil %}
+
+<script type="application/json" data-images>
+  {% assign product_images = product.media | where: 'media_type', 'image'  %}
+
+  {
+    {%- for media in product_images %}
+      {% if media.media_type == 'image' %}
+        {%- capture rimg_string -%}
+          {%
+            render 'rimg',
+            img: media,
+            attr: 'data-product-main-image',
+            size: '1400x',
+            lazy: false
+          %}
+        {%- endcapture -%}
+        "{{ media.id }}": {{ rimg_string | strip_newlines | json }}{%- unless forloop.last %},{%- endunless -%}
+      {% endif %}
+    {%- endfor -%}
+  }
+</script>
+
+{% assign product_id = product.id %}
+{% assign selected_variant = product.selected_or_first_available_variant %}
+
+{% if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' %}
+  {% assign found_a_collection = false %}
+  {% for c in product.collections %}
+    {% if found_a_collection == false and c.handle != 'frontpage' and c.handle != 'all' %}
+      {% assign found_a_collection = true %}
+      {% assign collection = c %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% assign selected_media = selected_variant.featured_media | default: product.featured_media %}
+
+<div
+  class="
+    product
+    {% if images_layout == 'masonry' %}
+      product-masonry
+    {% endif %}
+  "
+  data-ajax
+
+  {% if enable_zoom %}
+    data-zoom
+  {% endif %}
+
+  {% if enable_linked_options %}
+    data-linked-options
+  {% endif %}
+
+  {% if images_layout == 'slideshow' %}
+    data-images-slideshow
+  {% elsif images_layout == 'list' %}
+    data-images-list-view
+  {% elsif images_layout == 'masonry' %}
+  {% assign use_masonry = true %}
+    data-product-masonry
+  {% endif %}
+>
+  {%
+    render 'product-gallery',
+    images_layout: images_layout,
+    use_masonry: use_masonry,
+    product: product,
+    selected_media: selected_media,
+    enable_zoom: enable_zoom,
+  %}
+
+  <div class="product-details-wrapper">
+    <div class="product-details">
+      {% if product != blank %}
+        {% form 'product', product, data-product-form: '' %}
+          {%
+            render 'product-form-content',
+            product: product,
+            form: form,
+            show_social_media_icons: show_social_media_icons,
+            show_payment_button: show_payment_button,
+          %}
+        {% endform %}
+      {% else %}
+        <div data-product-form>
+          {%
+            render 'product-form-content',
+            product: nil,
+            form: nil,
+            show_social_media_icons: show_social_media_icons,
+            show_payment_button: show_payment_button,
+          %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,216 @@
+{% liquid
+  assign products_per_page = section.settings.products_per_row | times: section.settings.number_of_rows
+  assign use_masonry = false
+
+  if section.settings.layout == 'masonry'
+    assign use_masonry = true
+  endif
+%}
+
+<section
+  class="search"
+  data-product-hover="{{ settings.product_hover }}"
+  {% if use_masonry %}data-collection-masonry{% endif %}
+  data-section-id="{{ section.id }}"
+  data-section-type="static-search"
+>
+  <h1 class="page-title">
+    {% if search.performed %}
+      {{ 'general.search.header_search_performed' | t }}
+    {% else %}
+      {{ 'general.search.header' | t }}
+    {% endif %}
+  </h1>
+
+  {%
+    render 'search-form',
+    context: 'search-page',
+  %}
+
+  {% if search.performed %}
+    <p class="search-results-text">
+      {% if search.results_count > 0 %}
+        {{- 'general.search.search_results' | t: count: search.results_count, search_terms: search.terms -}}
+      {% else %}
+        {{- 'general.search.no_results' | t: count: search.results_count, search_terms: search.terms -}}
+      {% endif %}
+    </p>
+
+    {% if search.results_count > 0 %}
+      {% render 'breadcrumbs' %}
+    {% endif %}
+  {% endif %}
+
+  {% if section.settings.enable_filtering %}
+    <div class="faceted-filters" data-faceted-filter>
+      <div class="search-filter-wrapper">
+        {%
+          render 'faceted-filters',
+          filters: search.filters,
+          class_prefix: 'search',
+        %}
+      </div>
+
+      {%- capture clear_url -%}
+        {{ routes.search_url }}?q={{ search.terms | url_encode }}
+      {%- endcapture -%}
+
+      {% for filter in search.filters %}
+        {% if filter.active_values.size > 0 or filter.min_value.value or filter.max_value.value %}
+          <div class="search-page__filters-active">
+            {%-
+              render 'faceted-filters-active',
+              filters: search.filters,
+              class_prefix: 'search',
+              clear_url: clear_url,
+            -%}
+          </div>
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="search-results-wrapper">
+    {% if search.performed %}
+      {% assign productResultsCount = 0 %}
+      {% assign otherResultsCount = 0 %}
+
+      {% for item in search.results %}
+        {% if item.object_type == 'product' %}
+          {% assign productResultsCount = productResultsCount | plus: 1 %}
+        {% else %}
+          {% assign products_per_page = 50 %}
+          {% assign otherResultsCount = productResultsCount | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+
+      {% paginate search.results by products_per_page %}
+        {% if productResultsCount > 0 %}
+          <div
+            class="
+              search-results-products
+              rows-of-{{ section.settings.products_per_row }}
+            "
+            {% if use_masonry %}data-masonry-grid{% endif %}
+          >
+            {%- if use_masonry -%}
+              <div class="product-grid-masonry-sizer" data-masonry-sizer></div>
+            {%- endif -%}
+
+            {% for item in search.results %}
+              {% if item.object_type == 'product' %}
+                {%
+                  render 'product-list-item',
+                  product: item,
+                %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if otherResultsCount > 0 %}
+          <div class="search-results-other">
+            <h2 class="section-title">{{ 'general.search.other_results' | t }}</h2>
+
+            <div class="search-results-list">
+              {% for item in search.results %}
+                {% if item.object_type != 'product' %}
+                  <article class="search-results-item">
+                    <div class="search-results-data">
+                      <h3 class="search-result-title">
+                        <a class="search-result-link" href="{{ item.url }}">{{ item.title }}</a>
+                      </h3>
+
+                      {% if item.object_type == 'article' %}
+                        <time class="search-result-date">
+                          {{ item.published_at | date: format: 'short_month' }}
+                        </time>
+
+                        <div class="search-result-summary rte">
+                          {% if item.image %}
+                            <div class="search-result-image">
+                              {%
+                                render 'rimg',
+                                img: item.image,
+                                alt: item.title,
+                                size: '1024x1024',
+                                lazy: true,
+                              %}
+                            </div>
+                          {% endif %}
+                          <p>{{ item.excerpt_or_content | strip_html | truncatewords: 20 }}</p>
+                        </div>
+                      {% else %}
+                        <div class="search-result-summary rte">
+                          <p>{{ item.content | strip_html | truncatewords: 20 }}</p>
+                        </div>
+                      {% endif %}
+                    </div>
+                  </article>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if paginate.previous or paginate.next %}
+          {%
+            render 'pagination',
+            paginate: paginate,
+          %}
+        {% endif %}
+      {% endpaginate %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Search pages",
+  "class": "section-search",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "Enable filtering",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "masonry",
+          "label": "Masonry"
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products per row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "number_of_rows",
+      "label": "Rows",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "default": 3
+    }
+  ]
+}
+
+{% endschema %}

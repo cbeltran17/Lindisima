@@ -1,0 +1,67 @@
+{% assign block = block | default: nil %}
+{% assign image = onboard_image %}
+{% assign contentAlignment = contentAlignment %}
+{%- assign url = '' -%}
+{%- assign heading = 'onboarding.slideshow.title' | t -%}
+{%- assign subheading = 'onboarding.slideshow.subtitle' | t -%}
+{%- assign cta = 'onboarding.slideshow.cta' | t -%}
+
+{% if block %}
+  {%- assign contentAlignment = block.settings.content-alignment -%}
+  {%- assign overlayColor = block.settings.overlay-color -%}
+  {%- assign heading = block.settings.title | escape -%}
+  {%- assign subheading = block.settings.subheading | escape -%}
+  {%- assign cta = block.settings.cta | escape -%}
+  {%- assign url = block.settings.url -%}
+  {%- if block.settings.image -%}
+    {%- capture image -%}
+        {%
+          render 'rimg',
+          img: block.settings.image,
+          size: '1440x640',
+          lazy: true,
+          focal_point: block.settings.image.presentation.focal_point,
+        %}
+    {%- endcapture -%}
+    {%- endif -%}
+{%- endif -%}
+
+<article
+  class="
+    home-slideshow-slide
+    home-slideshow-slide-{{ slideIndex }}
+    home-slideshow-slide-alignment-{{ contentAlignment }}
+  "
+  data-slideshow-slide
+  data-slide-index="{{ slideIndex | minus: 1 }}"
+  {{ block.shopify_attributes }}
+>
+    <figure class="home-slideshow-slide-image">
+      {%- if url != blank -%}
+        <a href="{{ url }}">
+          {{ image }}
+        </a>
+      {%- else -%}
+        {{ image }}
+      {%- endif -%}
+    </figure>
+
+    {% if heading != blank or subheading != blank or cta != blank %}
+      <div class="home-slideshow-slide-content">
+        <div class="home-slideshow-slide-content-inner">
+          {% if heading != blank %}
+            <h1 class="home-slideshow-slide-heading" style="{%- if overlayColor -%}color: {{ overlayColor }};{%- endif -%}">{{ heading }}</h1>
+          {% endif %}
+
+          {% if subheading != blank %}
+            <p class="home-slideshow-slide-subheading" style="{%- if overlayColor -%}color: {{ overlayColor }};{%- endif -%}">{{ subheading }}</p>
+          {% endif %}
+
+          {% if cta != blank %}
+            <a class="home-slideshow-slide-cta button" {% if url != blank %}href="{{ url }}"{% endif %}>{{ cta }}</a>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </figure>
+</article>

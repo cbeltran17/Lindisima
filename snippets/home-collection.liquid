@@ -1,0 +1,69 @@
+{% assign block = block | default: nil %}
+{% assign collection = collection | default: nil %}
+{% assign image = onboard_image | default: nil %}
+
+{% if block and collection %}
+  {% capture image %}
+    {% if collection.image %}
+      {%
+        render 'rimg',
+        img: collection.image,
+        size: '1024x1024',
+        lazy: true,
+      %}
+    {% elsif collection.products.first.featured_media.preview_image %}
+      {%
+        render 'rimg',
+        img: collection.products.first.featured_media.preview_image,
+        size: '1024x1024',
+        lazy: true,
+      %}
+    {% endif %}
+  {% endcapture %}
+
+  {% assign title = collection.title %}
+  {% assign subheading = block.settings.subheading | escape %}
+  {% assign description = block.settings.description %}
+  {% assign overlayColor = block.settings.overlay-color %}
+{% else %}
+  {% assign title = 'onboarding.home_collections.collection_title' | t %}
+  {% assign subheading = 'onboarding.home_collections.collection_subtitle' | t %}
+  {% assign description = 'onboarding.home_collections.collection_description' | t %}
+  {% assign overlayColor = 'black' %}
+{% endif %}
+
+<article class="home-collection" {{ block.shopify_attributes }}>
+  <figure class="home-collection-image" style="--home-collection-image-aspect-ratio: {{ aspect_ratio | default: '1/1' }}">
+    {% if collection %}
+      <a class="home-collection__link" href="{{ collection.url }}"></a>
+    {% endif %}
+
+    {{ image }}
+
+    <div
+      class="
+        home-collection-overlay-wrapper
+        home-collection-overlay-color-{{ overlayColor }}
+      "
+      data-url="{{ collection.url }}"
+    >
+      <div class="home-collection-overlay">
+        <h3 class="home-collection-title">
+          {{ title }}
+        </h3>
+
+        {% if subheading != blank %}
+          <span class="home-collection-subtitle">
+            {{ subheading }}
+          </span>
+        {% endif %}
+      </div>
+    </div>
+  </figure>
+
+  {% if description != blank %}
+    <div class="home-collection-description">
+      {{ description }}
+    </div>
+  {% endif %}
+</article>

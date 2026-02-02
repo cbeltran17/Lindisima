@@ -1,0 +1,150 @@
+<table class="cart-items" data-cart-table>
+  <thead>
+    <tr>
+      <th class="first">{{ 'general.general.product' | t }}</th>
+      <th>{{ 'general.general.price' | t }}</th>
+      <th>{{ 'general.general.quantity' | t }}</th>
+      <th class="last" colspan="2">{{ 'general.general.total' | t }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in cart.items %}
+      {%- assign item_has_discounts = false -%}
+      {%- if item.line_level_discount_allocations.size > 0 -%}
+        {%- assign item_has_discounts = true -%}
+      {%- endif -%}
+      <tr
+        class="cart-item variant-{{ item.variant.id }} {% render 'for-looper', forloop: forloop %}"
+        data-key="{{ item.key }}"
+        data-variant="{{ item.variant.id }}"
+        data-title="{{ item.product.title }}"
+        data-url="{{ item.product.url }}"
+      >
+        <td class="product-item first">
+          <a class="image" href="{{ item.product.url }}">
+            {%
+              render 'rimg',
+              img: item.image,
+              size: '160x160'
+            %}
+          </a>
+          <div class="product-item-details">
+            {% if settings.product-vendor %}
+              <span class="cart-brand">{{ item.vendor | link_to_vendor }}</span>
+            {% endif %}
+            <span class="cart-title">{{ item.product.title | link_to: item.product.url }}</span>
+            {% unless item.variant.title == 'Default Title' %}
+              <span class="cart-variant">{{ item.variant.title }}</span>
+            {% endunless %}
+
+            {% if item.selling_plan_allocation.selling_plan %}
+              <span class="cart-item-subscriptions">{{ item.selling_plan_allocation.selling_plan.name }}</span>
+            {% endif %}
+
+            {% if item.properties %}
+              <div class="cart-item-properties">
+                {% for property in item.properties %}
+                  {% assign property_first_char = property.first | slice: 0 %}
+                  {% if property.last != blank and property_first_char != '_' %}
+                    <div class="cart-item-property">
+                      <span class="cart-item-property-label">{{ property.first }}:</span>
+                      {% if property.last contains '/uploads/' %}
+                        <a class="cart-item-property-image" href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>
+                      {% else %}
+                        <span class="cart-item-property-value">{{ property.last }}</span>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+          <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity=0" class="remove" data-remove-item="{{ item.key }}">&#xe603;</a>
+        </td>
+        <td class="price" data-title="{{ 'general.general.price' | t }}">
+          <span class="price-container">
+          {%- if item_has_discounts -%}
+            <s class="money original-price">{{ item.original_price | money }}</s>
+          {%- endif -%}
+            <span class="final-price money">{{ item.final_price | money }}</span>
+            {% if item.unit_price %}
+              {% assign variant_for_unit_price = item %}
+              {% comment %}Inject unit-price begin{% endcomment %}
+              {% comment %}
+                @param variant_for_unit_price
+                  Product variant for price
+                @param tax_text
+                  String containing 'tax included' text
+              {% endcomment %}
+              
+              {% capture total_quantity %}
+                <span class="product-price__unit-price-total-quantity" data-unit-price-quantity>
+                  {{ variant_for_unit_price.unit_price_measurement.quantity_value }}{{ variant_for_unit_price.unit_price_measurement.quantity_unit }}
+                </span>
+              {% endcapture %}
+              
+              
+              {% capture unit_price %}
+                <span class="product-price__unit-price-amount money" data-unit-price-amount>
+                  {{ variant_for_unit_price.unit_price | money }}
+                </span>
+              {% endcapture %}
+              {% capture unit_measure %}
+                <span class="product-price__unit-price-measure" data-unit-price-measure>
+                  {%- if variant_for_unit_price.unit_price_measurement.reference_value != 1 -%}
+                    {{ variant_for_unit_price.unit_price_measurement.reference_value }}
+                  {%- endif %}
+                  {{ variant_for_unit_price.unit_price_measurement.reference_unit }}
+                </span>
+              {% endcapture %}
+              
+              <div
+                class="
+                  product-price__unit-price
+                  {% unless variant_for_unit_price.unit_price_measurement %}hidden{% endunless %}
+                "
+                data-unit-price
+              >
+                {{ 'products.product.price_per_unit_html' | t: total_quantity: total_quantity, unit_price: unit_price, unit_measure: unit_measure | strip_newlines }}
+              </div>
+              
+              {% assign variant_for_unit_price = blank %}
+              {% comment %}Inject unit-price end{% endcomment %}
+
+            {% endif %}
+            {%- if item_has_discounts -%}
+              <ul class="cart-item-discounts">
+                {% for discount_allocation in item.line_level_discount_allocations %}
+                  <li class="cart-item-discount">
+                    {% render 'icons', id: 'sale-tag' %}
+                    {{ discount_allocation.discount_application.title }}
+                    (-<span class="money">{{ discount_allocation.amount | money }}</span>)
+                  </li>
+                {% endfor %}
+              </ul>
+            {%- endif -%}
+          </span>
+        </td>
+        <td class="quantity" data-title="{{ 'general.general.quantity' | t }}">
+          <input
+            class="input"
+            type="number"
+            name="updates[]"
+            id="updates_{{ item.key }}"
+            min="0"
+            value="{{ item.quantity }}"
+            data-quantity-key="{{ item.key }}"
+          >
+        </td>
+        <td class="total last" data-title="{{ 'general.general.total' | t }}">
+          <span class="price-container">
+            {%- if item_has_discounts -%}
+              <s class="money original-price">{{ item.original_line_price | money }}</s>
+            {%- endif -%}
+            <div class="final-price money">{{ item.final_line_price | money }}</div>
+          </span>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

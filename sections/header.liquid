@@ -1,0 +1,452 @@
+<script
+  type="application/json"
+  data-section-type="static-header"
+  data-section-id="{{ section.id }}"
+  data-section-data
+>
+  {
+    "stickyHeader": {{ section.settings.sticky_header }},
+    "compactCenter": "{{ section.settings.header_layout }}",
+    "enable_predictive_search": "{{ section.settings.enable_predictive_search }}"
+  }
+</script>
+
+{%- capture arrow_right -%}
+  {%-
+    render 'icons',
+    id: 'chevron-right'
+  -%}
+{%- endcapture -%}
+
+{% assign mega_nav_handle = section.settings.mega-nav-handle %}
+
+{%- capture header_classes -%}
+  header
+  header-layout-{{ section.settings.header_layout }}
+
+  {% if section.settings.header_full_width %}
+    header-full-width
+  {% else %}
+    header-content-width
+  {% endif %}
+
+  {% if section.settings.sticky_header and section.settings.sticky_header_logo %}
+    header-sticky-show-logo
+  {% endif %}
+
+  {% if section.settings.header_border and template != 'index' %}
+    header-border
+  {% endif %}
+{%- endcapture -%}
+
+<section
+  class="{{ header_classes | replace: '  ', ' ' | strip_newlines }}"
+  {% if section.settings.sticky_header %}data-sticky-header{% endif %}
+  {% if section.settings.header_layout == 'compact-center' %}data-header-compact-center{% endif %}
+  data-section-header
+>
+  <header
+    class="main-header"
+    role="banner"
+    data-header-main
+  >
+    <div class="header-tools-wrapper">
+      <div class="header-tools">
+
+        <div class="aligned-left">
+          <div id="coin-container"></div>
+        </div>
+
+        <div class="aligned-right">
+          {% if shop.customer_accounts_enabled %}
+            <div class="customer-links">
+              {% if customer %}
+                <a href="{{ routes.account_url }}">{{ 'layout.header.my_account' | t }}</a>
+
+                <div class="customer-links-inner">
+                  <span class="arrow"></span>
+                  <ul>
+                    <li><a href="{{ routes.account_url }}">{{ 'customers.general.purchases' | t }}</a></li>
+                    <li><a href="{{ routes.account_addresses_url }}">{{ 'customers.addresses.header' | t }}</a></li>
+                    <li>{{ 'layout.header.logout' | t | customer_logout_link }}</li>
+                  </ul>
+                </div>
+              {% else %}
+                <a class="customer-login-link" href="{{ routes.account_login_url }}">{{ 'layout.header.account' | t }}</a>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          <div class="mini-cart-wrapper">
+            <a class="cart-count" href="{{ routes.cart_url }}" data-cart-count>
+              <span class="cart-count-text">{{ 'layout.header.cart' | t }}</span>
+              (<span class="cart-count-number">{{ cart.item_count }}</span>)
+            </a>
+
+            {% render 'mini-cart' %}
+          </div>
+          <form class="checkout-link" action="{{ routes.cart_url }}" method="POST"><button class="checkout-link__button" type="submit" name="checkout">{{ 'layout.header.checkout' | t }}</button></form>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="header-main-content" data-header-content>
+      {% unless section.settings.menu == blank %}
+        <div class="header-content-left">
+          <button
+            class="navigation-toggle navigation-toggle-open"
+            aria-label="{{ 'layout.header.menu' | t }}"
+            data-header-nav-toggle
+          >
+            <span class="navigation-toggle-icon">
+              {%-
+                render 'icons',
+                id: 'menu'
+              -%}
+            </span>
+          </button>
+        </div>
+      {% endunless %}
+
+      <div
+        class="
+          header-branding
+          header-branding-desktop
+          {% if section.settings.logo %}header-branding-desktop--has-logo{% endif %}
+        "
+        data-header-branding
+      >
+        <a class="logo-link" href="{{ routes.root_url }}">
+          {%- if section.settings.logo -%}
+            {%
+              render 'rimg',
+              img: section.settings.logo,
+              class: 'logo-image',
+              size: '200x100',
+              focal_point: section.settings.logo.presentation.focal_point,
+            %}
+          {%- else -%}
+            <h1>{{- shop.name -}}</h1>
+          {%- endif -%}
+        </a>
+        <span
+          class="navigation-toggle navigation-toggle-close"
+          data-header-nav-toggle
+        >
+          {%-
+            render 'icons',
+            id: 'close',
+          -%}
+        </span>
+      </div>
+
+      {% unless section.settings.menu == blank %}
+        <div class="navigation-wrapper" data-navigation-wrapper>
+          <nav class="navigation navigation-desktop navigation-has-mega-nav" data-navigation-content>
+            <ul class="navigation-menu">
+              {% for link in linklists[section.settings.menu].links %}
+                {% assign first_tier_link = link %}
+                {% assign uses_blocks = true %}
+                {% comment %}Inject is-dropdown-or-meganav begin{% endcomment %}
+                {% comment %}
+                  A helper snippet for detecting if a link has a mega nav
+                  or dropdown associated with it.
+                
+                  @param first_tier_link
+                
+                  @param uses_blocks
+                {% endcomment %}
+                
+                {% assign is_dropdown = false %}
+                {% assign is_meganav = true %}
+                
+                {% if first_tier_link.links == blank %}
+                  {% assign is_meganav = false %}
+                {% else %}
+                  {% assign is_dropdown = true %}
+                {% endif %}
+                
+                {% for second_tier_link in first_tier_link.links %}
+                  {% if second_tier_link.links == blank %}
+                    {% assign is_meganav = false %}
+                  {% else %}
+                    {% assign is_dropdown = true %}
+                  {% endif %}
+                {% endfor %}
+                
+                {% if is_meganav %}
+                  {% assign is_dropdown = false %}
+                {% endif %}
+                
+                {% if uses_blocks %}
+                  {% assign found_mega_item_handle = false %}
+                  {% if section != blank and section.blocks != blank %}
+                    {% for block in section.blocks %}
+                      {% if block.type == 'mega_menu' %}
+                        {% assign menu_item_handle = block.settings.menu_item | handle %}
+                        {% if first_tier_link.handle == menu_item_handle %}
+                          {% assign found_mega_item_handle = true %}
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+                
+                  {% if found_mega_item_handle %}
+                    {% if is_dropdown %}
+                      {% assign is_meganav = true %}
+                      {% assign is_dropdown = false %}
+                    {% endif %}
+                  {% elsif found_mega_item_handle == false %}
+                    {% if is_meganav %}
+                      {% assign is_meganav = false %}
+                      {% assign is_dropdown = true %}
+                    {% endif %}
+                  {% else %}
+                    {% if is_meganav %}
+                      {% assign is_meganav = false %}
+                      {% assign is_dropdown = true %}
+                    {% endif %}
+                  {% endif %}
+                {% endif %}
+                {% comment %}Inject is-dropdown-or-meganav end{% endcomment %}
+
+
+                <li
+                  class="{% if is_dropdown %}has-dropdown{% elsif is_meganav %}has-mega-nav{% endif %}"
+                  {% if is_meganav %}data-mega-nav="true"{% endif %}
+                >
+                  {% if is_dropdown or is_meganav %}
+                    <details data-nav-details>
+                      <summary data-href="{{ link.url }}"
+                  {% else %}
+                    <a href="{{ link.url }}"
+                  {% endif %}
+                    id="main-navigation-{{ link.handle }}"
+                    class="navigation-menu-link"
+                    {% if is_dropdown or is_meganav %}aria-haspopup{% endif %}
+                  >
+                    {{ link.title }}
+                    {% if is_dropdown or is_meganav %}
+                      <span
+                        class="navigation-submenu-toggle"
+                        tabIndex="0"
+                        role="button"
+                        aria-controls="navigation-{{ link.handle }}"
+                        aria-expanded="false"
+                        aria-label="{{ 'general.accessibility.toggle' | t }}"
+                        data-subnav-toggle
+                      >
+                        {{- arrow_right -}}
+                      </span>
+                    {% endif %}
+                  {% if is_dropdown or is_meganav %}
+                    </summary>
+                  {% else %}
+                    </a>
+                  {% endif %}
+
+                  {% if is_dropdown %}
+                    {% assign direction = 'right' %}
+                    {% assign halfway = linklists[section.settings.menu].links.size | divided_by: 2 %}
+                    {% if forloop.index0 > halfway %}
+                      {% assign direction = 'left' %}
+                    {% endif %}
+
+                    {%- render 'dropdown', direction: direction, link: link -%}
+                    </details>
+                  {% elsif is_meganav %}
+                    {%- render 'mega-nav', link: link -%}
+                  {% endif %}
+                </li>
+              {% endfor %}
+
+              {% if shop.customer_accounts_enabled %}
+                {% if customer %}
+                  <li class="mobile-link">
+                    <a href="{{ routes.account_url }}">
+                      {{ 'layout.header.my_account' | t }}
+                    </a>
+                  </li>
+                  <li class="mobile-link">
+                    {{ 'layout.header.logout' | t | customer_logout_link }}
+                  </li>
+                {% else %}
+                  <li class="mobile-link">
+                    <a class="customer-login-link" href="{{ routes.account_login_url }}">{{ 'layout.header.account' | t }}</a>
+                  </li>
+                {% endif %}
+              {% endif %}
+            </ul>
+          </nav>
+          {% render 'mobile-nav', arrow_right: arrow_right %}
+        </div>
+      {% endunless %}
+
+      <div class="header-content-right" data-header-content-right>
+        {%
+          render 'search-form',
+          context: 'header',
+        %}
+
+        <button
+          class="search-toggle"
+          type="button"
+          aria-label="{{ 'general.search.header' | t }}"
+          data-header-search-toggle
+        >
+          {%
+            render 'icons',
+            id: 'search',
+          %}
+        </button>
+
+        {% if section.settings.sticky_header %}
+          <a class="sticky-header-cart-count" href="{{ routes.cart_url }}" data-cart-count>
+            <span class="cart-count-text">{{ 'layout.header.cart' | t }}</span>
+            (<span class="cart-count-number">{{ cart.item_count }}</span>)
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="search-takeover" data-search-takeover>
+        <div class="search-takeover__wrapper">
+          {%
+            render 'search-form',
+            context: 'mobile',
+          %}
+
+          <button
+            class="search-takeover__close-button"
+            type="button"
+            aria-label="{{ 'general.search.close' | t }}"
+            data-search-takeover-close
+          >
+            {%
+              render 'icons',
+              id: 'close',
+            %}
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+</section>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image",
+      "info": "200px tall recommended"
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "select",
+      "id": "header_layout",
+      "label": "Logo layout",
+      "info": "Logo layouts are only active on screens wider than 1080px",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "compact-center",
+          "label": "Compact center"
+        },
+        {
+          "value": "compact-left",
+          "label": "Compact left"
+        }
+      ],
+      "default": "compact-left"
+    },
+    {
+      "type": "checkbox",
+      "id": "header_full_width",
+      "label": "Enable full width header ",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "header_border",
+      "label": "Show header border",
+      "default": true,
+      "info": "This will appear on all pages except the home page."
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_header",
+      "label": "Enable sticky header"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_header_logo",
+      "default": true,
+      "label": "Show logo image in sticky header"
+    },
+    {
+      "type": "header",
+      "content": "Search behavior"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_predictive_search",
+      "label": "Enable predictive search",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Mini Cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_checkout_lock_icon",
+      "label": "Show lock icon on checkout button in mini cart",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_menu",
+      "name": "Mega menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_item",
+          "label": "Menu item",
+          "info": "Enter menu item to apply a mega menu dropdown. [Learn more](https://support.pixelunion.net/hc/en-us/articles/360022052534-How-to-set-up-your-store-s-navigation)"
+        },
+        {
+          "type": "image_picker",
+          "id": "menu_image",
+          "label": "Featured image",
+          "info": "480 x 1000px recommended"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}

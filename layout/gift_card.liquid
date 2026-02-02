@@ -1,0 +1,495 @@
+<!doctype html>
+<html
+  class="
+    no-js
+    loading
+  "
+  lang="{{ request.locale.iso_code }}"
+>
+<head>
+  <script>
+    window.Store = window.Store || {};
+    window.Store.id = {{ shop.id }};
+  </script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <!-- Preconnect Domains -->
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.shopify.com" crossorigin>
+  <link rel="preconnect" href="https://monorail-edge.shopifysvc.com">
+
+  <!-- Preload Assets -->
+  <link rel="preload" href="{{ 'chiko-icons.woff' | asset_url }}" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="{{ 'pxu-social-icons.woff' | asset_url }}" as="font" type="font/woff" crossorigin>
+
+  <link rel="preload" href="{{ 'gift-card.css' | asset_url }}" as="style">
+
+  <link rel="preload" href="{{ 'modernizr-2.8.2.min.js' | asset_url  }}" as="script">
+  <link rel="preload" href="{{ 'vendor/qrcode.js' | shopify_asset_url }}" as="script">
+
+  <link rel="preload" href="{{ 'grid.js' | asset_url }}" as="script">
+
+  <title>{{ 'gift_cards.issued.title' | t: value: formatted_initial_value_stripped, shop: shop.name }}</title>
+  <meta name="description" content="{{ 'gift_cards.issued.subtext' | t }}">
+
+  <link rel="canonical" href="{{ canonical_url }}" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  {{ content_for_header }}
+
+  <!-- Theme CSS -->
+  <link rel="stylesheet" href="{{ 'gift-card.css' | asset_url }}">
+
+  <!-- Theme object -->
+  {% comment %}Inject theme-object begin{% endcomment %}
+  <script>
+    var Theme = {};
+    Theme.version = "7.1.0";
+    Theme.name = 'Grid';
+  
+    Theme.currency = {{ shop.currency | json }};
+    Theme.moneyFormat = {{ shop.money_format | strip_html | json }};
+  
+    Theme.pleaseSelectText = "{{ 'general.general.please_select' | t | strip_newlines | escape }}";
+  
+    Theme.addToCartSuccess = "{{ 'products.product.success_html' | t: product: '**product**', cart_link: '**cart_link**', continue_link: '**continue_link**', checkout_link: '**checkout_link**' | strip_newlines | escape }}";
+  
+    {% if shop.customer_accounts_enabled and customer %}
+      Theme.customerLoggedIn = true;
+    {% endif %}
+  
+    Theme.shippingCalculator = true;
+    Theme.shippingButton = "{{ 'cart.shipping_calculator.submit' | t | strip_newlines | escape }}";
+    Theme.shippingDisabled = "{{ 'cart.shipping_calculator.disabled' | t | strip_newlines | escape }}";
+  
+    {% if shop.customer_accounts_enabled and customer and customer.default_address %}
+      Theme.customerAddress = {{ customer.default_address | json }};
+    {% endif %}
+  
+    Theme.shippingCalcErrorMessage = "{{ 'cart.shipping_calculator.error' | t | strip_newlines | replace: '"','\\"' }}";
+    Theme.shippingCalcMultiRates = "{{ 'cart.shipping_calculator.rates_html' | t | strip_newlines | replace: '"','\\"' }}";
+    Theme.shippingCalcOneRate = "{{ 'cart.shipping_calculator.rate' | t | strip_newlines | replace: '"','\\"' }}";
+    Theme.shippingCalcNoRates = "{{ 'cart.shipping_calculator.no_rates' | t | strip_newlines | replace: '"','\\"' }}";
+    Theme.shippingCalcRateValues = "{{ 'cart.shipping_calculator.rate_values_html' | t | strip_newlines | replace: '"','\\"' }}";
+  
+    Theme.routes = {
+      "root_url": "{{ routes.root_url }}",
+      "account_url": "{{ routes.account_url }}",
+      "account_login_url": "{{ routes.account_login_url }}",
+      "account_logout_url": "{{ routes.account_logout_url }}",
+      "account_register_url": "{{ routes.account_register_url }}",
+      "account_addresses_url": "{{ routes.account_addresses_url }}",
+      "collections_url": "{{ routes.collections_url }}",
+      "all_products_collection_url": "{{ routes.all_products_collection_url }}",
+      "search_url": "{{ routes.search_url }}",
+      "cart_url": "{{ routes.cart_url }}",
+      "cart_add_url": "{{ routes.cart_add_url }}",
+      "cart_change_url": "{{ routes.cart_change_url }}",
+      "cart_clear_url": "{{ routes.cart_clear_url }}",
+      "product_recommendations_url": "{{ routes.product_recommendations_url }}",
+      "predictive_search_url": "{{ routes.predictive_search_url }}",
+    };
+  </script>
+  {% comment %}Inject theme-object end{% endcomment %}
+
+</head>
+
+<body class="template-{{ template.name }}">
+  <div class="main-content">
+    {{ content_for_layout }}
+  </div>
+
+  <!-- Scripts -->
+  <!-- Third Party JS Libraries -->
+  <script src="{{ 'modernizr-2.8.2.min.js' | asset_url  }}" defer></script>
+  <script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}" defer></script>
+
+  <script src="{{ 'grid.js' | asset_url }}" defer></script>
+
+  {% comment %}Inject @pixelunion/shopify-structured-data/structured-data-article begin{% endcomment %}
+  {% comment %}
+    Article structured data
+    https://developers.google.com/search/docs/data-types/articles
+  {% endcomment %}
+  
+  {% if template contains 'article' %}
+    {%- capture article_description  -%}
+      {%- if article.excerpt != blank -%}
+        {{ article.excerpt | strip_html }}
+      {%- else -%}
+        {{ article.content | truncatewords: 100 | strip_html }}
+      {%- endif -%}
+    {%- endcapture -%}
+  
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "{{ shop.url }}{{ article.url }}"
+        },
+        "headline": {{ article.title | json }},
+        {% if article.image %}
+          "image": {
+            "@type": "ImageObject",
+            "url": {{ article.image | img_url: '800x800' | prepend: 'https:' | json }},
+            "height": 800,
+            "width": 800
+          },
+        {% endif %}
+        "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json}},
+        "dateModified": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json}},
+        "author": {
+          "@type": "Person",
+          "name": {{ article.author | json }}
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": {{ shop.name | json }},
+          "logo": {
+            "@type": "ImageObject",
+            "url": {{ article.user.image | img_url: '200x200' | prepend: 'https:' | json }}
+          }
+        },
+        "description": {{ article_description | json }}
+      }
+    </script>
+  {% endif %}
+  {% comment %}Inject @pixelunion/shopify-structured-data/structured-data-article end{% endcomment %}
+
+  {% comment %}Inject @pixelunion/shopify-structured-data/structured-data-breadcrumbs begin{% endcomment %}
+  {% comment %}
+    Breadcrumbs
+    https://developers.google.com/search/docs/data-types/breadcrumbs
+  {% endcomment %}
+  
+  {%- if current_tags -%}
+    {%- assign tag_names = current_tags | join: ', ' %}
+    {% comment %}Converting an array to a handle converts it to a string{% endcomment %}
+    {%- capture tag_handles -%}
+      {%- for tag in current_tags -%}
+        {{- tag | handle | append: '|' -}}
+      {%- endfor -%}
+    {%- endcapture -%}
+  {%- endif -%}
+  
+  {% if collection.url == blank %}
+    {% assign collection_url = '/collections/all' %}
+  {% else %}
+    {% assign collection_url = collection.url %}
+  {% endif %}
+  
+  {% if template.name == 'product'
+      or template.name == 'list-collections'
+      or template.name == 'collection'
+      or template.name == 'blog'
+      or template.name == 'article'
+      or template.name == 'search'
+      or template.name == 'cart'
+      or template.name == 'page'
+  %}
+  
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+        {% case template.name %}
+          {% when 'product' %}
+            {% if product.collections.size >= 1 %}
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                  "@id": "{{ shop.url }}/collections",
+                  "name": {{ 'structured_data.breadcrumbs.collections' | t | json }}
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@id": "{{ shop.url }}/collections/{{ product.collections.first.handle }}",
+                  "name": {{ product.collections.first.title | json }}
+                }
+              },
+            {% else %}
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                  "@id": "{{ shop.url }}/products",
+                  "name": {{ 'structured_data.breadcrumbs.products' | t | json }}
+                }
+              },
+            {% endif %}
+            {
+              "@type": "ListItem",
+              "position": {% if product.collections.size >= 1 %}3{% else %}2{% endif %},
+              "item": {
+                "@id": "{{ shop.url }}{{ product.url | within: collection }}",
+                "name": {{ product.title | json }}
+              }
+            }
+          {% when 'list-collections' %}
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@id": "{{ shop.url }}/collections",
+                "name": {{ 'structured_data.breadcrumbs.collections' | t | json }}
+              }
+            }
+            {% if current_page != 1 %}
+              ,
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@id": "{{ shop.url }}/collections",
+                  "name": {{ 'structured_data.breadcrumbs.page' | t: page: current_page | json }}
+                }
+              }
+            {% endif %}
+          {% when 'collection' %}
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@id": "{{ shop.url }}/collections",
+                "name": {{ 'structured_data.breadcrumbs.collections' | t | json }}
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@id": "{{ shop.url }}{{ collection_url }}",
+                "name": {{ collection.title | json }}
+              }
+            }
+            {% if current_tags %}
+              ,
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "item": {
+                  "@id": "{{ shop.url }}{{ collection_url }}/{{- tag_handles | split: '|' | join: '+' -}}",
+                  "name": {{ 'structured_data.breadcrumbs.tags_html' | t: tags: tag_names | json }}
+                }
+              }
+            {% endif %}
+            {% if current_page != 1 %}
+              {% if current_tags %}
+                {% assign position = 4 %}
+              {% else %}
+                {% assign position = 3 %}
+              {% endif %}
+              ,
+              {
+                "@type": "ListItem",
+                "position": {{ position }},
+                "item": {
+                  "@id": "{{ shop.url }}/collections?page={{ current_page }}",
+                  "name": {{ 'structured_data.breadcrumbs.page' | t: page: current_page | json }}
+                }
+              }
+            {% endif %}
+          {% when 'blog' or 'article' %}
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@id": "{{ shop.url }}{{ blog.url }}",
+                "name": {{ blog.title | json }}
+              }
+            }
+            {% if template.name == 'article' %}
+              ,
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@id": "{{ shop.url }}{{ article.url }}",
+                  "name": {{ article.title | json }}
+                }
+              }
+            {% elsif current_tags %}
+              ,
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@id": "{{ shop.url }}{{ blog.url }}/tagged/{{- tag_handles | split: '|' | join: '+' -}}",
+                  "name": {{ 'structured_data.breadcrumbs.tags_html' | t: tags: tag_names | json }}
+                }
+              }
+            {% endif %}
+            {% if current_page != 1 %}
+              {% if current_tags %}
+                {% assign position = 3 %}
+                {%- capture url -%}
+                  {{ shop.url }}{{ blog.url }}/tagged/{{ tag_handles | split: '|' | join: '+' }}?page={{ current_page }}
+                {%- endcapture -%}
+              {% else %}
+                {% assign position = 2 %}
+                  {%- capture url -%}
+                  {{ shop.url }}{{ blog.url }}?page={{ current_page }}
+                {%- endcapture -%}
+              {% endif %}
+              ,
+              {
+                "@type": "ListItem",
+                "position": {{ position }},
+                "item": {
+                  "@id": "{{ url }}",
+                  "name": {{ 'structured_data.breadcrumbs.page' | t: page: current_page | json }}
+                }
+              }
+            {% endif %}
+          {% when 'search' %}
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@id": "{{ shop.url }}/search",
+                "name": {{ 'structured_data.breadcrumbs.search' | t | json }}
+              }
+            }
+            {% if search.performed %}
+            ,
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@id": "{{ shop.url }}/search?q={{ search.terms }}",
+                  "name": {{ search.terms | json }}
+                }
+              }
+              {% if current_page != 1 %}
+              ,
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "item": {
+                    "@id": "{{ shop.url }}/search?page={{ current_page }}&q={{ search.terms }}",
+                    "name": {{ 'structured_data.breadcrumbs.page' | t: page: current_page | json }}
+                  }
+                }
+              {% endif %}
+            {% endif %}
+          {% when 'cart' %}
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@id": "{{ shop.url }}/cart",
+                "name": {{ 'structured_data.breadcrumbs.cart' | t | json }}
+              }
+            }
+          {% when 'page' %}
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@id": "{{ page.url }}",
+                "name": {{ page.title | json }}
+              }
+            }
+          {% else %}
+          {% endcase %}
+        ]
+      }
+    </script>
+  {% endif %}
+  {% comment %}Inject @pixelunion/shopify-structured-data/structured-data-breadcrumbs end{% endcomment %}
+
+  {% comment %}Inject @pixelunion/shopify-structured-data/structured-data-product begin{% endcomment %}
+  {% comment %}
+    Product structured data
+    https://developers.google.com/search/docs/data-types/products
+  {% endcomment %}
+  
+  {% if template contains 'product' %}
+    {% assign selected_variant = product.selected_or_first_available_variant | default: product.variants.first %}
+    {% assign product_image = selected_variant.featured_image | default: product.featured_image %}
+    {%- capture product_name -%}
+      {{ product.title }}
+      {%- if selected_variant.title != 'Default Title' and selected_variant.option1 == 'Default Title' -%}
+        - {{ selected_variant.title }}
+      {%- endif -%}
+    {%- endcapture -%}
+  
+    {%- assign now = 'now' | date: '%Y-%m-%d' | split: '-' -%}
+    {% capture year_from_now %}{{ now[0] | plus: 1 }}-{{ now[1] }}-{{ now[2] | at_most: 28 }}{% endcapture %}
+  
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org/",
+      "@type": "Product",
+      "name": {{ product_name | strip_newlines | json }},
+      "image": {{ product_image | img_url: '1024x1024' | prepend: 'https:' | json }},
+      {% if product.description != blank %}
+        "description": {{ product.description | json }},
+      {% endif %}
+      {% if product.vendor %}
+        "brand": {
+          "@type": "Thing",
+          "name": {{ product.vendor | json }}
+        },
+      {% endif %}
+      {% if selected_variant.sku != blank %}
+        "sku": {{ selected_variant.sku | json }},
+      {% endif %}
+      {% if selected_variant.barcode != blank %}
+        "mpn": {{ selected_variant.barcode | json }},
+      {% endif %}
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": {{ cart.currency.iso_code | json }},
+        "price": {{ selected_variant.price | divided_by: 100.0 | json }},
+        "availability": "http://schema.org/{% if selected_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+        "url": "{{ shop.url }}{{ selected_variant.url }}",
+        "seller": {
+          "@type": "Organization",
+          "name": {{ shop.name | json }}
+        },
+        "priceValidUntil": {{ year_from_now | json }}
+      }
+    }
+    </script>
+  {% endif %}
+  {% comment %}Inject @pixelunion/shopify-structured-data/structured-data-product end{% endcomment %}
+
+  {% comment %}Inject @pixelunion/shopify-structured-data/structured-data-website begin{% endcomment %}
+  {% comment %}
+    Store information
+    https://developers.google.com/search/docs/data-types/sitename
+  {% endcomment %}
+  
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": "{{ shop.name }}",
+      "url": "{{ shop.url }}"
+    }
+  </script>
+  {% comment %}Inject @pixelunion/shopify-structured-data/structured-data-website end{% endcomment %}
+
+
+  <script>
+    (function () {
+      function handleFirstTab(e) {
+        if (e.keyCode === 9) { // the "I am a keyboard user" key
+          document.body.classList.add('user-is-tabbing');
+          window.removeEventListener('keydown', handleFirstTab);
+        }
+      }
+      window.addEventListener('keydown', handleFirstTab);
+    })();
+  </script>
+</body>
+</html>

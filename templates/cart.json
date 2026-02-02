@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "main": {
+      "type": "cart",
+      "settings": {
+        "enable_checkout_lock_icon": false,
+        "special-instructions": true,
+        "special-instructions-placeholder": "Write any special instructions for your shipment here.",
+        "shipping-calculator": false,
+        "shipping_calculator_default_country": "United States"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

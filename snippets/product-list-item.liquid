@@ -1,0 +1,188 @@
+{% comment %}
+  @param product_attributes
+    custom attributes to be applied to the product item
+    Defaults to: blank
+{% endcomment %}
+
+{% liquid
+  assign product_attributes = product_attributes | default: ''
+  assign product_hover = settings.product_hover |  default: 'quick-shop'
+  assign product_stock_level_threshold = settings.product_stock_level_threshold | default: 1
+  assign product_badges = settings.product_badges | default: false
+  assign product_icons = settings.product_badges_icons | default: false
+  assign product_vendor = settings.show_vendor | default: false
+
+  assign item = product
+  if template contains 'search'
+    assign item = item
+  endif
+
+  assign has_quick_shop = false
+  if product_hover == 'quick-shop' and template.name != 'password' and product.variants_count <= 250
+    assign has_quick_shop = true
+  endif
+%}
+
+{% if product_hover == 'stock-level' and item.available %}
+  {% assign total = 0 %}
+  {% assign threshold = product_stock_level_threshold | times: 1 %}
+  {% assign infinity = false %}
+  {% for variant in item.variants %}
+    {% if variant.inventory_management == null %}
+      {% assign infinity = true %}
+    {% elsif variant.inventory_management == '' %}
+      {% assign infinity = true %}
+    {% elsif variant.inventory_management == 'shopify' and variant.inventory_policy == 'continue' %}
+      {% assign infinity = true %}
+    {% elsif infinity == false %}
+      {% capture temp %}{{ total | plus: variant.inventory_quantity }}{% endcapture %}
+      {% assign total = temp | times: 1 %}
+    {% endif %}
+  {% endfor %}
+  {% assign stockText = 'products.product.stock_indicator_message' | t: num: total %}
+{% endif %}
+
+<article
+  class="
+    product-list-item
+    {% if has_quick_shop %} has-quick-shop{% endif %}
+    {% if item.available and infinity == false and total <= threshold %} has-stock-indicator{%endif %}
+  "
+  id="product-list-item-{{ item.id }}"
+  data-product-id="{{ item.id }}"
+  {{ product_attributes }}
+>
+
+  {% assign secondaryImage = false %}
+  {% if item.media.size > 1 and product_hover == 'image-flip' %}
+    {% assign secondaryImage = true %}
+  {% endif %}
+
+  <figure
+    class="
+      product-list-item-thumbnail
+      {% if secondaryImage %}
+        has-secondary-image
+      {% endif %}
+    "
+    data-url="{{ item.url | within: collection }}"
+    {% if secondaryImage %}
+      {%
+        render 'rimg',
+        img: item.media[1].preview_image,
+        alt: item.media[1].preview_image.alt,
+        size: '600x600',
+        background: true,
+        lazy: true
+      %}
+    {% endif %}
+  >
+    <a href="{{ item.url | within: collection }}" aria-label="{{ item.title }}">
+      {% if item.featured_media.preview_image %}
+        {%
+          render 'rimg',
+          img: item.featured_media.preview_image,
+          alt: item.featured_media.preview_image.alt,
+          size: '600x600',
+          lazy: true
+        %}
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {% endif %}
+    </a>
+
+    {% if has_quick_shop %}
+      <span
+        class="quick-shop-modal-trigger"
+        data-product-url="{{ item.url | within: collection }}"
+      >
+        {{ 'products.product.quick_shop_trigger_text' | t }}
+      </span>
+    {% elsif product_hover == 'stock-level' %}
+
+      {% if item.available and infinity == false and total <= threshold %}
+        <a class="product-list-item-inventory" href="{{ item.url }}">{{ stockText }}</a>
+      {% endif %}
+
+    {% endif %}
+
+    {% if product_badges %}
+      {% if item.available != true %}
+        <span class="product-list-item-unavailable{% if product_icons %} product-icons{% endif %}" data-title="{{ 'products.product.sold_out' | t }}"></span>
+      {% elsif item.compare_at_price_min > item.price_min %}
+        <span class="product-list-item-on-sale{% if product_icons %} product-icons{% endif %}" data-title="{{ 'products.product.on_sale' | t }}"></span>
+      {% endif %}
+    {% endif %}
+  </figure>
+
+  <div class="product-list-item-details">
+    {% if product_vendor %}
+      <p class="product-list-item-vendor">{{ item.vendor | link_to_vendor }}</p>
+    {% endif %}
+    <h2 class="product-list-item-title"><a href="{{ item.url | within: collection }}">{{ item.title }}</a></h2>
+    <p class="product-list-item-price">
+      {% if item.price_varies %}
+        {% if item.price_varies %}{{ 'products.product.from' | t }}{% endif %}
+        {% if item.compare_at_price_min > item.price_min %}
+          <span class="money">{{ item.price_min | money }}</span>
+          <span class="original money">{{ item.compare_at_price_min | money }}</span>
+        {% else %}
+          <span class="money">{{ item.price_min | money }}</span>
+        {% endif %}
+      {% else %}
+        {% if item.compare_at_price_min > item.price_min %}
+          <span class="money">{{ item.price_min | money }}</span>
+          <span class="original money">{{ item.compare_at_price_min | money }}</span>
+        {% else %}
+          <span class="money">{{ item.price_min | money }}</span>
+        {% endif %}
+      {% endif %}
+    </p>
+    {% assign variant_for_unit_price = item.variants | sort: 'price' | first %}
+    {% if variant_for_unit_price.unit_price %}
+      {% comment %}Inject unit-price begin{% endcomment %}
+      {% comment %}
+        @param variant_for_unit_price
+          Product variant for price
+        @param tax_text
+          String containing 'tax included' text
+      {% endcomment %}
+      
+      {% capture total_quantity %}
+        <span class="product-price__unit-price-total-quantity" data-unit-price-quantity>
+          {{ variant_for_unit_price.unit_price_measurement.quantity_value }}{{ variant_for_unit_price.unit_price_measurement.quantity_unit }}
+        </span>
+      {% endcapture %}
+      
+      
+      {% capture unit_price %}
+        <span class="product-price__unit-price-amount money" data-unit-price-amount>
+          {{ variant_for_unit_price.unit_price | money }}
+        </span>
+      {% endcapture %}
+      {% capture unit_measure %}
+        <span class="product-price__unit-price-measure" data-unit-price-measure>
+          {%- if variant_for_unit_price.unit_price_measurement.reference_value != 1 -%}
+            {{ variant_for_unit_price.unit_price_measurement.reference_value }}
+          {%- endif %}
+          {{ variant_for_unit_price.unit_price_measurement.reference_unit }}
+        </span>
+      {% endcapture %}
+      
+      <div
+        class="
+          product-price__unit-price
+          {% unless variant_for_unit_price.unit_price_measurement %}hidden{% endunless %}
+        "
+        data-unit-price
+      >
+        {{ 'products.product.price_per_unit_html' | t: total_quantity: total_quantity, unit_price: unit_price, unit_measure: unit_measure | strip_newlines }}
+      </div>
+      
+      {% assign variant_for_unit_price = blank %}
+      {% comment %}Inject unit-price end{% endcomment %}
+
+    {% endif %}
+  </div>
+
+</article>

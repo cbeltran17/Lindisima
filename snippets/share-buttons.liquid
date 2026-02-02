@@ -1,0 +1,89 @@
+{% assign image = false %}
+
+{% if template contains 'article' or template contains 'blog' %}
+  {% capture permalinkURL %}{{ shop.url }}{{ article.url }}{% endcapture %}
+
+  {% if article.image %}
+    {% assign image = article.image | img_url: '1024x1024' %}
+  {% endif %}
+
+  {% assign description = article.title | escape %}
+
+{% elsif template contains 'product' %}
+  {% capture permalinkURL %}{{ shop.url }}{{ product.url }}{% endcapture %}
+  {% assign image = product.featured_media.preview_image | default: page_image | img_url: '1024x1024' %}
+  {% assign description = product.title | escape %}
+
+{% endif %}
+
+{% assign platforms = 0 %}
+{% if settings.share-widget-facebook %}{% assign platforms = platforms | plus: 1 %}{% endif %}
+{% if settings.share-widget-x %}{% assign platforms = platforms | plus: 1 %}{% endif %}
+{% if settings.share-widget-pinterest %}{% assign platforms = platforms | plus: 1 %}{% endif %}
+{% if settings.share-widget-fancy %}{% assign platforms = platforms | plus: 1 %}{% endif %}
+{% if settings.share-widget-email %}{% assign platforms = platforms | plus: 1 %}{% endif %}
+
+{% if platforms > 0 %}
+  <div class="share-buttons">
+
+    <span class="section-title">{{ 'general.social.share' | t }}</span>
+
+    {% if settings.share-widget-facebook %}
+      <a
+        class="share-facebook"
+        href="//www.facebook.com/sharer.php?u={{ permalinkURL }}"
+        target="_blank" >
+          {% render 'social-icon', id: 'facebook' %}
+        </a>
+    {% endif %}
+
+    {% if settings.share-widget-x %}
+      <a
+        class="share-x"
+        target="_blank"
+        href="//x.com/intent/tweet?url={{ permalinkURL }}"
+      >
+        {% render 'social-icon', id: 'x' %}
+      </a>
+    {% endif %}
+
+    {% if image %}
+
+      {% if settings.share-widget-pinterest %}
+        {% comment %}
+          Fix for pinit.js overwriting custom anchor styling
+          data-pin-do="buttonPin"
+          data-pin-custom="true"
+        {% endcomment %}
+        <a
+          class="share-pinterest"
+          href="//pinterest.com/pin/create/button/?url={{ permalinkURL }}&amp;media=http:{{ image }}&amp;description={{ description }}"
+          target="_blank"
+          data-pin-do="buttonPin"
+          data-pin-custom="true">
+            {% render 'social-icon', id: 'pinterest' %}
+          </a>
+      {% endif %}
+
+      {% if settings.share-widget-fancy %}
+        <a
+          class="share-fancy"
+          href="http://www.thefancy.com/fancyit?ItemURL={{ permalinkURL }}&amp;Title={{ description }}&amp;Category=Other&amp;ImageURL={{ image }}"
+          target="_blank">
+            {% render 'social-icon', id: 'fancy' %}
+          </a>
+      {% endif %}
+
+    {% endif %}
+
+    {% if settings.share-widget-email %}
+      <a
+        class="share-email"
+        href="mailto:?subject={{page_title}}&amp;body={{ 'general.social.email_body' | t: link: permalinkURL }}"
+        target="_blank">
+          {% render 'social-icon', id: 'email' %}
+        </a>
+    {% endif %}
+
+  </div>
+{% endif %}

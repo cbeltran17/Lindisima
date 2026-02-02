@@ -1,0 +1,219 @@
+{%- if predictive_search.performed -%}
+  {% liquid
+    assign search_results = false
+
+    if predictive_search.resources.products.size > 0 or predictive_search.resources.collections.size > 0 or predictive_search.resources.articles.size > 0 or predictive_search.resources.pages.size > 0
+      assign search_results = true
+    endif
+  %}
+
+  <div
+    class="
+      predictive-search-results
+      {% if predictive_search.resources.products.size > 0 and predictive_search.resources.pages.size > 0 or predictive_search.resources.articles.size > 0 %}
+        predictive-search-results--multi-column
+      {% endif %}
+    "
+  >
+    {%- if predictive_search.resources.queries.size > 0 or predictive_search.resources.collections.size > 0 -%}
+      <div class="predictive-search-query-suggestions">
+        <h2 class="predictive-search-heading">
+          {{- 'general.predictive_search.query_suggestions_heading' | t -}}
+        </h2>
+
+        <ul class="predictive-search-results-list" role="listbox">
+          {%- for query in predictive_search.resources.queries -%}
+            <li class="predictive-search-results-list__item" role="option">
+              <a class="predictive-search-results-list__item-result" href="{{ query.url }}">
+                {{- query.styled_text -}}
+              </a>
+            </li>
+          {%- endfor -%}
+
+          {%- for collection in predictive_search.resources.collections -%}
+            <li class="predictive-search-results-list__item" role="option">
+              <a class="predictive-search-results-list__item-result" href="{{ collection.url }}">
+                {{- collection.title | escape -}}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- if predictive_search.resources.products.size > 0 -%}
+      <div class="predictive-search-product-suggestions" data-predictive-search-product-suggestions>
+        <h2 class="predictive-search-heading">
+          {{- 'general.predictive_search.product_suggestions_heading' | t -}}
+        </h2>
+
+        <ul class="predictive-search-results-list" role="listbox">
+          {%- for product in predictive_search.resources.products -%}
+            <li class="predictive-search-results-list__item" role="option">
+              <a class="predictive-search-results-list__item-result" href="{{ product.url }}">
+                <div class="predictive-search-results-list__item-result-container">
+                  <div class="predictive-search-results-list__product-item-image-container">
+                    <figure>
+                      {%- if product.featured_media != blank -%}
+                        {%
+                          render 'rimg',
+                          img: product.featured_media.preview_image,
+                          alt: product.featured_media.preview_image.alt,
+                          size: '300x',
+                          lazy: true,
+                        %}
+                      {%- else -%}
+                        {{- 'product-1' | placeholder_svg_tag: 'placeholder-svg' -}}
+                      {%- endif -%}
+                    </figure>
+                  </div>
+
+                  <div class="predictive-search-results-list__product-item-content">
+                    <span class="predictive-search-results-list__product-item-vendor">
+                      {{- product.vendor -}}
+                    </span>
+
+                    <h3 class="predictive-search-results-list__product-item-heading">
+                      {{- product.title | escape -}}
+                    </h3>
+
+                    <p class="predictive-search-results-list__product-item-price">
+                      {%- if product.price_varies -%}
+                        {{- 'products.product.from' | t -}}
+
+                        {%- if product.compare_at_price_min > product.price_min -%}
+                          <span class="money">
+                            {{- product.price_min | money -}}
+                          </span>
+
+                          <span class="original money">
+                            {{- product.compare_at_price_min | money -}}
+                          </span>
+                        {%- else -%}
+                          <span class="money">
+                            {{- product.price_min | money -}}
+                          </span>
+                        {%- endif -%}
+                      {%- else -%}
+                        {%- if product.compare_at_price_min > product.price_min -%}
+                          <span class="money">
+                            {{- product.price_min | money -}}
+                          </span>
+
+                          <span class="original money">
+                            {{- product.compare_at_price_min | money -}}
+                          </span>
+                        {%- else -%}
+                          <span class="money">
+                            {{- product.price_min | money -}}
+                          </span>
+                        {%- endif -%}
+                      {%- endif -%}
+                    </p>
+
+                    {%- assign variant_for_unit_price = product.variants | sort: 'price' | first -%}
+
+                    {%- if variant_for_unit_price.unit_price -%}
+                      {% comment %}Inject unit-price begin{% endcomment %}
+                      {% comment %}
+                        @param variant_for_unit_price
+                          Product variant for price
+                        @param tax_text
+                          String containing 'tax included' text
+                      {% endcomment %}
+                      
+                      {% capture total_quantity %}
+                        <span class="product-price__unit-price-total-quantity" data-unit-price-quantity>
+                          {{ variant_for_unit_price.unit_price_measurement.quantity_value }}{{ variant_for_unit_price.unit_price_measurement.quantity_unit }}
+                        </span>
+                      {% endcapture %}
+                      
+                      
+                      {% capture unit_price %}
+                        <span class="product-price__unit-price-amount money" data-unit-price-amount>
+                          {{ variant_for_unit_price.unit_price | money }}
+                        </span>
+                      {% endcapture %}
+                      {% capture unit_measure %}
+                        <span class="product-price__unit-price-measure" data-unit-price-measure>
+                          {%- if variant_for_unit_price.unit_price_measurement.reference_value != 1 -%}
+                            {{ variant_for_unit_price.unit_price_measurement.reference_value }}
+                          {%- endif %}
+                          {{ variant_for_unit_price.unit_price_measurement.reference_unit }}
+                        </span>
+                      {% endcapture %}
+                      
+                      <div
+                        class="
+                          product-price__unit-price
+                          {% unless variant_for_unit_price.unit_price_measurement %}hidden{% endunless %}
+                        "
+                        data-unit-price
+                      >
+                        {{ 'products.product.price_per_unit_html' | t: total_quantity: total_quantity, unit_price: unit_price, unit_measure: unit_measure | strip_newlines }}
+                      </div>
+                      
+                      {% assign variant_for_unit_price = blank %}
+                      {% comment %}Inject unit-price end{% endcomment %}
+
+                    {%- endif -%}
+                  </div>
+                </div>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- if predictive_search.resources.pages.size > 0 or predictive_search.resources.articles.size > 0 -%}
+      <div class="predictive-search-page-and-post-suggestions">
+        <h2 class="predictive-search-heading">
+          {% if predictive_search.resources.articles.size > 0 and predictive_search.resources.pages.size > 0 %}
+            {{- 'general.predictive_search.pages_and_posts_suggestions_heading' | t -}}
+          {% elsif predictive_search.resources.articles.size > 0 %}
+            {{- 'general.predictive_search.posts_suggestions_heading' | t -}}
+          {% elsif predictive_search.resources.pages.size > 0 %}
+            {{- 'general.predictive_search.pages_suggestions_heading' | t -}}
+          {% endif %}
+        </h2>
+
+        <ul class="predictive-search-results-list" role="listbox">
+          {%- for article in predictive_search.resources.articles -%}
+            <li class="predictive-search-results-list__item" role="option">
+              <a class="predictive-search-results-list__item-result" href="{{ article.url }}">
+                {{- article.title | escape -}}
+              </a>
+            </li>
+          {%- endfor -%}
+
+          {%- for page in predictive_search.resources.pages -%}
+            <li class="predictive-search-results-list__item" role="option">
+              <a class="predictive-search-results-list__item-result" href="{{ page.url }}">
+                {{- page.title | escape -}}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- unless search_results -%}
+      <div class="predictive-search-no-results">
+        <p class="predictive-search-no-results__text">
+          {{- 'general.predictive_search.no_results_text' | t -}}
+        </p>
+      </div>
+    {%- endunless -%}
+
+    <div class="predictive-search-footer">
+      <button
+        class="predictive-search-footer__button"
+        type="submit"
+        data-predictive-search-button
+      >
+        {{- 'general.predictive_search.search_button_label' | t: search_terms: predictive_search.terms -}}
+      </button>
+    </div>
+  </div>
+{%- endif -%}

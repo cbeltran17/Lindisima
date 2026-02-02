@@ -1,0 +1,91 @@
+<script
+  type="application/json"
+  data-section-type="dynamic-featured-collection"
+  data-section-id="{{ section.id }}"
+></script>
+
+{%- assign product_count = section.settings.product-columns | times: section.settings.product-rows -%}
+
+<section
+  class="home-products home-products-columns-{{ section.settings.product-columns }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="home-featured-collection"
+  data-product-hover="{{ settings.product_hover }}"
+>
+  {% if section.settings.title != blank %}
+    <h2 class="section-title">{{ section.settings.title | escape }}</h2>
+  {% endif %}
+
+  <div class="home-products-content" data-products-container>
+    {%- assign collection = collections[section.settings.collection] -%}
+
+    {%- unless section.settings.collection == blank or collection.all_products_count == 0 -%}
+      {%- for product in collection.products limit: product_count -%}
+        {%
+          render 'product-list-item',
+          collection: collection,
+          product: product,
+        %}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..product_count) -%}
+        {%- capture productImage -%}
+          {%- cycle 'product-1', 'product-2', 'product-3' -%}
+        {%- endcapture -%}
+        {%- assign image = productImage | placeholder_svg_tag: 'placeholder-svg' -%}
+
+        {%- render 'home-onboard-product', image: image -%}
+      {%- endfor -%}
+    {%- endunless -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "class": "shopify-section--featured-collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Featured collection"
+    },
+    {
+      "id": "collection",
+      "type": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "product-columns",
+      "label": "Products per row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "product-rows",
+      "label": "Number of rows",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "default": 3
+    }
+  ],
+  "presets": [
+    {
+      "category": "Collection",
+      "name": "Featured collection"
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  }
+}
+
+{% endschema %}

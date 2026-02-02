@@ -1,0 +1,207 @@
+{% comment %}
+  @param filter
+  @param filter_group_classes
+{% endcomment %}
+
+<div class="{{ class_prefix }}-filters__details-wrapper">
+  <details
+    class="
+      {{ class_prefix }}-filters__filter-group
+    "
+    aria-label="{{ filter.label }}"
+    data-filter-group
+  >
+    <summary
+      class="{{ class_prefix }}-filters__filter-group-title select-wrapper"
+      data-filter-group-summary
+      data-filter-group-index="{{ forloop.index0 }}"
+      >
+      <div class="{{ class_prefix }}-filters__filter-title-wrapper">
+        <span class="{{ class_prefix }}-filters__filter-title">
+          {{ filter.label }}
+        </span>
+
+        {% if filter.type == 'list' or filter.type == 'boolean' %}
+          {% if filter.active_values.size > 0 %}
+            <span class="
+                {{ class_prefix }}-filters__active-filter-indicator
+                {{ class_prefix }}-filters__active-filter-count
+              "
+            >
+              {{ filter.active_values.size | strip }}
+            </span>
+          {% endif %}
+        {% elsif filter.type == 'price_range' %}
+          {% if filter.max_value.value or filter.min_value.value %}
+            <span class="
+                {{ class_prefix }}-filters__active-filter-indicator
+                {{ class_prefix }}-filters__active-filter-price
+              "
+            >
+              {{ cart.currency.symbol }}
+            </span>
+          {% endif %}
+        {% endif %}
+      </div>
+    </summary>
+
+    {% case filter.type %}
+      {% when 'boolean' or 'list' %}
+        <ul
+          class="
+            {{ class_prefix }}-filters__filter
+            {{ class_prefix }}-filters__filter-list
+          "
+          data-filter-group-list
+          data-filter-group-content
+          aria-expanded="false"
+          data-accordion-content
+        >
+          {%- for value in filter.values -%}
+            <li
+              class="
+                {{ class_prefix }}-filters__filter-list-item
+                {% if value.active %}
+                  {{ class_prefix }}-filters__filter-list-item--active
+                {% endif %}
+              "
+            >
+              <a
+                class="{{ class_prefix }}-filters__filter-link"
+                data-name="{{ value.param_name }}"
+                data-value="{{ value.value }}"
+                data-handle="filter-{{ filter.label | escape | replace: ' ', '-'}}-{{ forloop.index0 }}"
+
+                {% if value.active -%}
+                  data-filter-active
+                  data-url="{{ value.url_to_remove | replace: '%2C', ',' }}"
+                  href="{{ value.url_to_remove | replace: '%2C', ',' }}"
+                {% else %}
+                  data-url="{{ value.url_to_add | replace: '%2C', ',' }}"
+                  href="{{ value.url_to_add | replace: '%2C', ',' }}"
+                {%- endif %}
+                {% if value.count == 0 and value.active == false -%}
+                  data-disabled
+                  tabindex="-1"
+                {%- endif %}
+                data-filter-input
+              >
+                {%- case filter.presentation -%}
+                  {%- when 'swatch' -%}
+                    {%-
+                      render 'faceted-filter-swatch',
+                      type: value.display.type,
+                      value: value.display.value,
+                    -%}
+                  {%- when 'image' -%}
+                    <span class="faceted-filter-image">
+                      {%- if value.image -%}
+                        {{ value.image | image_url: width: 100 | image_tag: class: 'faceted-filter-image__image', alt: value.image.alt, loading: 'lazy' }}
+                      {%- endif -%}
+                    </span>
+                  {%- else -%}
+                    <span
+                      class="{{ class_prefix }}-filters__filter-checkbox"
+                      {% if value.active %}data-checked{% endif %}
+                      data-filter-checkbox
+                      data-handle="filter-{{ filter.label | escape | replace: ' ', '-'}}-{{ forloop.index0 }}"
+                    >
+                      {%
+                        render 'icons',
+                        id:'checkbox',
+                      %}
+                    </span>
+                {%- endcase -%}
+
+                <span class="{{ class_prefix }}-filters__filter-list-item-text">
+                  {{ value.label | escape }}
+                  ({{ value.count }})
+                </span>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {% when 'price_range' %}
+        <div
+          class="{{ class_prefix }}-filters__filter"
+          data-filter-group-content
+        >
+          <form
+            class="{{ class_prefix }}-filters__price-range-form">
+            <div
+              class="
+                {{ class_prefix }}-filters__filter-range
+              "
+              data-filter-group-range
+              aria-expanded="false"
+            >
+              <div class="{{ class_prefix }}-filters__filter-range--from">
+                <label
+                  class="
+                    form-field-title
+                    {{ class_prefix }}-filters__filter-range-label
+                    label
+                  "
+                  for="filter-{{ filter.label }}-{{ forloop.index0 }}-from"
+                >
+                    From
+                </label>
+                <span class="{{ class_prefix }}-filters__filter-range-currency">{{ cart.currency.symbol }}</span>
+                <input
+                  class="
+                    filter-range-input
+                    {{ class_prefix }}-filters__filter-range-input
+                    styled-text-field
+                    input
+                  "
+                  name="{{ filter.min_value.param_name }}"
+
+                  id="filter-{{ filter.label }}-{{ forloop.index0 }}-from"
+                  {% if filter.min_value.value -%}
+                    value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                  {%- endif %}
+                  type="number"
+                  placeholder="0"
+                  min="0"
+                  max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                  data-filter-range
+                >
+              </div>
+              <div class="{{ class_prefix }}-filters__filter-range--to">
+                <label
+                  class="
+                    form-field-title
+                    {{ class_prefix }}-filters__filter-range-label
+                    label
+                  "
+                  for="filter-{{ filter.label }}-{{ forloop.index0 }}-to"
+                >
+                  To
+                </label>
+                <span class="{{ class_prefix }}-filters__filter-range-currency">{{ cart.currency.symbol }}</span>
+                <input
+                  class="
+                    filter-range-input
+                    {{ class_prefix }}-filters__filter-range-input
+                    styled-text-field
+                    input
+                  "
+                  name="{{ filter.max_value.param_name }}"
+
+                  id="filter-{{ filter.label }}-{{ forloop.index0 }}-to"
+                  {% if filter.max_value.value -%}
+                    value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                  {%- endif %}
+                  type="number"
+                  placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                  min="0"
+                  max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                  data-filter-range
+                >
+              </div>
+            </div>
+          </form>
+        </div>
+    {% endcase %}
+  </details>
+</div>

@@ -1,0 +1,80 @@
+{% assign filter_count = 0 %}
+
+{%- capture tag_icon -%}
+  <span class="filter-icon--remove">
+    {% render 'icons', id: 'close' %}
+    <span class="visually-hidden">
+      {{ 'collections.collection.remove_filter' | t }}
+    </span>
+  </span>
+{%- endcapture -%}
+
+<div class="{{ class_prefix }}__filters--active">
+  <ul class="
+      active-filter-group
+      {% if show_sorting == false %}
+        active-filter-group--center
+      {% endif %}
+    "
+  >
+    {%- for filter in filters -%}
+      {% if filter.type == 'price_range' and filter.min_value.value or filter.max_value.value %}
+        {% assign filter_count = filter_count | plus: 1 %}
+        {% assign range_min = filter.min_value.value | default: 0 %}
+        {% assign range_max = filter.max_value.value | default: filter.range_max %}
+
+        {%- capture tag_text -%}
+          <span class="active-filter-text">
+            {{ range_min | money }} - {{ range_max | money }}
+          </span>
+
+          {{- tag_icon -}}
+        {%- endcapture -%}
+
+          <li class="active-filter-group__item-wrapper">
+            <a
+              class="active-filter-group__item"
+              data-url="{{ filter.url_to_remove }}"
+              href="{{ filter.url_to_remove | replace: '%2C', ',' }}"
+            >
+              {{ tag_text }}
+            </a>
+          </li>
+
+      {% else %}
+        {% if filter.active_values.size > 0 %}
+            {%- for value in filter.active_values -%}
+              {% assign filter_count = filter_count | plus: 1 %}
+              <li class="active-filter-group__item-wrapper">
+                {%- capture tag_text -%}
+                  <span class="active-filter-text">
+                    {% if filter.type == 'boolean' %}
+                      {{ filter.label | escape }}:
+                    {% endif %}
+                    {{ value.label | escape }}
+                  </span>
+
+                  {{- tag_icon -}}
+                {%- endcapture -%}
+
+                <a
+                  class="active-filter-group__item"
+                  data-url="{{ value.url_to_remove }}"
+                  href="{{ value.url_to_remove | replace: '%2C', ',' }}"
+                >
+                  {{ tag_text }}
+                </a>
+              </li>
+            {% endfor %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    {% if filter_count > 0 %}
+        <li class="active-filter-group__item-wrapper">
+          <a href="{{ clear_url }}">
+            {{ 'collections.collection.clear_all' | t }}
+          </a>
+        </li>
+    {% endif %}
+  </ul>
+</div>

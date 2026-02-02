@@ -1,0 +1,145 @@
+{%- capture taxes_shipping_checkout -%}
+  {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
+    {{ 'cart.general.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+  {%- elsif cart.taxes_included -%}
+    {{ 'cart.general.taxes_included_but_shipping_at_checkout' | t }}
+  {%- elsif shop.shipping_policy.body != blank -%}
+    {{ 'cart.general.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
+  {%- else -%}
+    {{ 'cart.general.tax_and_shipping' | t }}
+  {%- endif -%}
+{%- endcapture -%}
+
+<script
+  type="application/json"
+  data-section-type="static-cart"
+  data-section-id="{{ section.id }}"
+  data-section-data
+>
+  {
+    "hasShippingCalculator": {{ section.settings.shipping-calculator }}
+  }
+</script>
+
+<section
+  class="cart"
+  {% if section.settings.shipping-calculator %}data-shipping-calculator{% endif %}
+  data-section-id="{{ section.id }}"
+  data-section-type="cart">
+  <h1 class="page-title">{{ 'cart.general.header' | t }}</h1>
+
+  {% render 'breadcrumbs' %}
+
+  {% if cart.item_count > 0 %}
+
+    <form class="cart-form" action="{{ routes.cart_url }}" method="post">
+
+      {% render 'cart-table' %}
+      <div class="cart-tools {% if section.settings.shipping-calculator %}has-shipping-calculator{% endif %} {% if section.settings.special-instructions %}has-special-instructions{% endif %}">
+
+        {% if section.settings.special-instructions %}
+          <div class="cart-instructions">
+            <h2>{{ 'cart.general.special_instructions' | t }}</h2>
+            <textarea class="textarea" placeholder="{{ section.settings.special-instructions-placeholder | escape }}" name="note">{{ cart.note }}</textarea>
+          </div>
+        {% endif %}
+
+        <div class="cart-totals">
+          {% render 'cart-discounts' %}
+          <p class="cart-price"><span class="money" data-total-price>{{ cart.total_price | money }}</span></p>
+          <p class="cart-message">{{ taxes_shipping_checkout }}</p>
+          <div class="cart-buttons-container">
+            <noscript>
+              <input class="cart-update button secondary input" type="submit" name="update" value="{{ 'general.general.update' | t }}">
+            </noscript>
+            <button
+              class="cart-checkout button"
+              type="submit"
+              name="checkout"
+              value="{{ 'cart.general.submit' | t }}"
+            >
+              {% if section.settings.enable_checkout_lock_icon %}
+                {% render 'icons',
+                  id: 'checkout-lock',
+                %}
+              {% endif %}
+              <span>{{ 'cart.general.submit' | t }}</span>
+            </button>
+          </div>
+          {% if additional_checkout_buttons %}
+            <div class="additional-checkout-buttons">{{ content_for_additional_checkout_buttons }}</div>
+          {% endif %}
+        </div>
+
+      </div>
+
+    </form>
+
+    {% if section.settings.shipping-calculator %}
+      {% render 'shipping-calculator' %}
+    {% endif %}
+
+  {% else %}
+
+    {%- capture continueLink -%}
+      {% assign continue_href = section.settings.continue_shopping_link | default: routes.all_products_collection_url %}
+      <a href="{{ continue_href }}">{{ 'cart.general.continue_link' | t }}</a>
+    {%- endcapture -%}
+    <p class="empty">{{ 'cart.general.empty_html' | t: continue_link: continueLink }}</p>
+
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_checkout_lock_icon",
+      "label": "Show lock icon on checkout button",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Order Notes"
+    },
+    {
+      "type": "checkbox",
+      "id": "special-instructions",
+      "label": "Enable"
+    },
+    {
+      "type": "text",
+      "id": "special-instructions-placeholder",
+      "label": "Placeholder text",
+      "default": "Write any special instructions for your shipment here."
+    },
+    {
+      "type": "header",
+      "content": "Shipping rate calculator"
+    },
+    {
+      "type": "checkbox",
+      "id": "shipping-calculator",
+      "label": "Enable"
+    },
+    {
+      "type": "text",
+      "id": "shipping_calculator_default_country",
+      "label": "Default country",
+      "default": "United States"
+    },
+    {
+      "type": "header",
+      "content": "Continue shopping button"
+    },
+    {
+      "type": "url",
+      "id": "continue_shopping_link",
+      "label": "Link"
+    }
+  ]
+}
+
+{% endschema %}

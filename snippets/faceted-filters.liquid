@@ -1,0 +1,21 @@
+{% comment %}
+  @param class_prefix
+  @param filters
+  @param filter_group_classes
+{% endcomment %}
+
+<div class="{{ class_prefix }}-filters__title">
+  {{ 'collections.collection.filter_title' | t }}:
+</div>
+<div class="{{ class_prefix }}__filters {{ class_prefix}}-dropdown--filter">
+  {%- for filter in filters -%}
+    {%
+      render 'faceted-filter-group',
+      filter: filter,
+      filters: filters,
+      class_prefix: class_prefix
+      show_product_count: show_product_count,
+      forloop: forloop,
+    %}
+  {%- endfor -%}
+</div>

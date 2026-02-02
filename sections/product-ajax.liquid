@@ -1,0 +1,274 @@
+{% liquid
+  assign enable_zoom = section.settings.quickshop_enable_zoom
+  assign enable_video_autoplay = section.settings.quickshop_enable_video_autoplay
+  assign enable_video_looping = section.settings.quickshop_enable_video_looping
+  assign enable_cart_redirection = section.settings.quickshop_enable_cart_redirection
+  assign images_layout = section.settings.quickshop_images_layout
+  assign show_payment_button = section.settings.quickshop_show_payment_button
+  assign isQuickshop = true
+  assign product_json = product | json
+%}
+
+{% capture settings_string %}
+  {{ enable_zoom }}
+  {{ enable_cart_redirection }}
+  {{ images_layout }}
+  {{ show_payment_button }}
+  {{ enable_video_autoplay }}
+  {{ enable_video_looping }}
+  {{ isQuickshop }}
+{% endcapture %}
+
+<script
+  type="application/json"
+  data-section-type="product"
+  data-section-id="{{ section.id }}"
+  data-section-data
+  data-product-options
+>
+  {
+    "product": {{ product_json }},
+    "product_settings": {
+      "addToCartText": {{ 'products.product.add_to_cart' | t | json }},
+      "enableHistory": false,
+      "processingText": {{ 'products.product.processing' | t | json }},
+      "setQuantityText": {{ 'products.product.set_quantity' | t | json }},
+      "soldOutText": {{ 'products.product.sold_out' | t | json }},
+      "unavailableText": {{ 'products.product.unavailable' | t | json }}
+    },
+    "images_layout": {{ images_layout | json }},
+    "enable_zoom": {{ enable_zoom | json }},
+    "enable_video_autoplay": {{ enable_video_autoplay | json }},
+    "enable_video_looping": {{ enable_video_looping | json }},
+    "enable_cart_redirection": {{ enable_cart_redirection | json }},
+    "enable_fixed_positioning": false,
+    "isQuickshop": true
+  }
+</script>
+
+
+
+<section data-product-html>
+  {%
+    render 'product',
+    product: product,
+    enable_zoom: enable_zoom,
+    images_layout: images_layout,
+    enable_linked_options: true,
+    show_social_media_icons: show_social_media_icons,
+    show_payment_button: show_payment_button,
+    link_to: true,
+  %}
+</section>
+
+{% schema %}
+{
+  "name": "Quick shop",
+  "class": "shopify-section--quick-shop",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "quickshop_enable_cart_redirection",
+      "label": "Enable cart redirection",
+      "info": "Automatically sends users to the Cart page after adding a product.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "quickshop_show_payment_button",
+      "label": "Show dynamic checkout button",
+      "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "paragraph",
+      "content": "Learn more about [media types](https://help.shopify.com/en/manual/products/product-media/product-media-types)"
+    },
+    {
+      "type": "select",
+      "id": "quickshop_images_layout",
+      "label": "Layout",
+      "options": [
+        {
+          "label": "Slideshow",
+          "value": "slideshow"
+        },
+        {
+          "label": "List",
+          "value": "list"
+        },
+        {
+          "label": "Masonry",
+          "value": "masonry"
+        }
+      ],
+      "default": "slideshow"
+    },
+    {
+      "type": "checkbox",
+      "id": "quickshop_enable_zoom",
+      "label": "Enable image zoom",
+      "info": "Zoom only works with the slideshow image layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "quickshop_enable_video_autoplay",
+      "label": "Enable video autoplay",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "quickshop_enable_video_looping",
+      "label": "Enable video looping"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "collapsible-tab",
+      "name": "Collapsible tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "collapsible_tab_heading",
+          "label": "Heading",
+          "default": "Collapsible tab"
+        },
+        {
+          "type": "richtext",
+          "id": "collapsible_tab_text",
+          "label": "Text",
+          "default": "<p>Use this text to share information about your product.</p>"
+        }
+      ]
+    },
+    {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "Custom liquid",
+          "info": "Add app snippets or other Liquid code to create advanced customizations."
+        }
+      ]
+    },
+    {
+      "type": "tabs",
+      "name": "Tabs",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_product_description",
+          "label": "Show product description",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Tab"
+        },
+        {
+          "type": "text",
+          "id": "tab_heading_1",
+          "label": "Heading",
+          "default": "Tab 1"
+        },
+        {
+          "type": "richtext",
+          "id": "tab_text_1",
+          "label": "Text",
+          "default": "<p>Tab 1 content goes here.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Tab"
+        },
+        {
+          "type": "text",
+          "id": "tab_heading_2",
+          "label": "Heading",
+          "default": "Tab 2"
+        },
+        {
+          "type": "richtext",
+          "id": "tab_text_2",
+          "label": "Text",
+          "default": "<p>Tab 2 content goes here.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Tab"
+        },
+        {
+          "type": "text",
+          "id": "tab_heading_3",
+          "label": "Heading",
+          "default": "Tab 3"
+        },
+        {
+          "type": "richtext",
+          "id": "tab_text_3",
+          "label": "Text",
+          "default": "<p>Tab 3 content goes here.</p>"
+        }
+      ]
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "vendor",
+      "name": "Vendor",
+      "limit": 1
+    },
+    {
+      "type": "social",
+      "name": "Social",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },
+    {
+      "type": "form",
+      "name": "Form",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Customize form features for the product in the products portion of the theme settings."
+        }
+      ]
+    },
+    {
+      "type": "rating",
+      "name": "Product rating",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "To display a rating, add a product rating app. [Learn more](https://apps.shopify.com/product-reviews)"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}
