@@ -1,1 +1,56 @@
-{"type":"header","name":"Header","sections":{"announcement_bar":{"type":"pxs-announcement-bar","settings":{"show_announcement":true,"announcement_home_only":false,"announcement_text":"🌟Enjoy Free Shipping on orders over $150 🌟","announcement_text_mobile":"Free Shipping on orders over $150","announcement_link":"","announcement_color":"#262626","announcement_background":"#dadefe"}},"header":{"type":"header","blocks":{"1517006611982":{"type":"mega_menu","settings":{"menu_item":"Shop"}}},"block_order":["1517006611982"],"settings":{"logo":"shopify:\/\/shop_images\/LINDISIMA_LOGOS_RGB-07.png","header_layout":"default","header_full_width":false,"header_border":true,"sticky_header":false,"sticky_header_logo":true,"enable_predictive_search":true,"menu":"main-menu","enable_checkout_lock_icon":false}}},"order":["announcement_bar","header"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "announcement_bar": {
+      "type": "pxs-announcement-bar",
+      "settings": {
+        "show_announcement": true,
+        "announcement_home_only": false,
+        "announcement_text": "🌟Enjoy Free Shipping on orders over $150 🌟",
+        "announcement_text_mobile": "Free Shipping on orders over $150",
+        "announcement_link": "",
+        "announcement_color": "#000000",
+        "announcement_background": "#e4e0dd"
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "mega_menu_VPMVh7": {
+          "type": "mega_menu",
+          "settings": {
+            "menu_item": "SHOP"
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_VPMVh7"
+      ],
+      "settings": {
+        "logo": "shopify://shop_images/LINDISIMA_LOGOS_RGB-07.png",
+        "header_layout": "compact-left",
+        "header_full_width": true,
+        "header_border": true,
+        "sticky_header": false,
+        "sticky_header_logo": true,
+        "enable_predictive_search": true,
+        "menu": "main-menu-1",
+        "enable_checkout_lock_icon": false
+      }
+    }
+  },
+  "order": [
+    "announcement_bar",
+    "header"
+  ]
+}
