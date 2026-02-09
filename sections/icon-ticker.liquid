@@ -1,0 +1,181 @@
+{% comment %}
+  Icon Ticker Section – Slick Slider
+{% endcomment %}
+
+
+<style>
+  .icon-ticker-wrapper {
+    background: {{ section.settings.bg_color }};
+    padding: 15px 0;
+    overflow: hidden;
+    margin: 0 30px;
+  }
+
+  .icon-ticker {
+    margin: 0 auto;
+  }
+
+  .icon-ticker-item {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .icon-ticker-item img,
+  .icon-ticker-item svg {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+
+  .icon-ticker-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: {{ section.settings.text_color }};
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    .icon-ticker-text {
+      font-size: 13px;
+    }
+  }
+</style>
+{% if template.name == "product" %}
+  {% if  product.metafields.custom.icon_ticker_section.value == true %}
+    <div class="icon-ticker-wrapper">
+      <div class="icon-ticker multiple-items">
+        {% for block in section.blocks %}
+          <div class="icon-ticker-item" {{ block.shopify_attributes }}>
+            {% if block.settings.icon != blank %}
+              <img 
+                src="{{ block.settings.icon | image_url: width: 60 }}"
+                alt="{{ block.settings.text | escape }}"
+                loading="lazy"
+              >
+            {% endif %}
+            <span class="icon-ticker-text">
+              {{ block.settings.text }}
+            </span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+{% else %}
+  <div class="icon-ticker-wrapper">
+    <div class="icon-ticker multiple-items">
+      {% for block in section.blocks %}
+        <div class="icon-ticker-item" {{ block.shopify_attributes }}>
+          {% if block.settings.icon != blank %}
+            <img 
+              src="{{ block.settings.icon | image_url: width: 60 }}"
+              alt="{{ block.settings.text | escape }}"
+              loading="lazy"
+            >
+          {% endif %}
+          <span class="icon-ticker-text">
+            {{ block.settings.text }}
+          </span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof jQuery === 'undefined') return;
+
+    $('.multiple-items').slick({
+      infinite: true,
+      slidesToShow: 6,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 0,
+      speed: 5000,          // higher = slower scroll
+      cssEase: 'linear',
+      infinite: true,
+      arrows: false,
+      dots: false,
+      pauseOnHover: true,
+      pauseOnFocus: true,
+      swipe: false,
+      touchMove: false,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 3
+          }
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 3
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 3
+          }
+        }
+      ]
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Icon Ticker Slider",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#fff7f3"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Ticker Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "High-Quality"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Icon Ticker",
+      "blocks": [
+        { "type": "item", "settings": { "text": "High-Quality" } },
+        { "type": "item", "settings": { "text": "Cruelty Free" } },
+        { "type": "item", "settings": { "text": "Plant Based" } },
+        { "type": "item", "settings": { "text": "Paraben-Free" } },
+        { "type": "item", "settings": { "text": "Vegan" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

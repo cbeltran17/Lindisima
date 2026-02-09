@@ -14,7 +14,13 @@
   {% for block in section.blocks %}
     {% case block.type %}
       {% when 'vendor' %}
-        <a class="product-vendor" href="{{ product.vendor | url_for_vendor }}" {{ block.shopify_attributes }}>{{ product.vendor }}</a>
+        <a class="product-vendor" href="{{ product.vendor | url_for_vendor }}" {{ block.shopify_attributes }}>
+          {% if product.vendor == "selfnamed" or product.vendor == "Selfnamed"%}
+              LINDÍSIMA
+          {% else %}
+            {{ product.vendor }}
+          {% endif %}
+        </a>
 
       {% when 'title' %}
         <h1 class="product-title" {{ block.shopify_attributes }}>

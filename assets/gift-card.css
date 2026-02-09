@@ -700,7 +700,7 @@ th {
 
 /* Small caps */
 /* Typography */.template-gift_card .btn {
-  font-family: Figtree,sans-serif;
+    font-family: "montserrat",sans-serif;
   font-style: normal;
   font-weight: 400;
   color: #656565;
@@ -754,7 +754,7 @@ th {
   }
 }
 .template-gift_card {
-  font-family: Figtree,sans-serif;
+    font-family: "montserrat",sans-serif;
   font-style: normal;
   font-weight: 400;
   margin: 0;

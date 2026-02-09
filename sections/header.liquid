@@ -85,7 +85,7 @@
 
             {% render 'mini-cart' %}
           </div>
-          <form class="checkout-link" action="{{ routes.cart_url }}" method="POST"><button class="checkout-link__button" type="submit" name="checkout">{{ 'layout.header.checkout' | t }}</button></form>
+          {% comment %} <form class="checkout-link" action="{{ routes.cart_url }}" method="POST"><button class="checkout-link__button" type="submit" name="checkout">{{ 'layout.header.checkout' | t }}</button></form> {% endcomment %}
         </div>
 
       </div>
@@ -108,7 +108,7 @@
           </button>
         </div>
       {% endunless %}
-
+ 
       <div
         class="
           header-branding
@@ -123,7 +123,7 @@
               render 'rimg',
               img: section.settings.logo,
               class: 'logo-image',
-              size: '200x100',
+              size: '300x200',
               focal_point: section.settings.logo.presentation.focal_point,
             %}
           {%- else -%}

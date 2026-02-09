@@ -4,7 +4,13 @@
   </figure>
 
   <div class="product-list-item-details">
-    <p class="product-list-item-vendor">{{ 'onboarding.home_products.product_vendor' | t }}</p>
+    <p class="product-list-item-vendor">
+        {% if onboarding.home_products.product_vendor == "selfnamed" or onboarding.home_products.product_vendor == "Selfnamed"%}
+            LINDÍSIMA
+        {% else %}
+          {{ item.vendor | link_to_vendor }}
+        {% endif %}
+    </p>
     <h2 class="product-list-item-title">{{ 'onboarding.home_products.product_title' | t }}</h2>
     <p class="product-list-item-price">
       <span class="money">{{ 'onboarding.home_products.product_price' | t }}</span>

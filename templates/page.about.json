@@ -1,9 +1,19 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "1634913302f4c0aaad": {
       "type": "pxs-image-with-text-overlay",
       "settings": {
         "section_height": "original",
+        "image": "shopify://shop_images/Photoroom_20260127_181828.jpg",
         "title": "",
         "text": "",
         "content_position": "center-center",
@@ -19,7 +29,9 @@
       "blocks": {
         "16349133547a86ae30-0": {
           "type": "rich-text",
-          "settings": {}
+          "settings": {
+            "rich_text": "<p>Every ingredient that we include in our products is there for a specific therapeutic reason. We do not use fillers of any kind, meaning that almost every ingredient in our products is an “active” ingredient. This results in pure, highly concentrated, and effective formulas that are a rarity in the skincare and cosmetics world today. All of our formulas are original, created and tested by us, on real people — never on animals and always from scratch. All of our products have an emphasis on organic and high quality ingredients.</p><p>Knowing that everything we put on our skin quickly absorbs into our bodies, we ethically source the finest raw natural materials the earth has to offer. With ingredients ranging from French pink clay to Brazilian gemstones, we formulate treatments that combine essential vitamins, minerals, and botanicals to restore skin to its optimum health.</p>"
+          }
         }
       },
       "block_order": [
@@ -39,6 +51,7 @@
       "type": "home-products",
       "settings": {
         "title": "Shop Our Best Sellers",
+        "collection": "bundles",
         "product-columns": 3,
         "product-rows": 1
       }

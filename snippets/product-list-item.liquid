@@ -117,7 +117,14 @@
 
   <div class="product-list-item-details">
     {% if product_vendor %}
-      <p class="product-list-item-vendor">{{ item.vendor | link_to_vendor }}</p>
+      <p class="product-list-item-vendor">
+        {% if item.vendor == "selfnamed" or item.vendor == "Selfnamed"%}
+            LINDÍSIMA
+        {% else %}
+          {{ item.vendor | link_to_vendor }}
+        {% endif %}
+
+      </p>
     {% endif %}
     <h2 class="product-list-item-title"><a href="{{ item.url | within: collection }}">{{ item.title }}</a></h2>
     <p class="product-list-item-price">

@@ -32,6 +32,7 @@
     <link rel="preload" href="{{ 'shopify_common.js' | shopify_asset_url }}" as="script">
     <link rel="preload" href="{{ 'customer_area.js' | shopify_asset_url }}" as="script">
   {% endif %}
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
   <link rel="preload" href="{{ 'grid.js' | asset_url }}" as="script">
 
@@ -50,6 +51,8 @@
       &#8211; {{ shop.name }}
     {% endunless %}
   </title>
+  <script src="https://cdn-script.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
   {% if page_description %}
     <meta name="description" content="{{ page_description | escape }}" />
@@ -236,7 +239,7 @@
     .shopify-payment-button .shopify-payment-button__button.shopify-payment-button__button--unbranded,
     .shopify-payment-button .shopify-payment-button__button {
       --element-text-line-height--body-md: 1;
-      --element-button-color-primary: {{ settings['accent-color'] }};
+      --element-button-color-primary: #C9B99E;
       --element-button-color-secondary: {{ settings['button-color'] }};
       --element-button-padding-block: var(--size-5);
       --_box-shadow: none;
