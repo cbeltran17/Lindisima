@@ -198,6 +198,22 @@
         "product-rows": 1
       }
     },
+    "pxs_image_with_text_overlay_ikbmcC": {
+      "type": "pxs-image-with-text-overlay",
+      "name": "t:sections.image_with_text_overlay.presets.name",
+      "settings": {
+        "section_height": "medium",
+        "image": "shopify://shop_images/Screenshot_2026-02-19_at_12.07.25_PM.png",
+        "title": "Intentional Beauty",
+        "text": "<p>Made with pure, responsibly sourced ingredients for skin that glows naturally.</p>",
+        "content_position": "top-right",
+        "color": "#dadefe",
+        "overlay_background": "#dadefe",
+        "overlay_opacity": 0,
+        "link": "",
+        "button_text": "Shop Skin Rituals"
+      }
+    },
     "home_products-2": {
       "type": "home-products",
       "settings": {
@@ -211,15 +227,15 @@
       "type": "pxs-image-with-text-overlay",
       "settings": {
         "section_height": "small",
-        "image": "shopify://shop_images/image_2.png",
-        "title": "100% Jade Gua Sha",
-        "text": "<p>Improve the elasticity of your skin and reduce the appearance of fine lines with this ancient <br/>tool, while attracting luck and prosperity everywhere life takes you<strong>!</strong></p>",
-        "content_position": "center-center",
-        "color": "#262626",
+        "image": "shopify://shop_images/Screenshot_2026-02-19_at_12.07.16_PM.png",
+        "title": "",
+        "text": "<p>@lindisimany</p>",
+        "content_position": "bottom-right",
+        "color": "#656565",
         "overlay_background": "#dadefe",
-        "overlay_opacity": 10,
+        "overlay_opacity": 14,
         "link": "shopify://collections/all",
-        "button_text": "Shop all"
+        "button_text": ""
       }
     },
     "home_product": {
@@ -328,6 +344,7 @@
     "home_masonry",
     "icon_ticker_ERjHeW",
     "home_products-1",
+    "pxs_image_with_text_overlay_ikbmcC",
     "home_products-2",
     "home_image_with_text_overlay",
     "home_product",
