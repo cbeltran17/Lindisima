@@ -185,7 +185,7 @@
       ],
       "name": "Icon Ticker",
       "settings": {
-        "bg_color": "#e4e0dd",
+        "bg_color": "#dadeff",
         "text_color": "#000000"
       }
     },

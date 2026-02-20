@@ -36,9 +36,9 @@
           "settings": {
             "show_product_description": true,
             "tab_heading_1": "How to use",
-            "tab_text_1": "<p>Tab 1 content goes here.</p>",
+            "tab_text_1": "<p>{{ product.metafields.custom.how_to_use | metafield_tag }}</p>",
             "tab_heading_2": "Ingredients",
-            "tab_text_2": "<p>Tab 2 content goes here.</p>",
+            "tab_text_2": "<p>{{ product.metafields.custom.ingredients_text | metafield_tag }}</p>",
             "tab_heading_3": "",
             "tab_text_3": ""
           }
@@ -154,7 +154,7 @@
       ],
       "name": "Icon Ticker",
       "settings": {
-        "bg_color": "#e4e0dd",
+        "bg_color": "#dadeff",
         "text_color": "#000000"
       }
     },

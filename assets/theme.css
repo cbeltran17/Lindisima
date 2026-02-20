@@ -283,17 +283,12 @@
   font-display: block;
   src: url(//xn--lindsima-f2a.com/cdn/shop/t/3/assets/pxu-social-icons.woff?v=75149173774959108441769621030) format("woff");
 }
-
-
-
 @font-face {
-    font-family: "Acier BAT Text Solid";
-    src: url("https://db.onlinewebfonts.com/t/6e3bdf768c0dc5b08f0198a7243fbe21.eot");
-    src: url("https://db.onlinewebfonts.com/t/6e3bdf768c0dc5b08f0198a7243fbe21.eot?#iefix")format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/6e3bdf768c0dc5b08f0198a7243fbe21.woff2")format("woff2"),
-    url("https://db.onlinewebfonts.com/t/6e3bdf768c0dc5b08f0198a7243fbe21.woff")format("woff"),
-    url("https://db.onlinewebfonts.com/t/6e3bdf768c0dc5b08f0198a7243fbe21.ttf")format("truetype"),
-    url("https://db.onlinewebfonts.com/t/6e3bdf768c0dc5b08f0198a7243fbe21.svg#Acier BAT Text Solid")format("svg");
+  font-family: 'Acier BAT Text Solid';
+  src: url('https://cdn.shopify.com/s/files/1/0790/8232/4206/files/Acier_BAT_Text_Solid.ttf?v=1771582776') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 /* Settings */
 /* User Settings
@@ -1872,7 +1867,7 @@ input[type=button] {
 input[type=submit]:hover,
 input[type=button]:hover {
   color: #ffffff;
-  background: #1A1A1A;
+  background: #c7cbea;
 }
 .secondary.age-gate__confirm_btn, noscript .shopify-localization-form .secondary.disclosure__submit, .secondary.predictive-search-footer__button, .secondary.pxs-newsletter-form-button, .secondary.pxs-image-with-text-button, .secondary.button,
 .secondary.submit,
@@ -6801,6 +6796,43 @@ input.mailing-list-email::placeholder {
     background: transparent;
     color: gray;
 }
+.Primary-Btn,
+.Secondary-Btn{
+  transition: 
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.2s ease,
+    border-color 0.3s ease;
+}
+
+/* Primary */
+.Primary-Btn{
+  background: #dadefe !important;
+  color: white !important;
+  border-radius: 8px !important;
+  border: 0.5px solid #00000017 !important;
+}
+
+.Primary-Btn:hover{
+  background: #c7cbea !important;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+}
+
+/* Secondary */
+.Secondary-Btn{
+  background: transparent !important;
+  color: white !important;
+  border-radius: 8px !important;
+  border: 1px solid #c7cbea !important;
+}
+
+.Secondary-Btn:hover{
+  background: #c7cbea !important;
+  box-shadow: 0 6px 16px rgba(199,203,234,0.5);
+  transform: translateY(-2px);
+}
+
 .mailing-list-submit .submit {
   width: auto;
   height: 100%;
@@ -6811,12 +6843,12 @@ input.mailing-list-email::placeholder {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   background: #dadefe;
-  color: black;
-  border: .5px solid #00000017;
+  color: white;
 }
 .mailing-list-submit .submit {
     font-size: 0.8571428571rem;
-  }.subfooter {
+}
+.subfooter {
   margin-top: 40px;
   font-size: 0;
   display: flex;

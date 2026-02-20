@@ -157,13 +157,13 @@
   </div>
 
   <div class="mini-cart-footer">
-    <a class="button secondary" href="{{ routes.cart_url }}">{{ 'layout.mini_cart.view_cart' | t }}</a>
+    <a class="button secondary Primary-Btn" href="{{ routes.cart_url }}">{{ 'layout.mini_cart.view_cart' | t }}</a>
     <form
       action="{{ routes.cart_url }}"
       method="POST"
     >
       <button
-        class="button mini-cart-checkout-button"
+        class="button mini-cart-checkout-button Primary-Btn"
         type="submit"
         name="checkout"
       >
