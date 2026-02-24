@@ -200,15 +200,18 @@
     },
     "pxs_image_with_text_overlay_ikbmcC": {
       "type": "pxs-image-with-text-overlay",
+      "custom_css": [
+        ".pxs-image-with-text-content-wrapper {position: relative; padding: 0; top: 0; left: 0;}"
+      ],
       "name": "t:sections.image_with_text_overlay.presets.name",
       "settings": {
-        "section_height": "medium",
+        "section_height": "original",
         "image": "shopify://shop_images/Screenshot_2026-02-19_at_12.07.25_PM.png",
         "title": "Intentional Beauty",
         "text": "<p>Made with pure, responsibly sourced ingredients for skin that glows naturally.</p>",
-        "content_position": "top-right",
-        "color": "#dadefe",
-        "overlay_background": "#dadefe",
+        "content_position": "bottom-center",
+        "color": "#000000",
+        "overlay_background": "#c9b99e",
         "overlay_opacity": 0,
         "link": "",
         "button_text": "Shop Skin Rituals"
@@ -226,15 +229,15 @@
     "home_image_with_text_overlay": {
       "type": "pxs-image-with-text-overlay",
       "settings": {
-        "section_height": "small",
+        "section_height": "original",
         "image": "shopify://shop_images/Screenshot_2026-02-19_at_12.07.16_PM.png",
         "title": "",
-        "text": "<p>@lindisimany</p>",
+        "text": "",
         "content_position": "bottom-right",
         "color": "#656565",
         "overlay_background": "#dadefe",
         "overlay_opacity": 14,
-        "link": "shopify://collections/all",
+        "link": "",
         "button_text": ""
       }
     },

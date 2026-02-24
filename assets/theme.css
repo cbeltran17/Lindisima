@@ -816,7 +816,7 @@ input[type=button] {
 .header-branding .logo-image, .template-password .password-branding .logo-image {
     display: block;
     margin: 0;
-    width: 225px;
+    width: 300px;
     height: 80px;
 }
 .header-branding h1, .header-branding .age-gate__heading, .template-password .password-branding h1, .template-password .password-branding .age-gate__heading {
@@ -5220,16 +5220,19 @@ iframe {
 }
 @media (min-width: 720px) {
   .pxs-image-with-text-button {
-    margin-top: 28px;
+    margin-top: 17px;
   }
 }
 @media (min-width: 1024px) {
   .pxs-image-with-text-button {
-    margin-top: 36px;
+    margin-top: 17px;
 
   }
 }
-
+.pxs-image-with-text-button:hover{
+  background: none;
+  color: #000;
+}
 .pxs-image-with-text-link {
   position: absolute;
   top: 0;
@@ -6812,12 +6815,24 @@ input.mailing-list-email::placeholder {
   border-radius: 8px !important;
   border: 0.5px solid #00000017 !important;
 }
-
+.home-collection-add-to-cart{
+  background: #c9b99e;
+    border: 0;
+    color: black;
+    border-radius: 8px;
+    padding: 10px 21px;
+    margin-top: 7px;
+}
+button.home-collection-add-to-cart.disabled {
+    opacity: 50%;
+    color: black;
+    cursor: not-allowed;
+}
 .Primary-Btn:hover{
   background: #c7cbea !important;
   box-shadow: 0 6px 16px rgba(0,0,0,0.15);
   transform: translateY(-2px);
-}
+} 
 
 /* Secondary */
 .Secondary-Btn{
@@ -7100,10 +7115,10 @@ noscript .shopify-localization-form .disclosure-list__item--label {
   }
   .header-layout-compact-left .header-branding-desktop,
   .header-layout-compact-left .header-content-right {
-    width: 225px;
+    width: 300px;
   }
   .header-layout-compact-left .navigation-wrapper {
-    width: calc(100% - 450px);
+            width: calc(100% - 600px);
   }
   .header-layout-compact-left .header-branding-desktop {
     text-align: left;
@@ -9707,6 +9722,9 @@ input[type=checkbox].recipient-disclosure__checkbox {
   }.navigation.navigation-desktop .navigation-menu a:hover,
 .navigation.navigation-desktop .navigation-menu summary:hover {
   color: #898989;
+  text-decoration: underline;
+  text-decoration-color: #dadefe; /* sets the underline color */
+  text-underline-offset: 3px; 
 }
 .navigation.navigation-desktop .navigation-menu summary {
   list-style: none;
@@ -9725,11 +9743,16 @@ input[type=checkbox].recipient-disclosure__checkbox {
 .navigation.navigation-desktop .has-dropdown summary:after,
 .navigation.navigation-desktop .has-mega-nav > a:after,
 .navigation.navigation-desktop .has-mega-nav summary:after {
-  content: "\e602";
-  font-size: 0.2857142857rem;
+ content: ""; /* remove the font icon */
   position: absolute;
   top: 50%;
   right: 15px;
+  width: 10px; /* adjust to your image size */
+  height: 10px; /* adjust to your image size */
+  background-image: url('https://cdn.shopify.com/s/files/1/0790/8232/4206/files/down-arrow.png?v=1771844790');
+  background-size: contain;
+  background-repeat: no-repeat;
+  transform: translateY(-50%);
 }.navigation.navigation-desktop .has-dropdown > a:after,
   .navigation.navigation-desktop .has-dropdown summary:after,
   .navigation.navigation-desktop .has-mega-nav > a:after,
@@ -9786,9 +9809,9 @@ input[type=checkbox].recipient-disclosure__checkbox {
   color: #939393;
 }
 .navigation.navigation-desktop .has-dropdown > details .navigation-submenu-tier2 .has-dropdown > a::after,
-.navigation.navigation-desktop .has-dropdown > details .navigation-submenu-tier2 .has-dropdown > details summary::after {
+/* .navigation.navigation-desktop .has-dropdown > details .navigation-submenu-tier2 .has-dropdown > details summary::after {
   transform: rotate(-90deg);
-}
+} */
 .navigation.navigation-desktop .has-dropdown > details .navigation-submenu-tier3 {
   top: -16px;
 }
@@ -9809,10 +9832,10 @@ input[type=checkbox].recipient-disclosure__checkbox {
 
 .mega-nav {
   position: absolute;
-  left: 50%;
+  left: 55%;
   z-index: 2500;
   display: none;
-  width: 100vw;
+     width: 50vw;
   max-width: 1260px;
   padding: 35px;
   font-size: 0;
@@ -9867,7 +9890,7 @@ input[type=checkbox].recipient-disclosure__checkbox {
   color: #262626;
 }
 .navigation.navigation-desktop .mega-nav-list .mega-nav-list-title-link {
-  font-weight: 700;
+  font-weight: 500;
 }
 .mega-nav-list .mega-nav-list-title .mega-nav-list-title-link {
   margin-bottom: 10px;

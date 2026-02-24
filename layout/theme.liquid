@@ -32,6 +32,7 @@
     <link rel="preload" href="{{ 'shopify_common.js' | shopify_asset_url }}" as="script">
     <link rel="preload" href="{{ 'customer_area.js' | shopify_asset_url }}" as="script">
   {% endif %}
+  
   <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
   <link rel="preload" href="{{ 'grid.js' | asset_url }}" as="script">
@@ -53,7 +54,8 @@
   </title>
   <script src="https://cdn-script.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
+  <link rel="preload" href="{{ 'custom.js' | asset_url }}" as="script">
+  <script src="{{ 'custom.js' | asset_url }}" defer></script>
   {% if page_description %}
     <meta name="description" content="{{ page_description | escape }}" />
   {% endif %}
