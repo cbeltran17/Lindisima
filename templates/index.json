@@ -380,6 +380,25 @@
         "number_of_rows": 1
       }
     },
+    "home_message_Wi7xtj": {
+      "type": "home-message",
+      "blocks": {
+        "rich_text_6VbpUV": {
+          "type": "rich-text",
+          "settings": {
+            "rich_text": "<p>Support collagen. Smooth the look of fine lines.<br/><br/>Plant-powered ingredients chosen to strengthen, firm, and protect long-term skin vitality.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "rich_text_6VbpUV"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "border": true,
+        "heading": "Timeless Skin Ritual"
+      }
+    },
     "home_products_dCGJfi": {
       "type": "home-products",
       "name": "Featured collection",
@@ -404,6 +423,7 @@
     "home_testimonials",
     "home_map",
     "home_blog",
+    "home_message_Wi7xtj",
     "home_products_dCGJfi"
   ]
 }
