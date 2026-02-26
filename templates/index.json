@@ -236,10 +236,29 @@
         "button_text": "Shop Skin Rituals"
       }
     },
+    "home_message_iyccR9": {
+      "type": "home-message",
+      "blocks": {
+        "rich_text_jkpegp": {
+          "type": "rich-text",
+          "settings": {
+            "rich_text": "<p>Restore balance. Replenish deeply.<br/><br/>Formulated with plant-based oils and barrier-supporting ingredients to nourish, soften, and seal in moisture without heaviness.</p><p></p>"
+          }
+        }
+      },
+      "block_order": [
+        "rich_text_jkpegp"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "border": true,
+        "heading": "Deep Hydration Ritual"
+      }
+    },
     "home_products-2": {
       "type": "home-products",
       "settings": {
-        "title": "Shop by Skin GOals - HYDRATION",
+        "title": "Hydration that lasts beyond the moment.",
         "collection": "moisturizers",
         "product-columns": 4,
         "product-rows": 1
@@ -370,25 +389,6 @@
         "product-columns": 3,
         "product-rows": 1
       }
-    },
-    "home_message_iyccR9": {
-      "type": "home-message",
-      "blocks": {
-        "rich_text_jkpegp": {
-          "type": "rich-text",
-          "settings": {
-            "rich_text": "<p>Restore balance. Replenish deeply.<br/><br/>Formulated with plant-based oils and barrier-supporting ingredients to nourish, soften, and seal in moisture without heaviness.</p><p></p>"
-          }
-        }
-      },
-      "block_order": [
-        "rich_text_jkpegp"
-      ],
-      "name": "Rich text",
-      "settings": {
-        "border": true,
-        "heading": "Deep Hydration Ritual"
-      }
     }
   },
   "order": [
@@ -397,13 +397,13 @@
     "home_message_NjPqhP",
     "home_products-1",
     "pxs_image_with_text_overlay_ikbmcC",
+    "home_message_iyccR9",
     "home_products-2",
     "home_image_with_text_overlay",
     "home_product",
     "home_testimonials",
     "home_map",
     "home_blog",
-    "home_products_dCGJfi",
-    "home_message_iyccR9"
+    "home_products_dCGJfi"
   ]
 }
