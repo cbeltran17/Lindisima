@@ -370,6 +370,25 @@
         "product-columns": 3,
         "product-rows": 1
       }
+    },
+    "home_message_iyccR9": {
+      "type": "home-message",
+      "blocks": {
+        "rich_text_jkpegp": {
+          "type": "rich-text",
+          "settings": {
+            "rich_text": "<p>Restore balance. Replenish deeply.<br/><br/>Formulated with plant-based oils and barrier-supporting ingredients to nourish, soften, and seal in moisture without heaviness.</p><p></p>"
+          }
+        }
+      },
+      "block_order": [
+        "rich_text_jkpegp"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "border": true,
+        "heading": "Deep Hydration Ritual"
+      }
     }
   },
   "order": [
@@ -384,6 +403,7 @@
     "home_testimonials",
     "home_map",
     "home_blog",
-    "home_products_dCGJfi"
+    "home_products_dCGJfi",
+    "home_message_iyccR9"
   ]
 }
