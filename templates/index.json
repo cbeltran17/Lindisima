@@ -341,6 +341,16 @@
         "number_of_columns": 3,
         "number_of_rows": 1
       }
+    },
+    "home_products_dCGJfi": {
+      "type": "home-products",
+      "name": "Featured collection",
+      "settings": {
+        "title": "shop timeless skin (Anti-aging + collagen prodcution)",
+        "collection": "serums",
+        "product-columns": 3,
+        "product-rows": 1
+      }
     }
   },
   "order": [
@@ -353,6 +363,7 @@
     "home_product",
     "home_testimonials",
     "home_map",
-    "home_blog"
+    "home_blog",
+    "home_products_dCGJfi"
   ]
 }
