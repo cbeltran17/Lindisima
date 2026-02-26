@@ -189,10 +189,29 @@
         "text_color": "#000000"
       }
     },
+    "home_message_NjPqhP": {
+      "type": "home-message",
+      "blocks": {
+        "rich_text_mdHhE3": {
+          "type": "rich-text",
+          "settings": {
+            "rich_text": "<p>Choose your skin goal. We’ll guide the glow.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "rich_text_mdHhE3"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "border": true,
+        "heading": "SHOP BY SKIN GOALS"
+      }
+    },
     "home_products-1": {
       "type": "home-products",
       "settings": {
-        "title": "Shop By Skin Goals - Get THE GLOW",
+        "title": "Refine texture. Support balance. Reveal luminosity.Clean, vegan formulas designed to calm congestion while enhancing your natural glow.",
         "collection": "bundles",
         "product-columns": 3,
         "product-rows": 1
@@ -356,6 +375,7 @@
   "order": [
     "home_masonry",
     "icon_ticker_ERjHeW",
+    "home_message_NjPqhP",
     "home_products-1",
     "pxs_image_with_text_overlay_ikbmcC",
     "home_products-2",
