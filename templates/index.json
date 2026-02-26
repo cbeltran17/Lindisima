@@ -345,6 +345,7 @@
         "testimonial-block-1",
         "testimonial-block-2"
       ],
+      "disabled": true,
       "settings": {
         "title": "",
         "per_row": 2,
@@ -369,15 +370,6 @@
         "zoom": 1,
         "overlay_color": "#000000",
         "opacity": 10
-      }
-    },
-    "home_blog": {
-      "type": "home-blog",
-      "settings": {
-        "title": "",
-        "blog": "",
-        "number_of_columns": 3,
-        "number_of_rows": 1
       }
     },
     "home_message_Wi7xtj": {
@@ -408,6 +400,15 @@
         "product-columns": 3,
         "product-rows": 1
       }
+    },
+    "home_blog": {
+      "type": "home-blog",
+      "settings": {
+        "title": "",
+        "blog": "",
+        "number_of_columns": 3,
+        "number_of_rows": 1
+      }
     }
   },
   "order": [
@@ -422,8 +423,8 @@
     "home_product",
     "home_testimonials",
     "home_map",
-    "home_blog",
     "home_message_Wi7xtj",
-    "home_products_dCGJfi"
+    "home_products_dCGJfi",
+    "home_blog"
   ]
 }
