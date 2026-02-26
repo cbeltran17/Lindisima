@@ -228,7 +228,7 @@
         "image": "shopify://shop_images/Screenshot_2026-02-19_at_12.07.25_PM.png",
         "title": "CLEAN BEAUTY",
         "text": "<p>Made with pure, responsibly sourced ingredients for skin that glows naturally.</p>",
-        "content_position": "bottom-center",
+        "content_position": "bottom-left",
         "color": "#000000",
         "overlay_background": "#c9b99e",
         "overlay_opacity": 0,
