@@ -90,6 +90,9 @@
         "block_4",
         "image_feature_KkAFKH"
       ],
+      "custom_css": [
+        "{max-width: 1260px; margin: auto;}"
+      ],
       "settings": {
         "layout": "content-width",
         "gutters": true,
@@ -183,9 +186,12 @@
         "item_ja6iYg",
         "item_r74Fjz"
       ],
+      "custom_css": [
+        "{background: #a8b1a4;}"
+      ],
       "name": "Icon Ticker",
       "settings": {
-        "bg_color": "#dadeff",
+        "bg_color": "#a8b1a4",
         "text_color": "#000000"
       }
     },
@@ -220,7 +226,9 @@
     "pxs_image_with_text_overlay_ikbmcC": {
       "type": "pxs-image-with-text-overlay",
       "custom_css": [
-        ".pxs-image-with-text-content-wrapper {position: relative; padding: 0; top: 0; left: 0;}"
+        ".pxs-image-with-text-content-wrapper {position: relative; padding: 0; top: 0; left: 0;}",
+        " {background-color: #e4e0dd; padding: 20px 10px;}",
+        ".pxs-image-with-text {max-width: 1260px; margin: auto;}"
       ],
       "name": "t:sections.image_with_text_overlay.presets.name",
       "settings": {
@@ -228,7 +236,7 @@
         "image": "shopify://shop_images/Screenshot_2026-02-19_at_12.07.25_PM.png",
         "title": "CLEAN BEAUTY",
         "text": "<p>Made with pure, responsibly sourced ingredients for skin that glows naturally.</p>",
-        "content_position": "bottom-left",
+        "content_position": "top-center",
         "color": "#000000",
         "overlay_background": "#c9b99e",
         "overlay_opacity": 0,
@@ -266,6 +274,10 @@
     },
     "home_image_with_text_overlay": {
       "type": "pxs-image-with-text-overlay",
+      "custom_css": [
+        "{background-color: #e4e0dd; padding: 10px;}",
+        ",.pxs-image-with-text {max-width: 1260px; margin: auto;}"
+      ],
       "settings": {
         "section_height": "original",
         "image": "shopify://shop_images/Screenshot_2026-02-19_at_12.07.16_PM.png",
@@ -346,6 +358,9 @@
         "testimonial-block-2"
       ],
       "disabled": true,
+      "custom_css": [
+        ".home-testimonials {max-width: 1260px; margin: auto;}"
+      ],
       "settings": {
         "title": "",
         "per_row": 2,
@@ -403,6 +418,10 @@
     },
     "home_blog": {
       "type": "home-blog",
+      "custom_css": [
+        "{background-color: #e4e0dd;}",
+        ",.home-blog {max-width: 1260px; margin: auto;}"
+      ],
       "settings": {
         "title": "",
         "blog": "",
