@@ -16,7 +16,7 @@
           "type": "ai_gen_block_6a017dd",
           "settings": {
             "hero_image": "shopify://shop_images/POST_12.jpg",
-            "min_height": 600,
+            "min_height": 800,
             "min_height_mobile": 400,
             "desktop_width_percent": 100,
             "show_overlay": false,
