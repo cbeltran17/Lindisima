@@ -16,11 +16,11 @@
       "settings": {
         "show_announcement": true,
         "announcement_home_only": false,
-        "announcement_text": "Enjoy free shipping on orders over 150",
+        "announcement_text": "FREE SHIPPING ON ORDERS OVER $150",
         "announcement_text_mobile": "Enjoy free shipping on orders over 150",
         "announcement_link": "",
-        "announcement_color": "#000000",
-        "announcement_background": "#c9b99e"
+        "announcement_color": "#ffffff",
+        "announcement_background": "#080808"
       }
     },
     "header": {
