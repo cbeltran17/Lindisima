@@ -90,6 +90,7 @@
         "block_4",
         "image_feature_KkAFKH"
       ],
+      "disabled": true,
       "custom_css": [
         "{max-width: 1260px; margin: auto;}"
       ],
@@ -428,6 +429,67 @@
         "number_of_columns": 3,
         "number_of_rows": 1
       }
+    },
+    "17725584049db540e7": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_6a017dd_xjUTQ3": {
+          "type": "ai_gen_block_6a017dd",
+          "settings": {
+            "hero_image": "shopify://shop_images/POST_12.jpg",
+            "min_height": 600,
+            "min_height_mobile": 400,
+            "desktop_width_percent": 100,
+            "show_overlay": false,
+            "overlay_color": "#000000",
+            "overlay_opacity": 0.3,
+            "eyebrow": "Clean Beauty",
+            "heading": "Radiant Skin, Naturally",
+            "subheading": "Science-backed formulas with pure, sustainable ingredients",
+            "description": "<p>Discover our collection of clean, cruelty-free skincare designed to nourish your skin and protect the planet.</p>",
+            "content_max_width": 650,
+            "content_padding": 40,
+            "text_alignment": "right",
+            "content_vertical_alignment": "center",
+            "content_horizontal_alignment": "flex-end",
+            "eyebrow_size": 12,
+            "eyebrow_spacing": 15,
+            "eyebrow_color": "#ffffff",
+            "heading_size": 56,
+            "heading_spacing": 20,
+            "heading_color": "#ffffff",
+            "subheading_size": 20,
+            "subheading_spacing": 20,
+            "subheading_color": "#f0f0f0",
+            "description_size": 16,
+            "description_spacing": 30,
+            "description_color": "#e8e8e8",
+            "primary_cta_text": "Shop Now",
+            "primary_cta_link": "",
+            "primary_button_bg": "#e1bebe",
+            "primary_button_text": "#ffffff",
+            "primary_button_bg_hover": "#262626",
+            "primary_button_text_hover": "#ffffff",
+            "secondary_cta_text": "Add to Ritual",
+            "secondary_cta_link": "",
+            "secondary_button_bg": "rgba(0,0,0,0)",
+            "secondary_button_text": "#ffffff",
+            "secondary_button_border": "#ffffff",
+            "secondary_button_bg_hover": "#080808",
+            "secondary_button_text_hover": "#ffffff",
+            "secondary_button_border_hover": "#a8b2a2",
+            "button_text_size": 14,
+            "button_padding_vertical": 14,
+            "button_padding_horizontal": 32,
+            "button_border_radius": 4
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_6a017dd_xjUTQ3"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -444,6 +506,7 @@
     "home_map",
     "home_message_Wi7xtj",
     "home_products_dCGJfi",
-    "home_blog"
+    "home_blog",
+    "17725584049db540e7"
   ]
 }
