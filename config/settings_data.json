@@ -11,7 +11,7 @@
   "current": {
     "background-color": "#ffffff",
     "body-text-color": "#262626",
-    "accent-color": "#1d2349",
+    "accent-color": "#a1c78a",
     "heading-color": "#262626",
     "meta-color": "#656565",
     "border-color": "#e4e4e4",
@@ -33,7 +33,7 @@
     "navigation-font-small-caps": true,
     "font_meta": "figtree_n4",
     "meta-font-small-caps": false,
-    "font_button": "figtree_n4",
+    "font_button": "montserrat_n4",
     "button-font-small-caps": true,
     "social-email-link": "#",
     "social-facebook-link": "#",
