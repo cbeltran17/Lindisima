@@ -180,7 +180,7 @@
       ],
       "name": "Rich text",
       "settings": {
-        "border": true,
+        "border": false,
         "heading": "SHOP BY SKIN GOALS"
       }
     },
@@ -229,7 +229,7 @@
       ],
       "name": "Rich text",
       "settings": {
-        "border": true,
+        "border": false,
         "heading": "Deep Hydration Ritual"
       }
     },
@@ -372,7 +372,7 @@
       ],
       "name": "Rich text",
       "settings": {
-        "border": true,
+        "border": false,
         "heading": "Timeless Skin Ritual"
       }
     },
@@ -439,7 +439,7 @@
             "url": "shopify://collections/lipcare",
             "color": "white",
             "mobile": true,
-            "image": "shopify://shop_images/Peptide_Ant-Aging_Instagram_Image_1_ca6a216c-138d-45b8-925d-a909ca9f2bfc.webp",
+            "image": "shopify://shop_images/putting-on-lipgloss.jpg",
             "show_overlay": false,
             "overlay_color": "#000000",
             "opacity": 100
