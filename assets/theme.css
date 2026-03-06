@@ -1543,7 +1543,8 @@ body.template-index .main-content {
 }
 
 .main-content .shopify-section {
-  margin: 40px 0;
+      max-width: 1260px;
+    margin: 40px auto;
 }
 .main-content .customer-section,
 .main-content .shopify-policy__container {
@@ -4509,7 +4510,8 @@ text-align: center;
 }
 
 .home-message-content {
-  padding: 30px;
+      padding: 30px;
+    text-align: left;
 }
 .home-message-content.home-message-content-border {
   border: 1px solid #dadefe;
@@ -4517,7 +4519,6 @@ text-align: center;
 .home-message-content h2,
 .home-message-content h3 {
   display: block;
-  max-width: 840px;
   margin: 0 auto 16px;
 }
 
@@ -4528,8 +4529,9 @@ text-align: center;
 }
 
 .home-products .section-title {
-  margin-top: 0;
-  text-align: center;
+     margin-top: 0;
+    text-align: left;
+    margin-left: 30px;
 }
 
 .home-products-content {
@@ -5168,13 +5170,15 @@ text-align: center;
 }
 
 .pxs-image-with-text-content {
-  width: 85%;
+        width: 100%;
+        text-align: left;
   padding: 8px 0;
 }
 @media (min-width: 720px) {
   .pxs-image-with-text-content {
-    width: 60%;
-    padding: 12px 0;
+        width: 100%;
+        padding: 12px 0;
+        text-align: left;
   }
   .pxs-image-with-text-content-position-x-left .pxs-image-with-text-content, .pxs-image-with-text-content-position-x-right .pxs-image-with-text-content {
     width: 45%;
@@ -10789,6 +10793,10 @@ body:not(.user-is-tabbing) .plyr.plyr--video {
     background: transparent;
   }
 }
+.product-list-item-thumbnail img{
+  width: 100% !important;
+  margin: 0 !important;
+}
 .product-list-item-thumbnail img,
 .product-list-item-thumbnail svg {
   display: block;
@@ -10873,7 +10881,7 @@ body:not(.user-is-tabbing) .plyr.plyr--video {
 }
 
 .product-list-item-details {
-  text-align: center;
+  text-align: left;
 }
 .product-list-item-details p {
   margin: 0;
