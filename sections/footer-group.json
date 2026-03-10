@@ -27,7 +27,8 @@
         "1502298878006": {
           "type": "rich-text",
           "settings": {
-            "heading": "Thank You"
+            "heading": "Thank You",
+            "rich_text": "<p>Use this section to welcome customers to your store, say a bit about your brand, or share news and seasonal promotions.</p>"
           }
         },
         "1588892853067": {
@@ -41,8 +42,12 @@
         "1502298878006",
         "1588892853067"
       ],
+      "custom_css": [
+        "{background:black;}"
+      ],
       "settings": {
         "headings": true,
+        "show_follow_on_shop": true,
         "show_locale_selector": false,
         "show_currency_selector": true,
         "footer-payment-options": false
