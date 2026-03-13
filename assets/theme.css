@@ -323,6 +323,10 @@
   position: sticky;
   top: 0;
 }
+.product.sticky-active {
+    display: flex;
+    align-items: flex-start;
+}
 
 
 
