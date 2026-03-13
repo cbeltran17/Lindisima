@@ -318,7 +318,10 @@
   display: none;                /* Chrome, Safari */
 }
 
-
+.sticky-active{
+  position:sticky;
+  top:0;
+}
 
 
 
