@@ -306,7 +306,17 @@
 
 
 
-
+/* product page scroll bar */
+.product-details-wrapper {
+      position: sticky;
+    top: 0;
+    max-height: 100vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+.product-details-wrapper::-webkit-scrollbar {
+  display: none;                /* Chrome, Safari */
+}
 
 
 
