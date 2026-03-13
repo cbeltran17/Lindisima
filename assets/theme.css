@@ -306,27 +306,10 @@
 
 
 
-/* product page scroll bar */
 
-.product-details {
-  max-height: 100vh;
-  overflow-y: auto;
 
-  scrollbar-width: none;
-}
 
-.product-details::-webkit-scrollbar {
-  display: none;
-}
 
-.sticky-active {
-  position: sticky;
-  top: 0;
-}
-.product {
-    display: flex;
-    align-items: flex-start;
-}
 
 
 
