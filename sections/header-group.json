@@ -13,6 +13,7 @@
   "sections": {
     "announcement_bar": {
       "type": "pxs-announcement-bar",
+      "disabled": true,
       "settings": {
         "show_announcement": true,
         "announcement_home_only": false,
@@ -21,6 +22,21 @@
         "announcement_link": "",
         "announcement_color": "#ffffff",
         "announcement_background": "#080808"
+      }
+    },
+    "updated_header_Y8Wwrg": {
+      "type": "updated-header",
+      "name": "Header Custom",
+      "settings": {
+        "bg_color": "#ffffff",
+        "text_color": "#717568",
+        "logo_color": "#000000",
+        "main_menu": "header-deisgn",
+        "logo_image": "shopify://shop_images/Logo.png",
+        "logo_position": "center",
+        "show_search": true,
+        "show_account": true,
+        "show_cart": true
       }
     },
     "header": {
@@ -36,9 +52,10 @@
       "block_order": [
         "mega_menu_VPMVh7"
       ],
+      "disabled": true,
       "settings": {
         "logo": "shopify://shop_images/LINDISIMA_LOGOS_RGB-07.png",
-        "header_layout": "compact-left",
+        "header_layout": "compact-center",
         "header_full_width": true,
         "header_border": true,
         "sticky_header": false,
@@ -51,6 +68,7 @@
   },
   "order": [
     "announcement_bar",
+    "updated_header_Y8Wwrg",
     "header"
   ]
 }

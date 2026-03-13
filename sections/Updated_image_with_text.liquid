@@ -1,0 +1,262 @@
+{% comment %} 
+  Split Media & Text Section - Fixed Desktop Order & Mobile Image Top
+{% endcomment %}
+
+<style>
+  .split-section-{{ section.id }} {
+    max-width: 1820px;
+    margin: 40px auto;
+    padding: 0 10px;
+  }
+
+  .split-container-inner {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: {{ section.settings.bg_color }};
+    border-radius: {{ section.settings.border_radius }}px; /* Desktop Border Radius */
+    overflow: hidden;
+    min-height: 500px;
+  }
+
+  .split-side {
+    flex: 1 1 50%;
+    width: 50%;
+    display: flex;
+    box-sizing: border-box;
+  }
+
+  .split-image-wrapper {
+    width: 100%;
+    height: 100%;
+  }
+  .split-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .split-text-content {
+    width: 100%;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-left: {{ section.settings.padding_left }}px;
+    padding-right: {{ section.settings.padding_right }}px;
+    display: flex;
+    flex-direction: column;
+    justify-content: {% if section.settings.v_align == 'top' %}flex-start{% elsif section.settings.v_align == 'center' %}center{% else %}flex-end{% endif %};
+    text-align: {{ section.settings.h_align }};
+    align-items: {% if section.settings.h_align == 'left' %}flex-start{% elsif section.settings.h_align == 'center' %}center{% else %}flex-end{% endif %};
+  }
+
+  .split-title {
+    margin: 0 0 7px 0;
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 100%;
+    letter-spacing: 3%;
+        color: #8f9c87;
+
+  } 
+
+  .split-desc p {
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 32px;
+    margin: 0 0 12px 0;
+    max-width: 600px;
+        color: #8f9c87;
+  }
+
+  .split-btn {
+    display: inline-block;
+    padding: 12px 40px;
+    border: 1px solid #8f9c87;
+    border-radius: 50px;
+    text-decoration: none;
+    color: #8f9c87;
+    font-weight: 500;
+    transition: 0.3s;
+  }
+
+  /* Mobile Specific Styles (Under 768px) */
+  @media (max-width: 767px) {
+    .split-container-inner {
+      flex-direction: column;
+      border-radius: 0 !important; /* Remove border radius on mobile */
+    }
+
+    .split-side {
+      flex: 1 1 100%;
+      width: 100%;
+    }
+
+    /* Logic to force Image to Top on Mobile only */
+    .split-side--image_block {
+      order: 1 !important;
+    }
+    .split-side--content_block {
+      order: 2 !important;
+    }
+
+    .split-text-content {
+      padding: 60px 15px;
+    }
+    .split-section-{{ section.id }} {
+            margin: 0 0 22px 0;
+    }
+  }
+</style> 
+
+<div class="split-section-{{ section.id }} text-with-image-split">
+  <div class="split-container-inner">
+    {% for block in section.blocks %}
+      {%- comment -%} Assigning a class based on type to control mobile order {%- endcomment -%}
+      <div class="split-side split-side--{{ block.type }}" {{ block.shopify_attributes }}>
+        {% case block.type %}
+          {% when 'image_block' %}
+            <div class="split-image-wrapper">
+              {% if block.settings.image != blank %}
+                <img src="{{ block.settings.image | img_url: '1200x' }}" alt="{{ block.settings.image.alt }}">
+              {% else %}
+                {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+            </div>
+          {% when 'content_block' %}
+            <div class="split-text-content">
+              {% if block.settings.title != blank %}<h2 class="split-title">{{ block.settings.title }}</h2>{% endif %}
+              {% if block.settings.text != blank %}<div class="split-desc">{{ block.settings.text }}</div>{% endif %}
+              {% if block.settings.btn_label != blank %}
+                <a href="{{ block.settings.btn_link }}" class="split-btn">{{ block.settings.btn_label }}</a>
+              {% endif %}
+            </div>
+        {% endcase %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Split Image & Text Pro",
+  "max_blocks": 2,
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F9F1E7"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Corner Rounding (Desktop)",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Text Side Layout & Alignment"
+    },
+    {
+      "type": "select",
+      "id": "v_align",
+      "label": "Vertical Position",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "bottom", "label": "Bottom" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "h_align",
+      "label": "Horizontal Position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Independent Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Padding Left",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Padding Right",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_block",
+      "name": "Image Side",
+      "limit": 1,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "content_block",
+      "name": "Text Side",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Heading", "default": "Beauty That Works" },
+        { "type": "richtext", "id": "text", "label": "Description", "default": "<p>Lorem ipsum dolor sit amet...</p>" },
+        { "type": "text", "id": "btn_label", "label": "Button Label", "default": "Shop Now" },
+        { "type": "url", "id": "btn_link", "label": "Button Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Split Image & Text",
+      "blocks": [
+        { "type": "image_block" },
+        { "type": "content_block" }
+      ]
+    }
+  ]
+}
+{% endschema %}

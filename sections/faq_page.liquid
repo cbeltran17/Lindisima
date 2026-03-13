@@ -1,0 +1,516 @@
+<div class="faq-section-{{ section.id }} {{ section.settings.custom_class }}" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <h2 style="color: {{ section.settings.heading_color }}">{{ section.settings.faq_heading }}</h2>
+  <div class="faq-items">
+    {% for block in section.blocks %}
+        {%- case block.type -%}
+          {%- when 'faq_item' -%}
+          <div class="faq-item">
+            <button class="faq-question" style="color: {{ section.settings.question_color }}">
+              {{ block.settings.question }}
+              <span class="faq-toggle">+</span>
+            </button>
+            <div class="faq-answer" style="color: {{ section.settings.answer_color }}">
+              {{ block.settings.answer | newline_to_br }}
+            </div>
+          </div>
+
+        {% endcase %}
+    {% endfor %}
+  </div>
+</div>
+<style>
+  .{{ section.settings.custom_class }} {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .{{ section.settings.custom_class }} h2 {
+    font-size: 28px;
+    text-align: center;
+        margin: 15px 0;
+  }
+
+  .{{ section.settings.custom_class }} .faq-item {
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .{{ section.settings.custom_class }} .faq-question {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+  }
+
+  .{{ section.settings.custom_class }} .faq-question:focus {
+    outline: none;
+  }
+
+  .{{ section.settings.custom_class }} .faq-toggle {
+    font-size: 24px;
+    transition: all 0.3s;
+  }
+
+  .{{ section.settings.custom_class }} .faq-answer { 
+  max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    padding: 0;
+  }
+
+  .{{ section.settings.custom_class }} .faq-item.active .faq-answer {
+    padding-top: 10px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .{{ section.settings.custom_class }} h2 { font-size: 24px; }
+    .{{ section.settings.custom_class }} .faq-question { font-size: 16px; }
+    .{{ section.settings.custom_class }} .faq-answer { font-size: 15px; }
+  }
+  @media (max-width: 480px) {
+    .{{ section.settings.custom_class }} {
+      padding-left: 15px; 
+      padding-right: 15px;
+    }
+    .{{ section.settings.custom_class }} .faq-question { font-size: 15px; }
+    .{{ section.settings.custom_class }} .faq-answer { font-size: 14px; }
+  }
+</style>
+<style>
+  /* Modal Backdrop - Full 100vh/100vw */
+  .accordion-container .timer-wrapper {
+      justify-content: center;
+  }
+  .timer-wrapper {
+    text-align: center;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .timer-box-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+  .timer-label{
+    font-size: 9px;
+    font-weight: 500;
+    line-height: 100%;
+    margin-bottom: 6px;
+    color: #000;
+    text-transform: lowercase;
+  }
+  .t-unit-holder{ 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-direction: column;
+    gap:6px;
+  }
+  .t-unit-holder small{ 
+      font-size: 9px;
+      font-weight: 300;
+      line-height: 100%;
+      text-transform: lowercase;
+      font-family: Inter, sans-serif;
+  }
+  .t-unit {
+      background: #000;
+      color: #fff;
+      display: flex;
+      border-radius: 6px;
+      font-weight: bold;
+      justify-content: center;
+      align-items: center;
+      min-width: 42px;
+      min-height: 57px;
+  }
+  .t-unit span {
+    display: block;
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  .t-unit small {
+    display: block;
+    font-size: 9px;
+    letter-spacing: .1em;
+    opacity: .7;
+  }
+
+    .modal-overlay { 
+      display: none; 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100vw; 
+      height: 100vh; 
+      background: rgba(0, 0, 0, 0.85); 
+      z-index: 999999; /* Higher than theme headers */
+      align-items: center; 
+      justify-content: center;
+      backdrop-filter: blur(3px); /* Optional: modern blur look */
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    /* Modal Container - Centered and Responsive */
+    .modal-container { 
+      background: #fff;
+      display: flex;
+      width: 90%;
+      max-width: 1045px;
+      position: relative;
+      min-height: 600px;
+      max-height: 100vh;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      animation: modalFadeIn 0.3s ease-out;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-left { width: 45%; background: #f7f7f7; }
+    .modal-left img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    
+    .modal-right { width: 55%;     padding: 25px 73px 97px; display: flex; flex-direction: column; text-align: center; align-items: center;}
+    
+    .close-modal { 
+      position: absolute; 
+      top: 15px; 
+      right: 20px; 
+      font-size: 32px; 
+      cursor: pointer; 
+      z-index: 1001; 
+      line-height: 1; 
+      color: #000;
+    }
+  .close-modal-icon {
+    width: 28px;
+    height: 28px;
+    display: block;
+  }
+
+    /* Custom Button Style for the Tab */
+    .btn-black-custom {
+      background: #000 ;
+      color: #fff !important;
+      border: none !important;
+      padding: 16px !important;
+      margin-top: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: Inter;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 100%;
+      letter-spacing: 0;
+    }
+    .faq-item .btn-black-custom {
+      margin-top: 45px;
+    }
+    .btn-black-custom::after, .btn-black-custom::before{
+      content: none !important;
+    }
+    .step-title {
+      margin: 0 0 10px;
+      font-family: Montserrat;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 100%;
+      letter-spacing: 0;
+      text-align: left;
+      width:100%;
+    }
+    .step-title.step-2-title{
+      text-align: center;
+    }
+    .step-desc {
+      margin: 0 0 25px;
+      font-weight: 400;
+      font-size: 16px;
+      color: #000000;
+      line-height: 100%;
+      letter-spacing: 0;
+      text-align: left;
+      width: 100%;
+    }
+    .step-desc.step-2-desc{
+      text-align: center;
+      color: #A4A4A4;
+      line-height: 110%;
+      font-weight: 400;
+      font-size: 16px;
+    }
+  input[type="email"]::placeholder, input[type="text"]::placeholder{
+    color: #A4A4A4;
+  }
+    .step-desc.step-3-desc{
+      font-weight: 400;
+      font-size: 14px;
+      color: #6E6E6E;
+      line-height: 110%;
+      margin: 0 0 30px;
+    }
+    .step-desc.step-5-desc{
+      font-weight: 400;
+      font-size: 14px;
+      color: #6E6E6E;
+      line-height: 100%;
+      margin: 0 0 28px;
+      text-align: center;
+    }
+    h2.step-title.step-5-title {
+      margin: 0 0 10px;
+      font-family: Montserrat;
+      font-weight: 900;
+      font-size: 34px;
+      line-height: 100%;
+      letter-spacing: 0;
+      text-align: center;
+      margin-top: 48px;
+      margin-bottom: 56px;
+    }
+
+    .btn-black-custom.step-1-btn{
+      margin-top: 1rem;
+    }
+    .btn-black-custom.step-3-btn{
+      margin-top: 0;
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      align-items: center;
+      background-color: black;
+    }
+    .btn-black-custom.step-5-btn{
+      margin-top: 0;
+      align-items: center;  
+    }
+    .btn-black-custom.step-3-btn img{
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+    .btn-black-custom.step-5-btn{
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      align-items: center;
+    }
+    .btn-black-custom.step-5-btn img{
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+    .Next-drop-text{
+      font-family: Inter, sans-serif; 
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: 0;
+      color: #000000;
+      margin-bottom: 10px;
+    }
+    .modal-right input[type="text"], 
+    .modal-right input[type="email"] { 
+      width: 100%;
+      padding: 16px 11px;
+      margin-bottom: 13px;
+      background: #F2F2F2;
+      border: 1px solid #D9D9D9;
+      font-family: Inter;
+      font-weight: 400;
+      font-size: 16px;
+      border-radius: 4px;
+      line-height: 100%;
+      letter-spacing: 0;
+    }
+    label.step-3.Consent-holder{
+      font-size: 14px;
+      margin-bottom: 15px;
+      display: block;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      text-align: left;
+      line-height: 110%;
+      color: #000000;
+      font-family: Inter, sans-serif; 
+    }
+    label.step-3.Consent-holder input[type="checkbox"]{
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      margin: 0 0.5rem 0 0;
+    }
+    label.step-3.Consent-holder  input[type="checkbox"]:checked {
+    background-color: black;
+    border-color: black;
+  }
+    label.step-3.Final-text {
+      font-family: Inter, sans-serif; 
+      font-weight: 400;
+      font-size: 12px;
+      margin-top: 83px;
+      margin-bottom: 13px;
+      display: block;
+      text-align: left;
+      line-height: 110%;
+      color: #838383;
+      font-family: Inter, sans-serif; 
+    }
+    .collection-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-around; margin-bottom: 20px; }
+    .tag-btn { border: 1px solid #ddd; padding: 8px 20px; border-radius: 8px; cursor: pointer; background: #fff; font-weight: 500; font-size: 14px; font-family: Inter, sans-serif; }
+    .tag-btn.selected { background: #000; color: #fff; border-color: #000; }
+
+    .timer-box-wrap { display: flex; justify-content: center; gap: 10px; }
+
+    @media (max-width: 768px) {
+      .close-modal {
+        position: sticky;
+        top: 15px;
+        right: 20px;
+        height: 0;
+        margin-left: auto;
+      }
+      .modal-container { flex-direction: column; height: auto; width: 95%; max-height: 95vh; overflow-y: auto; }
+      .modal-left, .modal-right { width: 100%; }
+      .modal-left { height: 180px; }
+      .modal-right { padding: 30px 20px; }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  const sections = document.querySelectorAll('.faq-section-{{ section.id }}');
+
+  sections.forEach(section => {
+
+    const items = section.querySelectorAll('.faq-item');
+
+    items.forEach(item => {
+
+      const question = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      const toggle = question.querySelector('.faq-toggle');
+
+      question.addEventListener('click', function() {
+
+        if (item.classList.contains('active')) {
+
+          item.classList.remove('active');
+          answer.style.maxHeight = null;
+          toggle.innerText = '+';
+
+        } else {
+
+          items.forEach(i => {
+            i.classList.remove('active');
+            i.querySelector('.faq-answer').style.maxHeight = null;
+            i.querySelector('.faq-toggle').innerText = '+';
+          });
+
+          item.classList.add('active');
+          toggle.innerText = '-';
+          answer.style.maxHeight = (answer.scrollHeight + 20) + "px";
+
+        }
+
+      });
+
+    });
+
+  });
+
+});
+</script>
+{% schema %}
+{
+  "name": "FAQ Section",
+  "settings": [
+    {
+    "type": "text",
+    "id": "custom_class",
+    "label": "Custom Parent Class",
+    "default": "faq-section"
+    },
+    {
+      "type": "text",
+      "id": "faq_heading",
+      "label": "Section Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "question_color",
+      "label": "Question Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "answer_color",
+      "label": "Answer Color",
+      "default": "#555555"
+    },
+    {
+      "type": "number",
+      "id": "padding_top",
+      "label": "Section Top Padding (px)",
+      "default": 40
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom",
+      "label": "Section Bottom Padding (px)",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Your question here?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Your answer here."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "FAQ Section",
+      "category": "FAQ"
+    }
+  ]
+}
+{% endschema %}

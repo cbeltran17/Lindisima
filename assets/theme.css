@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 @charset "UTF-8";
 /* Fonts */@font-face {
   font-family: Poppins;
@@ -301,18 +303,48 @@
 /* General Settings
 ------------------------- */
 
-
-
-
-
-
-
-
-
-
-
-
-
+@font-face {
+  font-family: 'Roboto", sans-serif';
+  src: url('https://cdn.shopify.com/s/files/1/0790/8232/4206/files/Roboto-Light.ttf?v=1773305451') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Roboto", sans-serif';
+  src: url('https://cdn.shopify.com/s/files/1/0790/8232/4206/files/Roboto-SemiBold.ttf?v=1773305451') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Roboto", sans-serif';
+  src: url('https://cdn.shopify.com/s/files/1/0790/8232/4206/files/Roboto-Bold.ttf?v=1773305451') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Roboto", sans-serif';
+  src: url('https://cdn.shopify.com/s/files/1/0790/8232/4206/files/Roboto-Regular.ttf?v=1773305451') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Roboto", sans-serif';
+  src: url('https://cdn.shopify.com/s/files/1/0790/8232/4206/files/Roboto-Medium.ttf?v=1773305451') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ClimateCrisis';
+  src: url('https://cdn.shopify.com/s/files/1/0790/8232/4206/files/ClimateCrisis-Regular-VariableFont_YEAR.ttf?v=1773305428') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 
 
@@ -337,6 +369,11 @@ html {
  */
 body {
   margin: 0;
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
 }
 
 /* HTML5 display definitions
@@ -750,9 +787,8 @@ th {
 .quick-shop-modal-trigger, .product-list-item-inventory, .mega-nav-list .mega-nav-list-title .mega-nav-list-title-link, .navigation.navigation-desktop .mega-nav-list .mega-nav-list-title-link, .product-title, .home-masonry-feature-title, th, .section-title, .page-title,
 .shopify-policy__title h1,
 .shopify-policy__title .age-gate__heading, h1, .age-gate__heading, h2, h3, h4, h5, h6, .home-slideshow-slide-heading, .home-promotion-title {
-  font-family: "Acier BAT Text Solid" ,sans-serif;
+  font-family: "Roboto", sans-serif;
   font-style: normal;
-  font-weight: 400;
   color: #262626;
 }.quick-shop-modal-trigger, .product-list-item-inventory, .mega-nav-list .mega-nav-list-title .mega-nav-list-title-link, .navigation.navigation-desktop .mega-nav-list .mega-nav-list-title-link, .product-title, .home-masonry-feature-title, th, .section-title, .page-title,
   .shopify-policy__title h1,
@@ -1543,7 +1579,6 @@ body.template-index .main-content {
 }
 
 .main-content .shopify-section {
-      max-width: 1260px;
     margin: 40px auto;
 }
 .main-content .customer-section,

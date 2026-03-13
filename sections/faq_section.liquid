@@ -1,0 +1,207 @@
+{% comment %} 
+  Split FAQ Section - With Plus/Minus Toggle Logic
+{% endcomment %}
+
+<style>
+  .faq-section-{{ section.id }} {
+    max-width: 1820px;
+        padding: 20px 20px;
+    /* font-family: 'Roboto', sans-serif;
+            background: #8F9C87; */
+                margin: auto;
+  }
+
+  .faq-container {
+    display: flex;
+    gap: 100px;
+    align-items: flex-start;
+  }
+
+  .faq-info {
+    flex: 0 0 35%;
+  }
+
+  .faq-header-title {
+ margin: 0 0 16px 0;
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 100%;
+    letter-spacing: 3%;
+            color: white;
+  }
+
+  .faq-header-desc {
+    font-size: 16px;
+    line-height: 1.6;
+    color: white;
+  }
+
+  .faq-accordion {
+    flex: 1;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .faq-trigger {
+        width: 100%;
+    padding: 11px 0 14px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: left;
+  }
+
+  .faq-question {
+       margin: 0;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0%;
+    color: white;
+  }
+
+  /* Plus/Minus Icon Styling */
+  .faq-icon {
+    font-size: 28px;
+    font-weight: 300;
+    line-height: 1;
+    display: inline-block;
+    transition: transform 0.3s ease;
+    color: white;
+    width: 20px;
+    text-align: center;
+  }
+
+  .faq-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+  }
+
+  .faq-inner-desc {
+    padding-bottom: 25px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: white;
+  }
+.faq-inner-desc p {
+    margin: 0;
+  }
+  /* Open State Logic */
+  .faq-item.is-active .faq-content {
+    max-height: 1000px;
+  }
+
+  @media (max-width: 1024px) {
+    .faq-container {
+      flex-direction: column;
+      gap: 30px;
+    }
+    .faq-info {
+      flex: 1 1 100%;
+    }
+  }
+  @media (max-width: 767px) {
+    .faq-section-{{ section.id }} {
+          margin-bottom: 34px;
+          margin-top: 0;
+    }
+    .faq-header-title{
+        font-size: 28px;
+    }
+    .faq-header-desc{
+        font-weight: 400;
+    }
+    .faq-trigger{
+        padding: 11px 0 10px 0;
+    }
+    }
+</style>
+
+<div class="faq-section-{{ section.id }}">
+  <div class="faq-container">
+    
+    <div class="faq-info">
+      <h2 class="faq-header-title">{{ section.settings.title }}</h2>
+      <div class="faq-header-desc">{{ section.settings.description }}</div>
+    </div>
+
+    <div class="faq-accordion">
+      {% for block in section.blocks %}
+        <div class="faq-item" {{ block.shopify_attributes }}>
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            <h3 class="faq-question">{{ block.settings.question }}</h3>
+            <span class="faq-icon" id="icon-{{ block.id }}">+</span>
+          </button>
+          <div class="faq-content">
+            <div class="faq-inner-desc">
+              {{ block.settings.answer }}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function toggleFaq(element) {
+    const parent = element.parentElement;
+    const icon = element.querySelector('.faq-icon');
+    const isActive = parent.classList.contains('is-active');
+    
+    // 1. Close all other items and reset their icons to +
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.classList.remove('is-active');
+      item.querySelector('.faq-icon').textContent = '+';
+    });
+
+    // 2. If the clicked item wasn't active, open it and change icon to -
+    if (!isActive) {
+      parent.classList.add('is-active');
+      icon.textContent = '-';
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "FAQ Split Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "FAQ's"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Section Description",
+      "default": "Add your sidebar text here."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Question Title" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Detailed answer goes here.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Split Section"
+    }
+  ]
+}
+{% endschema %}

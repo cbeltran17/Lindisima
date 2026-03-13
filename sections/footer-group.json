@@ -11,6 +11,51 @@
   "type": "footer",
   "name": "Footer",
   "sections": {
+    "updated_footer_kEfcPV": {
+      "type": "updated_footer",
+      "blocks": {
+        "newsletter_HbeyC7": {
+          "type": "newsletter",
+          "settings": {
+            "heading": "Sign up for updates and get 10% discount",
+            "subheading": "By signing up you agree to our terms."
+          }
+        },
+        "link_list_fPxekN": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Quick Links",
+            "menu": "main-menu-copy"
+          }
+        },
+        "link_list_FFcJV8": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Our Company",
+            "menu": "main-menu-1"
+          }
+        },
+        "link_list_3gKBnF": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Our Policies",
+            "menu": "main-menu-1"
+          }
+        }
+      },
+      "block_order": [
+        "newsletter_HbeyC7",
+        "link_list_fPxekN",
+        "link_list_FFcJV8",
+        "link_list_3gKBnF"
+      ],
+      "name": "Custom Mobile Footer",
+      "settings": {
+        "footer_bg_color": "#9BA695",
+        "logo": "shopify://shop_images/output-onlinepngtools_5.png",
+        "show_payment_icons": true
+      }
+    },
     "footer": {
       "type": "footer",
       "blocks": {
@@ -42,8 +87,9 @@
         "1502298878006",
         "1588892853067"
       ],
+      "disabled": true,
       "custom_css": [
-        "{background:black;}"
+        "{background: black;}"
       ],
       "settings": {
         "headings": true,
@@ -55,6 +101,7 @@
     }
   },
   "order": [
+    "updated_footer_kEfcPV",
     "footer"
   ]
 }

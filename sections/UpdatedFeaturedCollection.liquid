@@ -1,0 +1,252 @@
+{% comment %} 
+  Bestsellers / Featured Collection Section 
+{% endcomment %}
+
+<style>
+  .bestseller-section {
+    max-width: 1820px;
+    margin: 0 auto;
+    padding: 0 15px; 
+    font-family: 'Roboto', sans-serif;
+  }
+
+  /* Header Styles */
+  .bestseller-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 30px;
+  }
+
+  .bestseller-title {
+    font-size: 34px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: 0.03em;
+  }
+
+  .view-all-link {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+    text-decoration: underline;
+    text-underline-offset: 4px; 
+  }
+
+  /* Grid Layout (Desktop & Tablet) */
+  .product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+  }
+
+  .product-card {
+    width: 25%; /* 4 columns */
+    padding: 0 16px;
+    margin-bottom: 30px;
+    box-sizing: border-box;
+  }
+
+  .product-image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Force Square */
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    margin-bottom: 15px;
+  }
+
+  .product-image-wrapper img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    border-radius: 10px;
+  }
+
+  .product-card:hover img {
+    transform: scale(1.05);
+  }
+
+  .product-info {
+    text-align: left;
+     margin-top: 16px;
+  }
+
+  .product-name {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0 0 5px 0;
+    color: #000;
+    text-decoration: none;
+    display: block;
+  }
+
+  .product-price {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+  }
+.for-mobile-only{display: none;}
+
+  /* Tablet Adjustments */
+  @media (max-width: 1024px) and (min-width: 768px) {
+    .product-card {
+      width: 33.33%; /* 3 columns */
+    }
+  }
+
+  /* Mobile Styles & Slider Overrides */
+  @media (max-width: 767px) {
+    .product-info{
+            margin-top: 16px;
+    }
+    .for-mobile-only{
+                display: block !important;
+        text-align: center;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 100%;
+        letter-spacing: 3%;
+        text-decoration: underline;
+        text-decoration-style: solid;
+        text-decoration-thickness: 0%;
+        text-decoration-skip-ink: auto;
+    }
+    .bestseller-section{
+        padding: 0 17px;
+        margin-bottom: 56px;
+    }
+    .bestseller-header {
+        justify-content: center; /* Center header title on mobile */
+    }
+    .view-all-link {
+        display: none; /* Usually hidden on mobile if sliding */
+    }
+    .bestseller-title {
+        font-size: 26px;
+        font-weight: 600;
+    }
+    .product-grid {
+        display: block; /* Required for Slick */
+        margin: 0 -10px;
+    }
+    .product-card {
+        width: 100%;
+        padding: 0 10px;
+        margin-bottom: 0;
+    }
+    /* Show partial next slide on mobile */
+    .slick-list {
+        padding: 0 20% 0 0 !important;
+    }
+  }
+</style>
+
+<div class="bestseller-section" id="Bestseller-{{ section.id }}">
+  {%- assign collection = collections[section.settings.collection] -%}
+  {%- assign product_limit = 4 -%}
+
+  <div class="bestseller-header">
+    <h2 class="bestseller-title">{{ section.settings.title }}</h2>
+    
+    {% if collection.products_count > product_limit %}
+      <a href="{{ collection.url }}" class="view-all-link">View All</a>
+    {% endif %}
+  </div>
+
+  <div class="product-grid {% if collection.products_count > 0 %}js-bestseller-slider{% endif %}">
+    {% for product in collection.products limit: product_limit %}
+      <div class="product-card">
+        <a href="{{ product.url }}" class="product-image-wrapper">
+          <img src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}" 
+               alt="{{ product.title | escape }}"
+               loading="lazy">
+        </a>
+        <div class="product-info">
+          <a href="{{ product.url }}" class="product-name">{{ product.title }}</a>
+          <span class="product-price">{{ product.price | money }}</span>
+        </div>
+      </div>
+    {% else %}
+      {% comment %} Placeholder for theme editor empty state {% endcomment %}
+      {% for i in (1..4) %}
+        <div class="product-card">
+          <div class="product-image-wrapper">
+            {{ 'product-' | append: i | placeholder_svg_tag }}
+          </div>
+          <div class="product-info">
+            <p class="product-name">Product Name Here</p>
+            <span class="product-price">$25.00</span>
+          </div>
+        </div>
+      {% endfor %}
+    {% endfor %}
+  </div>
+    {% if collection.products_count > product_limit %}
+      <a href="{{ collection.url }}" class="view-all-link for-mobile-only">View All</a>
+    {% endif %}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function initSlider() {
+      const $slider = $('#Bestseller-{{ section.id }} .js-bestseller-slider');
+      
+      if ($(window).width() < 768) {
+        if (!$slider.hasClass('slick-initialized')) {
+          $slider.slick({
+            slidesToShow: 1.2,
+            slidesToScroll: 1,
+            arrows: false,
+            dots: false,
+            infinite: false,
+            responsive: [
+              {
+                breakpoint: 768,
+                settings: {
+                  slidesToShow: 1.2,
+                  slidesToScroll: 1
+                }
+              }
+            ]
+          });
+        }
+      } else {
+        if ($slider.hasClass('slick-initialized')) {
+          $slider.slick('unslick');
+        }
+      }
+    }
+
+    // Run on load and resize
+    initSlider();
+    $(window).on('resize', initSlider);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Bestsellers Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Bestsellers"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bestsellers Collection"
+    }
+  ]
+}
+{% endschema %}

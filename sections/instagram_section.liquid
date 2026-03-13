@@ -1,0 +1,218 @@
+<style>
+  .insta-section-{{ section.id }} {
+    max-width: 1820px;
+    margin: 60px auto;
+    padding: 0 10px;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .insta-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .insta-title {
+        margin: 0;
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 100%;
+    letter-spacing: 3%;
+  }
+
+  .insta-follow-btn {
+        font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 3%;
+    text-decoration: underline;
+    text-decoration-style: solid;
+    text-decoration-thickness: 0%;
+    text-decoration-skip-ink: auto;
+    color: #000;
+    text-underline-offset: 4px;
+  }
+
+  /* Grid Layout */
+  .insta-grid {
+    display: flex;
+    gap: 20px;
+  }
+
+  .insta-item {
+    flex: 1;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+  }
+
+  .insta-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    display: block;
+  }
+
+  .insta-item:hover img {
+    transform: scale(1.05);
+  }
+
+  /* Tablet & Mobile Logic */
+  @media (max-width: 1024px) {
+    .insta-follow-btn {
+      display: none; /* Hidden on Tablet/Mobile per request */
+    } 
+    .insta-title {
+      font-size: 28px;
+    }
+    .insta-grid {
+      display: block; /* Required for Slick */
+      margin: 0 -10px;
+    }
+    .insta-item {
+      margin: 0 10px;
+      border-radius: 10px;
+    }
+    /* Mobile slide peek effect */
+    .slick-list {
+      padding: 0 20% 0 0 !important;
+    }
+  }
+  @media (max-width: 767px) {
+     .insta-section-{{ section.id }} {
+        padding: 0 17px;
+        margin-bottom: 41px;
+                margin-top: 0;
+     }
+     .insta-header{
+            margin-bottom: 16px;
+     }
+     .main-content{
+        margin-bottom: 41px !important;
+     }
+  }
+</style>
+
+<div class="insta-section-{{ section.id }}">
+  <div class="insta-header">
+    <h2 class="insta-title">{{ section.settings.title }}</h2>
+    {% if section.settings.insta_link != blank %}
+      <a href="{{ section.settings.insta_link }}" class="insta-follow-btn" target="_blank">Follow Now</a>
+    {% endif %}
+  </div>
+
+  <div class="insta-grid js-insta-slider-{{ section.id }}">
+    {% for block in section.blocks %}
+      <div class="insta-item" {{ block.shopify_attributes }}>
+        {% if block.settings.link != blank %}
+          <a href="{{ block.settings.link }}">
+        {% endif %}
+          
+          {% if block.settings.image != blank %}
+            <img src="{{ block.settings.image | img_url: '600x600', crop: 'center' }}" alt="Instagram Image" loading="lazy">
+          {% else %}
+            {{ 'image' | placeholder_svg_tag }}
+          {% endif %}
+
+        {% if block.settings.link != blank %}
+          </a>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function initInstaSlider() {
+      const $slider = $('.js-insta-slider-{{ section.id }}');
+      
+      if ($(window).width() <= 1024) {
+        if (!$slider.hasClass('slick-initialized')) {
+          $slider.slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            dots: false,
+            infinite: false,
+            mobileFirst: false,
+            responsive: [
+              {
+                breakpoint: 1024,
+                settings: {
+                  slidesToShow: 2.2
+                }
+              },
+              {
+                breakpoint: 767,
+                settings: {
+                  slidesToShow: 1.2
+                }
+              }
+            ]
+          });
+        }
+      } else {
+        if ($slider.hasClass('slick-initialized')) {
+          $slider.slick('unslick');
+        }
+      }
+    }
+
+    initInstaSlider();
+    $(window).on('resize', initInstaSlider);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Instagram Gallery",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Follow us on Instagram"
+    },
+    {
+      "type": "url",
+      "id": "insta_link",
+      "label": "Instagram Profile Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "insta_image",
+      "name": "Instagram Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Image Link (Optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram Gallery",
+      "blocks": [
+        { "type": "insta_image" },
+        { "type": "insta_image" },
+        { "type": "insta_image" },
+        { "type": "insta_image" },
+        { "type": "insta_image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

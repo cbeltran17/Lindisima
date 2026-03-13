@@ -9,503 +9,417 @@
  */
 {
   "sections": {
-    "17725584049db540e7": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_6a017dd_xjUTQ3": {
-          "type": "ai_gen_block_6a017dd",
-          "settings": {
-            "hero_image": "shopify://shop_images/POST_12.jpg",
-            "min_height": 800,
-            "min_height_mobile": 400,
-            "desktop_width_percent": 100,
-            "show_overlay": false,
-            "overlay_color": "#000000",
-            "overlay_opacity": 0.3,
-            "eyebrow": "Clean Beauty",
-            "heading": "Radiant Skin, Naturally",
-            "subheading": "Science-backed formulas with pure, sustainable ingredients",
-            "description": "<p>Discover our collection of clean, cruelty-free skincare designed to nourish your skin and protect the planet.</p>",
-            "content_max_width": 650,
-            "content_padding": 40,
-            "text_alignment": "right",
-            "content_vertical_alignment": "center",
-            "content_horizontal_alignment": "flex-end",
-            "eyebrow_size": 12,
-            "eyebrow_spacing": 15,
-            "eyebrow_color": "#ffffff",
-            "heading_size": 56,
-            "heading_spacing": 20,
-            "heading_color": "#ffffff",
-            "subheading_size": 20,
-            "subheading_spacing": 20,
-            "subheading_color": "#f0f0f0",
-            "description_size": 16,
-            "description_spacing": 30,
-            "description_color": "#e8e8e8",
-            "primary_cta_text": "Shop Now",
-            "primary_cta_link": "",
-            "primary_button_bg": "#e1bebe",
-            "primary_button_text": "#ffffff",
-            "primary_button_bg_hover": "#262626",
-            "primary_button_text_hover": "#ffffff",
-            "secondary_cta_text": "Add to Ritual",
-            "secondary_cta_link": "",
-            "secondary_button_bg": "rgba(0,0,0,0)",
-            "secondary_button_text": "#ffffff",
-            "secondary_button_border": "#ffffff",
-            "secondary_button_bg_hover": "#080808",
-            "secondary_button_text_hover": "#ffffff",
-            "secondary_button_border_hover": "#a8b2a2",
-            "button_text_size": 14,
-            "button_padding_vertical": 14,
-            "button_padding_horizontal": 32,
-            "button_border_radius": 4
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_6a017dd_xjUTQ3"
+    "updated_banner_kX38tm": {
+      "type": "Updated_banner",
+      "custom_css": [
+        "@media (max-width: 767px) {{margin: 0 !important; }}",
+        "{margin: 0 !important;}"
       ],
-      "settings": {}
+      "name": "Custom Flexible Banner",
+      "settings": {
+        "desktop_image": "shopify://shop_images/Mask_group.jpg",
+        "mobile_image": "shopify://shop_images/Mask_group_1.jpg",
+        "max_width": 1820,
+        "border_radius": 10,
+        "title": "Welcome the Spring Collection",
+        "paragraph": "",
+        "button_label": "Shop Now",
+        "button_link": "",
+        "content_position": "pos-bottom-left",
+        "text_align": "left",
+        "mobile_content_position": "m-pos-top-center",
+        "mobile_text_align": "center",
+        "text_color": "#000000",
+        "btn_bg_color": "#f4f4f4",
+        "btn_text_color": "#000000",
+        "padding_horizontal_desktop": 10,
+        "padding_vertical_desktop": 0
+      }
     },
-    "icon_ticker_ERjHeW": {
-      "type": "icon-ticker",
+    "product_image_card_YqBdUj": {
+      "type": "product-image-card",
       "blocks": {
-        "item_UagXFM": {
-          "type": "item",
+        "goal_block_Kt3enL": {
+          "type": "goal_block",
           "settings": {
-            "icon": "shopify://shop_images/High_quality_10ad0d30-6d7c-4e46-a38e-1efce8a2df08.svg",
-            "text": "High-Quality"
+            "image": "shopify://shop_images/Mask_group_2.jpg",
+            "title": "Hydration",
+            "button_text": "",
+            "link": ""
           }
         },
-        "item_6QtfiP": {
-          "type": "item",
+        "goal_block_jHLN69": {
+          "type": "goal_block",
           "settings": {
-            "icon": "shopify://shop_images/cruelty-free.svg",
-            "text": "Cruelty Free"
+            "image": "shopify://shop_images/Mask_group_1.jpg",
+            "title": "Glow",
+            "button_text": "Shop Now",
+            "link": ""
           }
         },
-        "item_HrAQge": {
-          "type": "item",
+        "goal_block_MbVxkz": {
+          "type": "goal_block",
           "settings": {
-            "icon": "shopify://shop_images/plant-based.svg",
-            "text": "Plant Based"
-          }
-        },
-        "item_KKNNqR": {
-          "type": "item",
-          "settings": {
-            "icon": "shopify://shop_images/Paraben_Free_34056f62-cc2d-498c-9fd6-f0e899176fb1.svg",
-            "text": "Paraben-Free"
-          }
-        },
-        "item_UkQq4W": {
-          "type": "item",
-          "settings": {
-            "icon": "shopify://shop_images/vegan_9f0e7e29-48eb-4839-8857-137fdca66283.svg",
-            "text": "Vegan"
-          }
-        },
-        "item_7NDjWN": {
-          "type": "item",
-          "settings": {
-            "icon": "shopify://shop_images/High_quality_10ad0d30-6d7c-4e46-a38e-1efce8a2df08.svg",
-            "text": "High-Quality"
-          }
-        },
-        "item_hEEUbn": {
-          "type": "item",
-          "settings": {
-            "icon": "shopify://shop_images/cruelty-free.svg",
-            "text": "Cruelty Free"
-          }
-        },
-        "item_84ERGP": {
-          "type": "item",
-          "settings": {
-            "icon": "shopify://shop_images/plant-based.svg",
-            "text": "Plant Based"
-          }
-        },
-        "item_ja6iYg": {
-          "type": "item",
-          "settings": {
-            "icon": "shopify://shop_images/Paraben_Free_34056f62-cc2d-498c-9fd6-f0e899176fb1.svg",
-            "text": "Paraben-Free"
-          }
-        },
-        "item_r74Fjz": {
-          "type": "item",
-          "settings": {
-            "icon": "shopify://shop_images/vegan_9f0e7e29-48eb-4839-8857-137fdca66283.svg",
-            "text": "Vegan"
+            "image": "shopify://shop_images/Mask_group.png",
+            "title": "Timeless",
+            "button_text": "",
+            "link": ""
           }
         }
       },
       "block_order": [
-        "item_UagXFM",
-        "item_6QtfiP",
-        "item_HrAQge",
-        "item_KKNNqR",
-        "item_UkQq4W",
-        "item_7NDjWN",
-        "item_hEEUbn",
-        "item_84ERGP",
-        "item_ja6iYg",
-        "item_r74Fjz"
+        "goal_block_Kt3enL",
+        "goal_block_jHLN69",
+        "goal_block_MbVxkz"
       ],
       "custom_css": [
-        "{background: #a8b1a4;}"
+        "@media (max-width: 767px) {{margin: 31px 0 0 0 !important; }}"
+      ],
+      "name": "Product Image Card",
+      "settings": {
+        "title": "Shop by Skin Goals",
+        "description": "",
+        "header_alignment": "center"
+      }
+    },
+    "updated_featured_collection_P4yjij": {
+      "type": "UpdatedFeaturedCollection",
+      "custom_css": [
+        "@media (max-width: 767px) {{margin: 31px 0 0 0 !important; }}"
+      ],
+      "name": "Bestsellers Collection",
+      "settings": {
+        "title": "Bestsellers",
+        "collection": "bundles"
+      }
+    },
+    "updated_videosection_gzg74F": {
+      "type": "updated_videosection",
+      "custom_css": [
+        "@media (max-width: 767px) {{margin: 31px 0 0 0 !important; }}"
+      ],
+      "name": "Triggered Video",
+      "settings": {
+        "cover_image": "shopify://shop_images/Mask_group_4.jpg",
+        "play_icon": "shopify://shop_images/Vector_1.svg",
+        "video_url": ""
+      }
+    },
+    "icon_ticker_3N7kdL": {
+      "type": "icon-ticker",
+      "blocks": {
+        "item_bhYJEN": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/Ellipse_4.svg",
+            "text": "Beauty That Glows"
+          }
+        },
+        "item_n7wUDM": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/Ellipse_4.svg",
+            "text": "Pure Beauty Essentials"
+          }
+        },
+        "item_KbT9ML": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/Ellipse_4.svg",
+            "text": "Luxury Beauty Rituals"
+          }
+        },
+        "item_68ycPr": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/Ellipse_4.svg",
+            "text": "Skin That Loves You Back"
+          }
+        },
+        "item_qX3a8E": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/Ellipse_4.svg",
+            "text": "Self-Care Beauty Picks"
+          }
+        },
+        "item_RXVyyB": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/Ellipse_4.svg",
+            "text": "Luxury Beauty Rituals"
+          }
+        },
+        "item_EjtWwY": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/Ellipse_4.svg",
+            "text": "Pure Beauty Essentials"
+          }
+        }
+      },
+      "block_order": [
+        "item_bhYJEN",
+        "item_n7wUDM",
+        "item_KbT9ML",
+        "item_68ycPr",
+        "item_qX3a8E",
+        "item_RXVyyB",
+        "item_EjtWwY"
+      ],
+      "custom_css": [
+        ".icon-ticker-item img,.icon-ticker-item svg {width: 8px; height: 8px; flex-shrink: 0;}",
+        ".icon-ticker-wrapper {border-bottom: 1px solid black;}",
+        "@media (max-width: 767px) {{margin: 23px 0 0 0 !important; }}",
+        " {max-width: 1820px; margin: auto;}"
       ],
       "name": "Icon Ticker",
       "settings": {
-        "bg_color": "#aad097",
+        "bg_color": "rgba(0,0,0,0)",
         "text_color": "#000000"
       }
     },
-    "home_message_NjPqhP": {
-      "type": "home-message",
+    "about_us_6UXzCa": {
+      "type": "About_us",
       "blocks": {
-        "rich_text_mdHhE3": {
-          "type": "rich-text",
-          "settings": {
-            "rich_text": "<p>Choose your skin goal. We’ll guide the glow.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "rich_text_mdHhE3"
-      ],
-      "name": "Rich text",
-      "settings": {
-        "border": false,
-        "heading": "SHOP BY SKIN GOALS"
-      }
-    },
-    "home_products-1": {
-      "type": "home-products",
-      "settings": {
-        "title": "Clarity & Glow Ritual Refine texture. Support balance. Reveal luminosity.",
-        "collection": "bundles",
-        "product-columns": 3,
-        "product-rows": 1
-      }
-    },
-    "pxs_image_with_text_overlay_ikbmcC": {
-      "type": "pxs-image-with-text-overlay",
-      "custom_css": [
-        ".pxs-image-with-text-content-wrapper {position: relative; padding: 0; top: 0; left: 0;}",
-        " {background-color: #e4e0dd; padding: 20px 10px;}",
-        ".pxs-image-with-text {max-width: 1260px; margin: auto;}"
-      ],
-      "name": "t:sections.image_with_text_overlay.presets.name",
-      "settings": {
-        "section_height": "original",
-        "image": "shopify://shop_images/Screenshot_2026-02-19_at_12.07.25_PM.png",
-        "title": "CLEAN BEAUTY",
-        "text": "<p>Made with pure, responsibly sourced ingredients for skin that glows naturally.</p>",
-        "content_position": "top-center",
-        "color": "#000000",
-        "overlay_background": "#c9b99e",
-        "overlay_opacity": 0,
-        "link": "",
-        "button_text": "Shop Skin Rituals"
-      }
-    },
-    "home_message_iyccR9": {
-      "type": "home-message",
-      "blocks": {
-        "rich_text_jkpegp": {
-          "type": "rich-text",
-          "settings": {
-            "rich_text": "<p>Restore balance. Replenish deeply.<br/><br/>Formulated with plant-based oils and barrier-supporting ingredients to nourish, soften, and seal in moisture without heaviness.</p><p></p>"
-          }
-        }
-      },
-      "block_order": [
-        "rich_text_jkpegp"
-      ],
-      "name": "Rich text",
-      "settings": {
-        "border": false,
-        "heading": "Deep Hydration Ritual"
-      }
-    },
-    "home_products-2": {
-      "type": "home-products",
-      "settings": {
-        "title": "Hydration that lasts beyond the moment.",
-        "collection": "moisturizers",
-        "product-columns": 4,
-        "product-rows": 1
-      }
-    },
-    "home_image_with_text_overlay": {
-      "type": "pxs-image-with-text-overlay",
-      "custom_css": [
-        "{background-color: #e4e0dd; padding: 10px;}",
-        ",.pxs-image-with-text {max-width: 1260px; margin: auto;}"
-      ],
-      "settings": {
-        "section_height": "original",
-        "image": "shopify://shop_images/Screenshot_2026-02-19_at_12.07.16_PM.png",
-        "title": "",
-        "text": "",
-        "content_position": "bottom-right",
-        "color": "#656565",
-        "overlay_background": "#dadefe",
-        "overlay_opacity": 14,
-        "link": "",
-        "button_text": ""
-      }
-    },
-    "home_product": {
-      "type": "home-product",
-      "blocks": {
-        "204ade9d-9c3b-4554-87aa-d454b0538034": {
-          "type": "vendor",
-          "settings": {}
-        },
-        "title": {
+        "title_VGWdyR": {
           "type": "title",
-          "settings": {}
+          "settings": {
+            "title_text": "About Us",
+            "align_desktop": "center",
+            "align_mobile": "center"
+          }
         },
-        "price": {
-          "type": "price",
-          "settings": {}
-        },
-        "form": {
-          "type": "form",
-          "settings": {}
-        },
-        "description": {
+        "description_w8hMid": {
           "type": "description",
-          "settings": {}
+          "settings": {
+            "content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec scelerisque ex. Donec dignissim justo at tortor pellentesque posuere. Maecenas mollis vehicula pretium. Pellentesque maximus magna egestas, feugiat justo nec, facilisis ipsum. Vivamus eget aliquet ipsum, at gravida neque. Quisque odio sem, sollicitudin quis bibendum eget, posuere sit amet odio. Praesent turpis tellus, efficitur vitae placerat id, lacinia in erat. Proin vitae tincidunt est, ullamcorper cursus mi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque pretium rhoncus sem eu rutrum.<br/><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec scelerisque ex. Donec dignissim justo at tortor pellentesque posuere. Maecenas mollis<br/>vehicula pretium. Pellentesque maximus magna egestas, feugiat justo nec, facilisis ipsum. Vivamus eget aliquet ipsum, at gravida neque. Quisque odio sem, sollicitudin quis bibendum eget, posuere sit amet odio. Praesent turpis tellus, efficitur vitae placerat id, lacinia in erat.</p>",
+            "align_desktop": "center",
+            "align_mobile": "center"
+          }
+        },
+        "button_RUiUE6": {
+          "type": "button",
+          "settings": {
+            "btn_label": "Read More",
+            "link": "",
+            "align_desktop": "center",
+            "align_mobile": "center"
+          }
         }
       },
       "block_order": [
-        "204ade9d-9c3b-4554-87aa-d454b0538034",
-        "title",
-        "price",
-        "form",
-        "description"
+        "title_VGWdyR",
+        "description_w8hMid",
+        "button_RUiUE6"
       ],
-      "disabled": true,
+      "name": "About Us",
       "settings": {
-        "product_handle": "",
-        "enable_cart_redirection": false,
-        "show_payment_button": true,
-        "images_layout": "slideshow",
-        "enable_zoom": true,
-        "enable_video_autoplay": false,
-        "enable_video_looping": false
+        "bg_color_desktop": "#8f9c87",
+        "text_color_desktop": "#ffffff",
+        "bg_color_mobile": "#8f9c87",
+        "text_color_mobile": "#ffffff"
       }
     },
-    "home_testimonials": {
-      "type": "home-testimonials",
+    "updated_image_with_text_tAGRUD": {
+      "type": "Updated_image_with_text",
       "blocks": {
-        "testimonial-block-1": {
-          "type": "testimonial",
+        "image_block_MkHMei": {
+          "type": "image_block",
           "settings": {
-            "quote": "Showcase up to eight testimonials to build trust with potential customers.",
-            "title": "Name",
-            "role": "Role"
+            "image": "shopify://shop_images/Untitled-11_copy1_1.jpg"
           }
         },
-        "testimonial-block-2": {
-          "type": "testimonial",
+        "content_block_66yjkc": {
+          "type": "content_block",
           "settings": {
-            "quote": "Showcase up to eight testimonials to build trust with potential customers.",
-            "title": "Name",
-            "role": "Role"
+            "title": "Beauty That Works",
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.Ut nec scelerisque ex. Donec dignissim justo at tortor pellentesque posuere. Maecenas mollis vehicula pretium. Pellentesque maximus magna egestas, feugiat justo nec, facilisis ipsum.</p>",
+            "btn_label": "Shop Now",
+            "btn_link": ""
           }
         }
       },
       "block_order": [
-        "testimonial-block-1",
-        "testimonial-block-2"
+        "image_block_MkHMei",
+        "content_block_66yjkc"
       ],
-      "disabled": true,
-      "custom_css": [
-        ".home-testimonials {max-width: 1260px; margin: auto;}"
-      ],
+      "name": "Split Image & Text",
       "settings": {
-        "title": "",
-        "per_row": 2,
-        "style": "filled"
+        "bg_color": "#f9f1e7",
+        "border_radius": 20,
+        "v_align": "bottom",
+        "h_align": "left",
+        "padding_top": 80,
+        "padding_bottom": 50,
+        "padding_left": 80,
+        "padding_right": 80
       }
     },
-    "home_map": {
-      "type": "pxs-map",
-      "disabled": true,
-      "settings": {
-        "section_height": "small",
-        "title": "Local Curbside Pickup",
-        "content": "<p>After placing your order, we will contact you with a time and date to pick up your order anywhere from Monday-Friday!</p><p><span style=\"text-decoration:underline\"><strong>Contact us with any questions</strong></span></p>",
-        "text_alignment": "center",
-        "layout": "overlay-center-center",
-        "layout_mobile": "below",
-        "address": "1221 Broad St, Victoria, BC",
-        "api_key": "",
-        "enable_custom_colors": false,
-        "foreground_color": "#292929",
-        "background_color": "#ffffff",
-        "zoom": 1,
-        "overlay_color": "#000000",
-        "opacity": 10
-      }
-    },
-    "home_message_Wi7xtj": {
-      "type": "home-message",
+    "updated_image_with_text_9rHQBP": {
+      "type": "Updated_image_with_text",
       "blocks": {
-        "rich_text_6VbpUV": {
-          "type": "rich-text",
+        "content_block_fbTwpi": {
+          "type": "content_block",
           "settings": {
-            "rich_text": "<p>Support collagen. Smooth the look of fine lines.<br/><br/>Plant-powered ingredients chosen to strengthen, firm, and protect long-term skin vitality.</p>"
+            "title": "Healthy Skin Starts Here",
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.Ut nec scelerisque ex. Donec dignissim justo at tortor pellentesque posuere. Maecenas mollis vehicula pretium. Pellentesque maximus magna egestas, feugiat justo nec, facilisis ipsum.</p>",
+            "btn_label": "Shop Now",
+            "btn_link": ""
+          }
+        },
+        "image_block_Xh4dtV": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/Untitled-10_copy_1.jpg"
           }
         }
       },
       "block_order": [
-        "rich_text_6VbpUV"
-      ],
-      "name": "Rich text",
-      "settings": {
-        "border": false,
-        "heading": "Timeless Skin Ritual"
-      }
-    },
-    "home_products_dCGJfi": {
-      "type": "home-products",
-      "name": "Featured collection",
-      "settings": {
-        "title": "shop timeless skin (Anti-aging + collagen prodcution)",
-        "collection": "serums",
-        "product-columns": 3,
-        "product-rows": 1
-      }
-    },
-    "home_masonry": {
-      "type": "home-masonry",
-      "blocks": {
-        "block_1": {
-          "type": "image_feature",
-          "settings": {
-            "title": "Shop Bundles & Kits",
-            "subheading": "",
-            "url": "shopify://collections/bundles",
-            "color": "white",
-            "mobile": true,
-            "image": "shopify://shop_images/p9F4jpuTVP5H0acWrlM7zewCo3gJ1CKG.jpg",
-            "show_overlay": true,
-            "overlay_color": "#e4e4e4",
-            "opacity": 1
-          }
-        },
-        "block_2": {
-          "type": "image_feature",
-          "settings": {
-            "title": "Shop Dryness",
-            "subheading": "",
-            "url": "",
-            "color": "black",
-            "mobile": true,
-            "image": "shopify://shop_images/make-it-a-lighter-blue-color-almost-like-carribbean-water.png",
-            "show_overlay": false,
-            "overlay_color": "#000000",
-            "opacity": 50
-          }
-        },
-        "block_3": {
-          "type": "image_feature",
-          "settings": {
-            "title": "Shop Face",
-            "subheading": "",
-            "url": "shopify://collections/face",
-            "color": "white",
-            "mobile": true,
-            "image": "shopify://shop_images/IMG_2774.png",
-            "show_overlay": false,
-            "overlay_color": "#000000",
-            "opacity": 15
-          }
-        },
-        "block_4": {
-          "type": "image_feature",
-          "settings": {
-            "title": "Shop Lips",
-            "subheading": "",
-            "url": "shopify://collections/lipcare",
-            "color": "white",
-            "mobile": true,
-            "image": "shopify://shop_images/shiny-lipgloss-on-lips.jpg",
-            "show_overlay": false,
-            "overlay_color": "#000000",
-            "opacity": 100
-          }
-        },
-        "image_feature_KkAFKH": {
-          "type": "image_feature",
-          "settings": {
-            "title": "Shop Glass Skin",
-            "subheading": "",
-            "url": "shopify://products/the-ultimate-renewal-collection-box",
-            "color": "black",
-            "mobile": true,
-            "image": "shopify://shop_images/AHA_Peeling_Concentrate.webp",
-            "show_overlay": false,
-            "overlay_color": "#000000",
-            "opacity": 50
-          }
-        }
-      },
-      "block_order": [
-        "block_1",
-        "block_2",
-        "block_3",
-        "block_4",
-        "image_feature_KkAFKH"
+        "content_block_fbTwpi",
+        "image_block_Xh4dtV"
       ],
       "custom_css": [
-        "{max-width: 1260px; margin: auto;}"
+        ".text-with-image-split {margin: 80px auto;}"
       ],
+      "name": "Split Image & Text",
       "settings": {
-        "layout": "content-width",
-        "gutters": true,
-        "hover": true,
-        "hover-animation": true
+        "bg_color": "#f9f1e7",
+        "border_radius": 20,
+        "v_align": "bottom",
+        "h_align": "left",
+        "padding_top": 80,
+        "padding_bottom": 50,
+        "padding_left": 80,
+        "padding_right": 80
       }
     },
-    "home_blog": {
-      "type": "home-blog",
-      "custom_css": [
-        "{background-color: #e4e0dd;}",
-        ",.home-blog {max-width: 1260px; margin: auto;}"
+    "faq_section_URWjb8": {
+      "type": "faq_section",
+      "blocks": {
+        "faq_item_e8NkfX": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Lorem Ipsum has been the industry's standard dummy?",
+            "answer": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+          }
+        },
+        "faq_item_7LQTMR": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Vivamus fermentum nisl ut risus vehicula, bibendum interdum sem sagittis.?",
+            "answer": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+          }
+        },
+        "faq_item_Xf9GgP": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Aenean interdum mi a metus placerat consectetur?",
+            "answer": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+          }
+        },
+        "faq_item_EqagyL": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Suspendisse facilisis ante quis risus semper dignissim?",
+            "answer": "<p>Detailed answer goes here.</p>"
+          }
+        },
+        "faq_item_TAWr9K": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Duis auctor eros vitae faucibus aliquet?",
+            "answer": "<p>Detailed answer goes here.</p>"
+          }
+        },
+        "faq_item_MwLUd9": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Cras eleifend urna vitae dui ultrices, vulputate auctor ipsum congue?",
+            "answer": "<p>Detailed answer goes here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_e8NkfX",
+        "faq_item_7LQTMR",
+        "faq_item_Xf9GgP",
+        "faq_item_EqagyL",
+        "faq_item_TAWr9K",
+        "faq_item_MwLUd9"
       ],
+      "custom_css": [
+        "{background: #8f9c87;}"
+      ],
+      "name": "FAQ Split Section",
       "settings": {
-        "title": "",
-        "blog": "",
-        "number_of_columns": 3,
-        "number_of_rows": 1
+        "title": "FAQ's",
+        "description": "Lorem Ipsum has been the industry's standard dummy text ever since the when an unknown\nprinter took a galley of type and scrambled it to make a type specimen book Lorem Ipsum has\nbeen the industry's standard dummy text ever since the when an unknown printer took a\ngalley of type and scrambled it to make a type specimen book"
+      }
+    },
+    "instagram_section_6RDbg4": {
+      "type": "instagram_section",
+      "blocks": {
+        "insta_image_kpAaEe": {
+          "type": "insta_image",
+          "settings": {
+            "image": "shopify://shop_images/Mask_group_6.jpg",
+            "link": ""
+          }
+        },
+        "insta_image_TLJyWm": {
+          "type": "insta_image",
+          "settings": {
+            "image": "shopify://shop_images/Mask_group_1.png",
+            "link": ""
+          }
+        },
+        "insta_image_myW8Rg": {
+          "type": "insta_image",
+          "settings": {
+            "image": "shopify://shop_images/Mask_group_2.png",
+            "link": ""
+          }
+        },
+        "insta_image_DaTPWa": {
+          "type": "insta_image",
+          "settings": {
+            "image": "shopify://shop_images/Mask_group_3.png",
+            "link": ""
+          }
+        },
+        "insta_image_Xm9hmr": {
+          "type": "insta_image",
+          "settings": {
+            "image": "shopify://shop_images/Mask_group_4.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "insta_image_kpAaEe",
+        "insta_image_TLJyWm",
+        "insta_image_myW8Rg",
+        "insta_image_DaTPWa",
+        "insta_image_Xm9hmr"
+      ],
+      "name": "Instagram Gallery",
+      "settings": {
+        "title": "Follow us on Instagram",
+        "insta_link": "#"
       }
     }
   },
   "order": [
-    "17725584049db540e7",
-    "icon_ticker_ERjHeW",
-    "home_message_NjPqhP",
-    "home_products-1",
-    "pxs_image_with_text_overlay_ikbmcC",
-    "home_message_iyccR9",
-    "home_products-2",
-    "home_image_with_text_overlay",
-    "home_product",
-    "home_testimonials",
-    "home_map",
-    "home_message_Wi7xtj",
-    "home_products_dCGJfi",
-    "home_masonry",
-    "home_blog"
+    "updated_banner_kX38tm",
+    "product_image_card_YqBdUj",
+    "updated_featured_collection_P4yjij",
+    "updated_videosection_gzg74F",
+    "icon_ticker_3N7kdL",
+    "about_us_6UXzCa",
+    "updated_image_with_text_tAGRUD",
+    "updated_image_with_text_9rHQBP",
+    "faq_section_URWjb8",
+    "instagram_section_6RDbg4"
   ]
 }

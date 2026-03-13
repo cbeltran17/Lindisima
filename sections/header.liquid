@@ -38,7 +38,8 @@
     header-border
   {% endif %}
 {%- endcapture -%}
-
+{% comment %} {% assign test = "-1" %}
+{{ 2 | minus: test }} assasasasa {% endcomment %}
 <section
   class="{{ header_classes | replace: '  ', ' ' | strip_newlines }}"
   {% if section.settings.sticky_header %}data-sticky-header{% endif %}

@@ -1,0 +1,152 @@
+{%- style -%}
+  .banner-id-{{ section.id }} {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: {{ section.settings.padding_vertical_desktop }}px {{ section.settings.padding_horizontal_desktop }}px;
+  }
+
+  .banner-wrapper-{{ section.id }} {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ section.settings.border_radius }}px;
+    display: flex;
+    width: 100%;
+  }
+
+  .banner-bg-{{ section.id }} { width: 100%; display: block; }
+  .banner-bg-{{ section.id }} img { width: 100%; height: auto; display: block; object-fit: cover; }
+
+  .overlay-{{ section.id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 40px;
+    box-sizing: border-box;
+    z-index: 2;
+  }
+
+  /* Desktop Positioning Classes */
+  .pos-top-left { justify-content: flex-start; align-items: flex-start; }
+  .pos-top-center { justify-content: center; align-items: flex-start; }
+  .pos-top-right { justify-content: flex-end; align-items: flex-start; }
+  .pos-center-left { justify-content: flex-start; align-items: center; }
+  .pos-center-center { justify-content: center; align-items: center; }
+  .pos-center-right { justify-content: flex-end; align-items: center; }
+  .pos-bottom-left { justify-content: flex-start; align-items: flex-end; }
+  .pos-bottom-center { justify-content: center; align-items: flex-end; }
+  .pos-bottom-right { justify-content: flex-end; align-items: flex-end; }
+
+
+
+  .text-box-{{ section.id }} {max-width: 770px; color: {{ section.settings.text_color }}; }
+  .text-box-{{ section.id }} h2 {
+        font-size: 44px;
+    margin: 0 0 10px 0;
+    line-height: 100%;
+    letter-spacing: 2%;
+}
+  .btn-{{ section.id }} {
+    display: inline-block;
+    padding: 10px 45px;
+    text-decoration: none;
+    border-radius: 100px;
+    border: 1px solid black;
+    color: {{ section.settings.btn_text_color }};
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .btn-{{ section.id }}:hover {
+    color: {{ section.settings.btn_text_color }};
+  }
+    /* Mobile Positioning Classes */
+  @media (max-width: 767px) {
+    .banner-id-{{ section.id }} { padding: 0 15px; }
+    
+    .m-pos-top-left { justify-content: flex-start !important; align-items: flex-start !important; }
+    .m-pos-top-center { justify-content: center !important; align-items: flex-start !important; }
+    .m-pos-top-right { justify-content: flex-end !important; align-items: flex-start !important; }
+    .m-pos-center-left { justify-content: flex-start !important; align-items: center !important; }
+    .m-pos-center-center { justify-content: center !important; align-items: center !important; }
+    .m-pos-center-right { justify-content: flex-end !important; align-items: center !important; }
+    .m-pos-bottom-left { justify-content: flex-start !important; align-items: flex-end !important; }
+    .m-pos-bottom-center { justify-content: center !important; align-items: flex-end !important; }
+    .m-pos-bottom-right { justify-content: flex-end !important; align-items: flex-end !important; }
+
+    .overlay-{{ section.id }} { padding: 20px; }
+    .text-box-{{ section.id }} { max-width: 100%; text-align: {{ section.settings.mobile_text_align }} !important; }
+    .text-box-{{ section.id }} h2 { font-size: 40px !important; }
+     .btn-{{ section.id }} {
+        font-size: 26px !important;
+            padding: 14px 58px !important;
+                    line-height: 100%;
+     }
+  }
+{%- endstyle -%}
+
+<div class="banner-id-{{ section.id }}">
+  <div class="banner-wrapper-{{ section.id }}">
+    <picture class="banner-bg-{{ section.id }}">
+      {% if section.settings.mobile_image != blank %}<source media="(max-width: 767px)" srcset="{{ section.settings.mobile_image | img_url: '800x' }}">{% endif %}
+      {% if section.settings.desktop_image != blank %}<img src="{{ section.settings.desktop_image | img_url: '2000x' }}" alt="{{ section.settings.title }}">
+      {% else %}{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}
+    </picture>
+
+    <div class="overlay-{{ section.id }} {{ section.settings.content_position }} {{ section.settings.mobile_content_position }}">
+      <div class="text-box-{{ section.id }}" style="text-align: {{ section.settings.text_align }};">
+        {% if section.settings.title != blank %}<h2>{{ section.settings.title }}</h2>{% endif %}
+        {% if section.settings.paragraph != blank %}<p>{{ section.settings.paragraph }}</p>{% endif %}
+        {% if section.settings.button_label != blank %}
+          <a href="{{ section.settings.button_link }}" class="btn-{{ section.id }}">{{ section.settings.button_label }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Flexible Banner",
+  "settings": [
+    { "type": "header", "content": "Images Layout" },
+    { "type": "image_picker", "id": "desktop_image", "label": "Desktop Image" },
+    { "type": "image_picker", "id": "mobile_image", "label": "Mobile Image" },
+    { "type": "number", "id": "max_width", "label": "Max Width (px)", "default": 1820 },
+    { "type": "range", "id": "border_radius", "min": 0, "max": 100, "step": 2, "unit": "px", "label": "Border Radius", "default": 10 },
+    { "type": "header", "content": "Content Settings" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "Welcome the Spring Collection" },
+    { "type": "textarea", "id": "paragraph", "label": "Description" },
+    { "type": "text", "id": "button_label", "label": "Button Label", "default": "Shop Now" },
+    { "type": "url", "id": "button_link", "label": "Button Link" },
+    { "type": "header", "content": "Desktop Positioning" },
+    { "type": "select", "id": "content_position", "label": "Desktop Text Position", "options": [
+        { "value": "pos-top-left", "label": "Top Left" }, { "value": "pos-top-center", "label": "Top Center" }, { "value": "pos-top-right", "label": "Top Right" },
+        { "value": "pos-center-left", "label": "Center Left" }, { "value": "pos-center-center", "label": "Center" }, { "value": "pos-center-right", "label": "Center Right" },
+        { "value": "pos-bottom-left", "label": "Bottom Left" }, { "value": "pos-bottom-center", "label": "Bottom Center" }, { "value": "pos-bottom-right", "label": "Bottom Right" }
+      ], "default": "pos-bottom-left" },
+    { "type": "select", "id": "text_align", "label": "Desktop Text Align", "options": [
+        { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }
+      ], "default": "left" },
+    { "type": "header", "content": "Mobile Positioning" },
+    { "type": "select", "id": "mobile_content_position", "label": "Mobile Text Position", "options": [
+        { "value": "m-pos-top-center", "label": "Top Center" }, { "value": "m-pos-center-center", "label": "Center" }, { "value": "m-pos-bottom-center", "label": "Bottom Center" },
+        { "value": "m-pos-top-left", "label": "Top Left" }, { "value": "m-pos-bottom-left", "label": "Bottom Left" }
+      ], "default": "m-pos-bottom-center" },
+    { "type": "select", "id": "mobile_text_align", "label": "Mobile Text Align", "options": [
+        { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }
+      ], "default": "center" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "text_color", "label": "Text Color", "default": "#000000" },
+    { "type": "color", "id": "btn_bg_color", "label": "Button Background", "default": "#f4f4f4" },
+    { "type": "color", "id": "btn_text_color", "label": "Button Text Color", "default": "#000000" },
+    { "type": "header", "content": "Desktop Padding" },
+    { "type": "range", "id": "padding_horizontal_desktop", "min": 0, "max": 100, "step": 5, "unit": "px", "label": "Horizontal", "default": 60 },
+    { "type": "range", "id": "padding_vertical_desktop", "min": 0, "max": 100, "step": 5, "unit": "px", "label": "Vertical", "default": 30 }
+  ],
+  "presets": [
+    { "name": "Custom Flexible Banner" }
+  ]
+}
+{% endschema %}

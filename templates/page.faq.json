@@ -11,10 +11,272 @@
   "sections": {
     "main": {
       "type": "page",
+      "disabled": true,
       "settings": {}
+    },
+    "faq_page_rB4kWf": {
+      "type": "faq_page",
+      "blocks": {
+        "faq_item_E4dFpd": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is LINDÍSIMA’s mission?",
+            "answer": "Our mission is to create conscious beauty products rooted in intention, purity, and care. We believe beauty should feel honest, accessible, and deeply connected to well-being — honoring both skin and self through clean, cruelty-free formulations. Every product is designed to support mindful rituals and encourage a more intentional way of caring for yourself."
+          }
+        },
+        "faq_item_nU7tmW": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What does “conscious beauty” mean to LINDÍSIMA?",
+            "answer": "To us, conscious beauty means creating products with intention, transparency, and care. Our formulations prioritize skin health, ingredient integrity, and mindful self-care rituals."
+          }
+        },
+        "faq_item_aw7jb3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are LINDÍSIMA products cruelty-free?",
+            "answer": "Yes. All LINDÍSIMA products are cruelty-free. We never test on animals and work with partners who share the same commitment to ethical beauty."
+          }
+        },
+        "faq_item_4HJXEB": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are all LINDÍSIMA products vegan?",
+            "answer": "Not all of our products are vegan. Each product listing clearly indicates whether or not it is vegan so you can choose products that align with your preferences."
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_E4dFpd",
+        "faq_item_nU7tmW",
+        "faq_item_aw7jb3",
+        "faq_item_4HJXEB"
+      ],
+      "custom_css": [],
+      "name": "FAQ Section",
+      "settings": {
+        "custom_class": "frequently-questions",
+        "faq_heading": "About LINDÍSIMA",
+        "heading_color": "#111111",
+        "question_color": "#000000",
+        "answer_color": "#555555",
+        "padding_top": 10,
+        "padding_bottom": 20
+      }
+    },
+    "faq_page_nKk4j7": {
+      "type": "faq_page",
+      "blocks": {
+        "faq_item_dUHrRz": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I know which products are right for my skin?",
+            "answer": "Each product page includes ingredient information and guidance to help you understand how the product fits into your skincare routine and skin goals."
+          }
+        },
+        "faq_item_8DtQcr": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are LINDÍSIMA products suitable for sensitive skin?",
+            "answer": "Many of our formulations are created with gentle ingredients, but everyone’s skin is unique. We recommend performing a patch test before introducing a new product into your routine."
+          }
+        },
+        "faq_item_3QYwGq": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is a patch test?",
+            "answer": "Apply a small amount of product to a discreet area of skin, such as the inside of your wrist or elbow. Wait 24 hours to ensure your skin reacts comfortably before full use."
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_dUHrRz",
+        "faq_item_8DtQcr",
+        "faq_item_3QYwGq"
+      ],
+      "name": "FAQ Section",
+      "settings": {
+        "custom_class": "frequently-questions",
+        "faq_heading": "Choosing the Right Products",
+        "heading_color": "#111111",
+        "question_color": "#000000",
+        "answer_color": "#555555",
+        "padding_top": 10,
+        "padding_bottom": 20
+      }
+    },
+    "faq_page_A7DYLU": {
+      "type": "faq_page",
+      "blocks": {
+        "faq_item_TjKdw3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long will it take to see results?",
+            "answer": "Most customers begin noticing improvements in their skin within <strong>2–4 weeks of consistent use.</strong> Skincare works best as a daily ritual, and results continue to improve as your skin responds to nourishing ingredients over time."
+          }
+        },
+        "faq_item_c9fMqD": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I use LINDÍSIMA products with other skincare brands?",
+            "answer": "Yes. Our products are designed to complement a variety of skincare routines and can generally be used alongside products from other brands."
+          }
+        },
+        "faq_item_FGritg": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What order should I apply my skincare products?",
+            "answer": "A simple routine typically follows this order: cleanse, treat (serums or targeted treatments), moisturize, and apply SPF during the day."
+          }
+        },
+        "faq_item_7ULfLH": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What makes LINDÍSIMA different from other skincare brands?",
+            "answer": "LINDÍSIMA is built on the belief that skincare should be more than a routine — it should be a ritual. Our products are created to support intentional moments of care that nourish both skin and self."
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_TjKdw3",
+        "faq_item_c9fMqD",
+        "faq_item_FGritg",
+        "faq_item_7ULfLH"
+      ],
+      "name": "FAQ Section",
+      "settings": {
+        "custom_class": "frequently-questions",
+        "faq_heading": "Results & Skincare Ritual",
+        "heading_color": "#111111",
+        "question_color": "#000000",
+        "answer_color": "#555555",
+        "padding_top": 10,
+        "padding_bottom": 20
+      }
+    },
+    "faq_page_aQFUrX": {
+      "type": "faq_page",
+      "blocks": {
+        "faq_item_J3jaik": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What should I do if I entered the wrong shipping address?",
+            "answer": "Please contact us immediately. If your order has not yet shipped, we may be able to update the shipping address."
+          }
+        },
+        "faq_item_JRyWyU": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What if my order arrives damaged?",
+            "answer": "If your order arrives damaged, please contact us within 48 hours and include photos of the packaging and product so we can assist with a replacement.\n\nIf a product is confirmed to be defective or damaged, we will gladly provide a store credit."
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_J3jaik",
+        "faq_item_JRyWyU"
+      ],
+      "name": "FAQ Section",
+      "settings": {
+        "custom_class": "frequently-questions",
+        "faq_heading": "Orders",
+        "heading_color": "#111111",
+        "question_color": "#000000",
+        "answer_color": "#555555",
+        "padding_top": 10,
+        "padding_bottom": 20
+      }
+    },
+    "faq_page_aP8GjG": {
+      "type": "faq_page",
+      "blocks": {
+        "faq_item_UcxfVJ": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Where do you ship?",
+            "answer": "At this time we ship only within the United States. International shipping is not available.\n\nInspecting Your Order\nWe kindly ask that you review your order upon arrival. If your package appears damaged, defective, or incorrect, please contact us as soon as possible so we can assist you promptly.\n\nTo ensure we can properly evaluate the issue, concerns must be reported within 48 hours of delivery.\n\nQuality Assurance\nEach LINDÍSIMA product undergoes a meticulous quality review before it leaves our studio. While issues are rare, we take every concern seriously and will review claims with care.\n\nReporting a Concern\nWhen contacting us, please include:\n• Your order number\n• A description of the issue\n• Clear photos of the product and packaging\nThis allows our team to review the matter quickly and provide the best resolution.\n\nApproved Returns\nIf your claim is approved, we will provide a prepaid return shipping label along with instructions for returning the item.\nPlease note that returns sent without prior authorization cannot be accepted."
+          }
+        },
+        "faq_item_PR4Un7": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How much does shipping cost?",
+            "answer": "Standard Shipping: $5.99\nPriority Shipping: $12.99"
+          }
+        },
+        "faq_item_QB3eB6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you offer free shipping?",
+            "answer": "Yes. We offer free shipping on all orders over $150."
+          }
+        },
+        "faq_item_gcq8kM": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "Orders typically ship within 3–5 business days. Delivery time will vary depending on the shipping option selected at checkout."
+          }
+        },
+        "faq_item_nezXYw": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Will I receive tracking information?",
+            "answer": "Yes. Once your order ships, you will receive an email with tracking details so you can follow your package."
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_UcxfVJ",
+        "faq_item_PR4Un7",
+        "faq_item_QB3eB6",
+        "faq_item_gcq8kM",
+        "faq_item_nezXYw"
+      ],
+      "name": "FAQ Section",
+      "settings": {
+        "custom_class": "frequently-questions",
+        "faq_heading": "Shipping, Damages & Order Issues",
+        "heading_color": "#111111",
+        "question_color": "#000000",
+        "answer_color": "#555555",
+        "padding_top": 10,
+        "padding_bottom": 20
+      }
+    },
+    "faq_page_A6ahzR": {
+      "type": "faq_page",
+      "blocks": {
+        "faq_item_9rjePn": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How can I contact LINDÍSIMA?",
+            "answer": "If you have questions about our products, your order, or your skincare ritual, please reach out through our contact page or email us directly at <a href=\"#\">hello@lindisimany.com</a>. Our team will respond as soon as possible to assist you."
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_9rjePn"
+      ],
+      "name": "FAQ Section",
+      "settings": {
+        "custom_class": "faq-section",
+        "faq_heading": "Contact",
+        "heading_color": "#111111",
+        "question_color": "#000000",
+        "answer_color": "#555555",
+        "padding_top": 10,
+        "padding_bottom": 20
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "faq_page_rB4kWf",
+    "faq_page_nKk4j7",
+    "faq_page_A7DYLU",
+    "faq_page_aQFUrX",
+    "faq_page_aP8GjG",
+    "faq_page_A6ahzR"
   ]
 }

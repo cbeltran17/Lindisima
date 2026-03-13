@@ -1,133 +1,138 @@
 {% comment %}
-  Icon Ticker Section – Slick Slider
+  Refined Icon Ticker Section
+  Matches design from image_bb5c60.png and image_bb589d.png
 {% endcomment %}
 
-
 <style>
-  .icon-ticker-wrapper {
+  .icon-ticker-wrapper-{{ section.id }} {
     background: {{ section.settings.bg_color }};
-    padding: 15px 0;
+    padding: 0 0 18px 0;
     overflow: hidden;
-    margin: 0 30px;
-    max-width: 1260px;
-    margin: auto;
+    width: 100%;
+    border-bottom: 1px solid #e0e0e0;
   }
 
-  .icon-ticker {
+  .icon-ticker-{{ section.id }} {
     margin: 0 auto;
+    display: flex;
+    align-items: center;
   }
 
+  /* Item Layout */
   .icon-ticker-item {
     display: flex !important;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 10px;
-    text-align: center;
+    gap: 12px;
+    padding: 0 30px; /* Increased padding to prevent overlapping */
+    outline: none;
   }
 
-  .icon-ticker-item img,
-  .icon-ticker-item svg {
-    width: 28px;
-    height: 28px;
+  /* Dot/Icon Styling */
+  .icon-ticker-item img {
+    width: 8px; /* Small dots as seen in image_bb5c60.png */
+    height: 8px;
+    object-fit: contain;
     flex-shrink: 0;
   }
 
-  .icon-ticker-text {
-    font-size: 14px;
-    font-weight: 500;
-    color: {{ section.settings.text_color }};
-    white-space: nowrap;
+  /* Fallback for small dot if no icon is selected */
+  .ticker-dot-fallback {
+    width: 6px;
+    height: 6px;
+    background-color: #9BA695; /* Matches your brand green */
+    border-radius: 50%;
+    display: inline-block;
   }
 
+  .icon-ticker-text {
+        font-weight: 500;
+    font-size: 29px;
+    color: {{ section.settings.text_color }};
+    white-space: nowrap;
+    text-transform: none;
+    line-height: 100%;
+    letter-spacing: 3%;
+  }
+
+  /* Fixing the overlapping from image_bb589d.png */
   @media (max-width: 768px) {
+    .icon-ticker-item {
+      padding: 0 15px;
+      gap: 8px;
+    }
     .icon-ticker-text {
       font-size: 13px;
     }
   }
+
+  /* Slick initialization fix: prevents flash of unstyled content */
+  .icon-ticker-{{ section.id }}:not(.slick-initialized) {
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+  }
 </style>
-{% if template.name == "product" %}
-  {% if  product.metafields.custom.icon_ticker_section.value == true %}
-    <div class="icon-ticker-wrapper">
-      <div class="icon-ticker multiple-items">
-        {% for block in section.blocks %}
-          <div class="icon-ticker-item" {{ block.shopify_attributes }}>
-            {% if block.settings.icon != blank %}
-              <img 
-                src="{{ block.settings.icon | image_url: width: 60 }}"
-                alt="{{ block.settings.text | escape }}"
-                loading="lazy"
-              >
-            {% endif %}
-            <span class="icon-ticker-text">
-              {{ block.settings.text }}
-            </span>
-          </div>
-        {% endfor %}
-      </div>
+
+{%- capture ticker_content -%}
+  {% for block in section.blocks %}
+    <div class="icon-ticker-item" {{ block.shopify_attributes }}>
+      {% if block.settings.icon != blank %}
+        <img src="{{ block.settings.icon | image_url: width: 30 }}" alt="" loading="lazy">
+      {% else %}
+        <span class="ticker-dot-fallback"></span>
+      {% endif %}
+      <span class="icon-ticker-text">{{ block.settings.text }}</span>
     </div>
-  {% endif %}
-{% else %}
-  <div class="icon-ticker-wrapper">
-    <div class="icon-ticker multiple-items">
-      {% for block in section.blocks %}
-        <div class="icon-ticker-item" {{ block.shopify_attributes }}>
-          {% if block.settings.icon != blank %}
-            <img 
-              src="{{ block.settings.icon | image_url: width: 60 }}"
-              alt="{{ block.settings.text | escape }}"
-              loading="lazy"
-            >
-          {% endif %}
-          <span class="icon-ticker-text">
-            {{ block.settings.text }}
-          </span>
-        </div>
-      {% endfor %}
+  {% endfor %}
+{%- endcapture -%}
+
+{% if template.name != 'product' or product.metafields.custom.icon_ticker_section.value == true %}
+  <div class="icon-ticker-wrapper-{{ section.id }}">
+    <div class="icon-ticker-{{ section.id }} multiple-items-{{ section.id }}">
+      {{ ticker_content }}
+      {% comment %} Duplicate content for smoother infinite loop if few blocks {% endcomment %}
+      {% if section.blocks.size < 6 %}
+        {{ ticker_content }}
+      {% endif %}
     </div>
   </div>
 {% endif %}
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    if (typeof jQuery === 'undefined') return;
+    const initTicker = () => {
+      if (typeof jQuery === 'undefined' || typeof $.fn.slick === 'undefined') {
+        setTimeout(initTicker, 100);
+        return;
+      }
 
-    $('.multiple-items').slick({
-      infinite: true,
-      slidesToShow: 6,
-      slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 0,
-      speed: 5000,          // higher = slower scroll
-      cssEase: 'linear',
-      infinite: true,
-      arrows: false,
-      dots: false,
-      pauseOnHover: true,
-      pauseOnFocus: true,
-      swipe: false,
-      touchMove: false,
-      responsive: [
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 3
+      $('.multiple-items-{{ section.id }}').slick({
+        infinite: true,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 0,
+        speed: 6000, /* Smooth continuous scroll */
+        cssEase: 'linear',
+        arrows: false,
+        dots: false,
+        pauseOnHover: false,
+        pauseOnFocus: false,
+        variableWidth: true, /* Crucial for varying text lengths to prevent overlapping */
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: { slidesToShow: 3 }
+          },
+          {
+            breakpoint: 768,
+            settings: { slidesToShow: 2 }
           }
-        },
-        {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 3
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 3
-          }
-        }
-      ]
-    });
+        ]
+      });
+    };
+    initTicker();
   });
 </script>
 
@@ -139,7 +144,7 @@
       "type": "color",
       "id": "bg_color",
       "label": "Background color",
-      "default": "#fff7f3"
+      "default": "#ffffff"
     },
     {
       "type": "color",
@@ -156,7 +161,7 @@
         {
           "type": "image_picker",
           "id": "icon",
-          "label": "Icon"
+          "label": "Icon (Small Dot)"
         },
         {
           "type": "text",
@@ -169,13 +174,12 @@
   ],
   "presets": [
     {
-      "name": "Icon Ticker",
+      "name": "Icon Ticker Slider",
       "blocks": [
-        { "type": "item", "settings": { "text": "High-Quality" } },
-        { "type": "item", "settings": { "text": "Cruelty Free" } },
-        { "type": "item", "settings": { "text": "Plant Based" } },
-        { "type": "item", "settings": { "text": "Paraben-Free" } },
-        { "type": "item", "settings": { "text": "Vegan" } }
+        { "type": "item", "settings": { "text": "Beauty That Glows" } },
+        { "type": "item", "settings": { "text": "Pure Beauty Essentials" } },
+        { "type": "item", "settings": { "text": "Luxury Beauty Rituals" } },
+        { "type": "item", "settings": { "text": "Skin That Loves You Back" } }
       ]
     }
   ]

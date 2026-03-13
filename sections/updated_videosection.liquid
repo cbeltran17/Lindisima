@@ -1,0 +1,179 @@
+<style>
+  .video-trigger-section {
+     max-width: 1820px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .video-container-inner {
+    position: relative;
+    width: 100%;
+    height: 700px; 
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #000;
+  }
+
+  /* Overlay Cover */
+  .video-custom-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none; /* Let clicks pass through unless on the button */
+  }
+
+  .video-custom-overlay img.bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+  /* Specific Play Button */
+  .play-button-trigger {
+    width: 90px;
+    height: 90px;
+    cursor: pointer;
+    pointer-events: auto; /* Enable clicks ONLY here */
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 11;
+  }
+
+  .play-button-trigger:hover {
+    transform: scale(1.15);
+  }
+
+  .play-button-trigger img, 
+  .play-button-trigger svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .video-custom-overlay.is-hidden {
+    display: none;
+  }
+
+  /* Media Elements */
+  .video-trigger-section video,
+  .video-trigger-section iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    object-fit: cover;
+  }
+
+  @media (max-width: 767px) {
+    .video-container-inner {
+      height: 450px;
+    }
+    .play-button-trigger {
+      width: 70px;
+      height: 70px;
+    }
+  }
+</style>
+
+<div class="video-trigger-section" id="VideoSect-{{ section.id }}">
+  <div class="video-container-inner">
+    
+    {%- comment -%} The Overlay with the restricted Play Button {%- endcomment -%}
+    <div class="video-custom-overlay" id="Overlay-{{ section.id }}">
+      {% if section.settings.cover_image != blank %}
+        <img class="bg-image" src="{{ section.settings.cover_image | img_url: '1920x' }}" alt="Cover">
+      {% endif %}
+
+      <div class="play-button-trigger" onclick="handleVideoPlay{{ section.id | replace: '-', '_' }}()">
+        {% if section.settings.play_icon != blank %}
+          <img src="{{ section.settings.play_icon | img_url: '200x' }}" alt="Play">
+        {% else %}
+          <svg viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="45" cy="45" r="45" fill="white" fill-opacity="0.3"/>
+            <path d="M58 45L38 56.547L38 33.453L58 45Z" fill="white"/>
+          </svg>
+        {% endif %}
+      </div>
+    </div>
+
+    {%- comment -%} Video Source {%- endcomment -%}
+    <div id="MediaContainer-{{ section.id }}" style="width:100%; height:100%;">
+      {% if section.settings.video_url.type == 'youtube' %}
+        <iframe id="Youtube-{{ section.id }}"
+                src="https://www.youtube.com/embed/{{ section.settings.video_url.id }}?enablejsapi=1&rel=0&autoplay=0" 
+                allow="autoplay; encrypted-media" 
+                allowfullscreen></iframe>
+      {% elsif section.settings.hosted_video != blank %}
+        <video id="Hosted-{{ section.id }}" controls>
+          <source src="{{ section.settings.hosted_video.url }}" type="video/mp4">
+        </video>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function handleVideoPlay{{ section.id | replace: '-', '_' }}() {
+    const overlay = document.getElementById('Overlay-{{ section.id }}');
+    overlay.classList.add('is-hidden');
+
+    {% if section.settings.video_url.type == 'youtube' %}
+      const iframe = document.getElementById('Youtube-{{ section.id }}');
+      // Sending postMessage to YouTube API to trigger play
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      // Fallback: Re-setting src with autoplay=1 if API is slow
+      if (!iframe.src.includes("autoplay=1")) {
+        iframe.src += "&autoplay=1";
+      }
+    {% elsif section.settings.hosted_video != blank %}
+      const video = document.getElementById('Hosted-{{ section.id }}');
+      video.play();
+    {% endif %}
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Triggered Video",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "cover_image",
+      "label": "Cover Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "play_icon",
+      "label": "Custom Play Icon"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "label": "YouTube URL",
+      "accept": ["youtube"]
+    },
+    {
+      "type": "video",
+      "id": "hosted_video",
+      "label": "Or Shopify MP4 Video"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Triggered Video"
+    }
+  ]
+}
+{% endschema %}
