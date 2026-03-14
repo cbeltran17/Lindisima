@@ -98,6 +98,22 @@
     max-height: 1000px;
   }
 
+  .faq-hidden-items {
+    display: none;
+  }
+
+  .view-more-button {
+    background-color: transparent; /* Fond transparent */
+    color: white;
+    padding: 10px 20px;
+    border: 1px solid white; /* Bordure pour la visibilité */
+    border-radius: 12px; /* Rayon de bordure de 12px */
+    cursor: pointer;
+    margin: 20px auto; /* Centrer le bouton et ajouter une marge supérieure */
+    display: block; /* Nécessaire pour que margin: auto fonctionne */
+    font-size: 16px;
+  }
+
   @media (max-width: 1024px) {
     .faq-container {
       flex-direction: column;
@@ -133,19 +149,47 @@
     </div>
 
     <div class="faq-accordion">
+      {% assign faq_count = 0 %}
       {% for block in section.blocks %}
-        <div class="faq-item" {{ block.shopify_attributes }}>
-          <button class="faq-trigger" onclick="toggleFaq(this)">
-            <h3 class="faq-question">{{ block.settings.question }}</h3>
-            <span class="faq-icon" id="icon-{{ block.id }}">+</span>
-          </button>
-          <div class="faq-content">
-            <div class="faq-inner-desc">
-              {{ block.settings.answer }}
+        {% assign faq_count = faq_count | plus: 1 %}
+        {% if faq_count <= 5 %}
+          <div class="faq-item" {{ block.shopify_attributes }}>
+            <button class="faq-trigger" onclick="toggleFaq(this)">
+              <h3 class="faq-question">{{ block.settings.question }}</h3>
+              <span class="faq-icon" id="icon-{{ block.id }}">+</span>
+            </button>
+            <div class="faq-content">
+              <div class="faq-inner-desc">
+                {{ block.settings.answer }}
+              </div>
             </div>
           </div>
-        </div>
+        {% else %}
+          {% if faq_count == 6 %}
+            <div class="faq-hidden-items" id="faq-hidden-items-{{ section.id }}">
+          {% endif %}
+            <div class="faq-item" {{ block.shopify_attributes }}>
+              <button class="faq-trigger" onclick="toggleFaq(this)">
+                <h3 class="faq-question">{{ block.settings.question }}</h3>
+                <span class="faq-icon" id="icon-{{ block.id }}">+</span>
+              </button>
+              <div class="faq-content">
+                <div class="faq-inner-desc">
+                  {{ block.settings.answer }}
+                </div>
+              </div>
+            </div>
+          {% if forloop.last %}
+            </div> {# close faq-hidden-items #}
+          {% endif %}
+        {% endif %}
       {% endfor %}
+
+      {% if section.blocks.size > 5 %}
+        <button class="view-more-button" onclick="toggleHiddenFaqs('faq-hidden-items-{{ section.id }}', this)" id="view-more-button-{{ section.id }}">
+          Voir plus
+        </button>
+      {% endif %}
     </div>
 
   </div>
@@ -157,16 +201,32 @@
     const icon = element.querySelector('.faq-icon');
     const isActive = parent.classList.contains('is-active');
     
-    // 1. Close all other items and reset their icons to +
+    // Close all other items and reset their icons to +
     document.querySelectorAll('.faq-item').forEach(item => {
-      item.classList.remove('is-active');
-      item.querySelector('.faq-icon').textContent = '+';
+      if (item !== parent) {
+        item.classList.remove('is-active');
+        item.querySelector('.faq-icon').textContent = '+';
+      }
     });
 
-    // 2. If the clicked item wasn't active, open it and change icon to -
+    // If the clicked item wasn't active, open it and change icon to -
     if (!isActive) {
       parent.classList.add('is-active');
       icon.textContent = '-';
+    } else {
+      parent.classList.remove('is-active');
+      icon.textContent = '+';
+    }
+  }
+
+  function toggleHiddenFaqs(hiddenItemsId, buttonElement) {
+    const hiddenItems = document.getElementById(hiddenItemsId);
+    if (hiddenItems.style.display === 'none') {
+      hiddenItems.style.display = 'block';
+      buttonElement.textContent = 'Voir moins';
+    } else {
+      hiddenItems.style.display = 'none';
+      buttonElement.textContent = 'Voir plus';
     }
   }
 </script>
