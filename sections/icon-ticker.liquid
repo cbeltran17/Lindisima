@@ -6,7 +6,7 @@
 <style>
   .icon-ticker-wrapper-{{ section.id }} {
     background: {{ section.settings.bg_color }};
-    padding: 0 0 18px 0;
+    padding: 20px 0 18px 0;
     overflow: hidden;
     width: 100%;
     border-bottom: 1px solid #e0e0e0;
@@ -30,16 +30,16 @@
 
   /* Dot/Icon Styling */
   .icon-ticker-item img {
-    width: 8px; /* Small dots as seen in image_bb5c60.png */
-    height: 8px;
+    width: 24px; /* Small dots as seen in image_bb5c60.png */
+    height: 24px;
     object-fit: contain;
     flex-shrink: 0;
   }
 
   /* Fallback for small dot if no icon is selected */
   .ticker-dot-fallback {
-    width: 6px;
-    height: 6px;
+    width: 12px;
+    height: 12px;
     background-color: #9BA695; /* Matches your brand green */
     border-radius: 50%;
     display: inline-block;
@@ -63,6 +63,14 @@
     }
     .icon-ticker-text {
       font-size: 13px;
+    }
+    .icon-ticker-item img {
+      width: 16px;
+      height: 16px;
+    }
+    .ticker-dot-fallback {
+      width: 8px;
+      height: 8px;
     }
   }
 
