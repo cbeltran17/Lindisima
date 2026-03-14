@@ -1,5 +1,5 @@
 {% comment %} 
-  Split FAQ Section - Centered Header and FAQ for Desktop
+  Split FAQ Section - Centered Layout for Desktop
 {% endcomment %}
 
 <style>
@@ -11,15 +11,17 @@
 
   .faq-container {
     display: flex;
-    gap: 100px;
-    align-items: flex-start;
-    justify-content: center; /* Centrage horizontal sur desktop */
+    flex-direction: column;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
     margin: 0 auto;
   }
 
   .faq-info {
-    flex: 0 0 35%;
-    text-align: center; /* Centrage du texte de l'en-tête */
+    width: 100%;
+    max-width: 700px;
+    text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -42,8 +44,8 @@
   }
 
   .faq-accordion {
-    flex: 1;
-    max-width: 600px; /* Limite la largeur pour un meilleur rendu centré */
+    width: 100%;
+    max-width: 700px;
   }
 
   .faq-item {
@@ -125,16 +127,14 @@
     .faq-container {
       flex-direction: column;
       gap: 30px;
-      justify-content: center;
-      align-items: center;
     }
     .faq-info {
-      flex: 1 1 100%;
-      text-align: center;
+      width: 100%;
+      max-width: 600px;
     }
     .faq-accordion {
-      max-width: 100%;
       width: 100%;
+      max-width: 600px;
     }
   }
 
@@ -151,6 +151,12 @@
     }
     .faq-trigger {
       padding: 11px 0 10px 0;
+    }
+    .faq-info {
+      max-width: 100%;
+    }
+    .faq-accordion {
+      max-width: 100%;
     }
   }
 </style>
