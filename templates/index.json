@@ -90,7 +90,7 @@
       "name": "Bestsellers Collection",
       "settings": {
         "title": "Bestsellers",
-        "collection": "bundles"
+        "collection": "frontpage"
       }
     },
     "updated_videosection_gzg74F": {
