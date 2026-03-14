@@ -2,11 +2,13 @@
   <div class="header-container">
     <div class="header-left">
       <div class="logo">
+        <a href="/">
           {% if section.settings.logo_image != blank %}
             <img src="{{ section.settings.logo_image | img_url: 'medium' }}" alt="{{ shop.name }}">
           {% else %}
             {{ shop.name }}
           {% endif %}
+        </a>
       </div>
     </div>
     <div class="header-center">
@@ -37,11 +39,13 @@
     </div>
     <div class="header-center header-center-mobile" style='display : none;'>
       <div class="logo">
+        <a href="/">
           {% if section.settings.logo_image != blank %}
             <img src="{{ section.settings.logo_image | img_url: 'medium' }}" alt="{{ shop.name }}">
           {% else %}
             {{ shop.name }}
           {% endif %}
+        </a>
       </div>
     </div>
     <div class="header-right">
