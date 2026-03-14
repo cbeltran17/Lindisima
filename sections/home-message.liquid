@@ -14,6 +14,15 @@
   {%- assign caption = 'onboarding.message.caption' | t -%}
 {%- endif -%}
 
+<style>
+  #shopify-section-{{ section.id }} .home-message-content h2,
+  #shopify-section-{{ section.id }} .home-message-content .rte,
+  #shopify-section-{{ section.id }} .home-message-content .rte p,
+  #shopify-section-{{ section.id }} .home-message-content .rte span {
+    font-size: calc(1em + 2pt) !important;
+  }
+</style>
+
 <section
   class="home-message"
   data-section-id="{{ section.id }}"
@@ -90,5 +99,4 @@
     ]
   }
 }
-
 {% endschema %}
