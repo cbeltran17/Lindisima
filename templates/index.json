@@ -109,6 +109,12 @@
     "icon_ticker_3N7kdL": {
       "type": "icon-ticker",
       "blocks": {
+        "item_cP44rc": {
+          "type": "item",
+          "settings": {
+            "text": "Cruelty Free"
+          }
+        },
         "item_bhYJEN": {
           "type": "item",
           "settings": {
@@ -160,6 +166,7 @@
         }
       },
       "block_order": [
+        "item_cP44rc",
         "item_bhYJEN",
         "item_n7wUDM",
         "item_KbT9ML",
