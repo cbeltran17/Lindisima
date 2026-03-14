@@ -62,8 +62,8 @@
           "settings": {
             "image": "shopify://shop_images/Mask_group.png",
             "title": "Timeless",
-            "button_text": "",
-            "link": ""
+            "button_text": "Shop Timeless",
+            "link": "shopify://collections/anti-ageing"
           }
         }
       },
