@@ -21,7 +21,7 @@
         "mobile_image": "shopify://shop_images/Photoroom_20260314_124349.jpg",
         "max_width": 1820,
         "border_radius": 10,
-        "title": "Clean Formulas You Can Trust",
+        "title": "Clean Formulas for You",
         "paragraph": "Vegan, Cruelty-Free, and Conscious",
         "button_label": "Shop Now",
         "button_link": "shopify://collections/all",
@@ -194,6 +194,14 @@
         "text_color": "#000000"
       }
     },
+    "updated_featured_collection_nU96dt": {
+      "type": "UpdatedFeaturedCollection",
+      "name": "Bestsellers Collection",
+      "settings": {
+        "title": "Shop signature formulas",
+        "collection": "bundles"
+      }
+    },
     "updated_image_with_text_9rHQBP": {
       "type": "Updated_image_with_text",
       "blocks": {
@@ -295,6 +303,41 @@
         "description": "About LINDÍSIMA"
       }
     },
+    "updated_image_with_text_nBFccJ": {
+      "type": "Updated_image_with_text",
+      "blocks": {
+        "image_block_qzkeG9": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/Mask_group_2.png"
+          }
+        },
+        "content_block_xY8GD8": {
+          "type": "content_block",
+          "settings": {
+            "title": "About Us",
+            "text": "<p><strong>Beauty, With Intention</strong></p><p>LINDÍSIMA is a women-owned clean beauty brand inspired by nature, heritage, and mindful self-care.</p><p>Founded by Colombian entrepreneurs and based in New York, we create vegan, cruelty-free, plant-based skincare designed to support healthy skin and simple daily rituals.</p><p>Beauty isn’t something to perfect — it’s something to nurture.</p>",
+            "btn_label": "View More",
+            "btn_link": "shopify://pages/about-us"
+          }
+        }
+      },
+      "block_order": [
+        "image_block_qzkeG9",
+        "content_block_xY8GD8"
+      ],
+      "name": "Split Image & Text",
+      "settings": {
+        "bg_color": "#f9f1e7",
+        "border_radius": 20,
+        "v_align": "center",
+        "h_align": "left",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_left": 80,
+        "padding_right": 80
+      }
+    },
     "instagram_section_6RDbg4": {
       "type": "instagram_section",
       "blocks": {
@@ -345,49 +388,6 @@
       "settings": {
         "title": "Follow us on Instagram",
         "insta_link": "#"
-      }
-    },
-    "updated_image_with_text_nBFccJ": {
-      "type": "Updated_image_with_text",
-      "blocks": {
-        "image_block_qzkeG9": {
-          "type": "image_block",
-          "settings": {
-            "image": "shopify://shop_images/Mask_group_2.png"
-          }
-        },
-        "content_block_xY8GD8": {
-          "type": "content_block",
-          "settings": {
-            "title": "About Us",
-            "text": "<p><strong>Beauty, With Intention</strong></p><p>LINDÍSIMA is a women-owned clean beauty brand inspired by nature, heritage, and mindful self-care.</p><p>Founded by Colombian entrepreneurs and based in New York, we create vegan, cruelty-free, plant-based skincare designed to support healthy skin and simple daily rituals.</p><p>Beauty isn’t something to perfect — it’s something to nurture.</p>",
-            "btn_label": "View More",
-            "btn_link": "shopify://pages/about-us"
-          }
-        }
-      },
-      "block_order": [
-        "image_block_qzkeG9",
-        "content_block_xY8GD8"
-      ],
-      "name": "Split Image & Text",
-      "settings": {
-        "bg_color": "#f9f1e7",
-        "border_radius": 20,
-        "v_align": "center",
-        "h_align": "left",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_left": 80,
-        "padding_right": 80
-      }
-    },
-    "updated_featured_collection_nU96dt": {
-      "type": "UpdatedFeaturedCollection",
-      "name": "Bestsellers Collection",
-      "settings": {
-        "title": "Shop signature formulas",
-        "collection": "bundles"
       }
     }
   },
