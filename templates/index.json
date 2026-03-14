@@ -202,7 +202,7 @@
           "type": "button",
           "settings": {
             "btn_label": "Read More",
-            "link": "",
+            "link": "shopify://pages/about-us",
             "align_desktop": "center",
             "align_mobile": "center"
           }
