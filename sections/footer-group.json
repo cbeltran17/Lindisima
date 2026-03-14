@@ -17,8 +17,8 @@
         "newsletter_HbeyC7": {
           "type": "newsletter",
           "settings": {
-            "heading": "Sign up for updates and get 10% discount",
-            "subheading": "By signing up you agree to our terms."
+            "heading": "Your Clean Beauty Ritual Starts Here - Save 10%",
+            "subheading": "Sign up for LINDISIMA updates and discover vegan, cruelty-free skincare designed to hydrate, nourish, and protect your skin. Receive 10% off your first order — because radiant skin starts with clean beauty."
           }
         },
         "link_list_fPxekN": {
@@ -51,7 +51,7 @@
       ],
       "name": "Custom Mobile Footer",
       "settings": {
-        "footer_bg_color": "#9BA695",
+        "footer_bg_color": "#9ba695",
         "logo": "shopify://shop_images/output-onlinepngtools_5.png",
         "show_payment_icons": true
       }
