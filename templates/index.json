@@ -331,6 +331,13 @@
             "question": "How do I know which products are right for my skin?",
             "answer": "<p>Each product page includes ingredient information and guidance to help you understand how the product fits into your skincare routine and skin goals.</p>"
           }
+        },
+        "faq_item_nEjN9w": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Question Title",
+            "answer": "<p>Detailed answer goes here.</p>"
+          }
         }
       },
       "block_order": [
@@ -338,7 +345,8 @@
         "faq_item_449E9G",
         "faq_item_7LQTMR",
         "faq_item_EqagyL",
-        "faq_item_Xf9GgP"
+        "faq_item_Xf9GgP",
+        "faq_item_nEjN9w"
       ],
       "custom_css": [
         "{background: #8f9c87;}"
