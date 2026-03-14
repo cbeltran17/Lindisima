@@ -95,6 +95,7 @@
     },
     "updated_videosection_gzg74F": {
       "type": "updated_videosection",
+      "disabled": true,
       "custom_css": [
         "@media (max-width: 767px) {{margin: 31px 0 0 0 !important; }}"
       ],
@@ -177,83 +178,6 @@
       "settings": {
         "bg_color": "rgba(0,0,0,0)",
         "text_color": "#000000"
-      }
-    },
-    "about_us_6UXzCa": {
-      "type": "About_us",
-      "blocks": {
-        "title_VGWdyR": {
-          "type": "title",
-          "settings": {
-            "title_text": "About Us",
-            "align_desktop": "center",
-            "align_mobile": "center"
-          }
-        },
-        "description_w8hMid": {
-          "type": "description",
-          "settings": {
-            "content": "<h4><strong>Beauty, With Intention</strong></h4><p><strong>LINDÍSIMA is a women-owned clean beauty brand based in New York, founded by Colombian entrepreneurs Victoria Beltran and Linda Soares.</strong></p><p></p><p>Inspired by their roots and a deep connection to nature, LINDÍSIMA creates <strong>clean, vegan, cruelty-free, plant-based skincare</strong> designed to support both skin health and mindful self-care.</p><p></p><p>At LINDÍSIMA, beauty is approached as a <strong>daily ritual of care rather than perfection</strong>, encouraging presence, balance, and natural glow.</p><p></p><h3>Our Roots</h3><p>LINDÍSIMA was created to honor a connection to nature, culture, and the quiet rituals that shape everyday life. Inspired by Colombia’s landscapes and now based in New York, the brand reflects a meeting of heritage and modern living.</p><p>The <strong>Cattleya orchid</strong>, Colombia’s national flower, became our symbol — representing beauty, renewal, and resilience. Like the flower itself, beauty unfolds gently through care, patience, and intention.</p><h3>Our Philosophy</h3><p>LINDÍSIMA exists at the intersection of <strong>clean beauty and everyday wellness</strong>. Each product is thoughtfully formulated to support the skin while creating moments of connection and self-care.</p><p>Our approach is guided by three principles:</p><p><strong>Botanical Integrity:</strong>Plant-based formulations inspired by nature and guided by purity and transparency.</p><p><strong>Ritual & Intimacy:</strong>Skincare experienced as a personal ritual that encourages presence and well-being.</p><p><strong>Modern Femininity:</strong>Beauty that celebrates confidence, softness, and authenticity.</p><h3>Conscious Formulation</h3><p>Every LINDÍSIMA product is created with care, responsibility, and transparency.</p><p>Our formulations are:</p><p>• Vegan</p><p>• Cruelty-free</p><p>• Plant-based</p><p>• Clean and thoughtfully formulated</p><p>Each ingredient is selected with intention to support healthy skin and natural radiance.</p><p><strong>LINDÍSIMA</strong></p><p>Thoughtful. Intentional. Gently powerful.</p><p>Beauty is nurtured.<br/><br/></p>",
-            "align_desktop": "center",
-            "align_mobile": "center"
-          }
-        },
-        "button_RUiUE6": {
-          "type": "button",
-          "settings": {
-            "btn_label": "Read More",
-            "link": "shopify://pages/about-us",
-            "align_desktop": "center",
-            "align_mobile": "center"
-          }
-        }
-      },
-      "block_order": [
-        "title_VGWdyR",
-        "description_w8hMid",
-        "button_RUiUE6"
-      ],
-      "name": "About Us",
-      "settings": {
-        "bg_color_desktop": "#8f9c87",
-        "text_color_desktop": "#ffffff",
-        "bg_color_mobile": "#8f9c87",
-        "text_color_mobile": "#ffffff"
-      }
-    },
-    "updated_image_with_text_tAGRUD": {
-      "type": "Updated_image_with_text",
-      "blocks": {
-        "image_block_MkHMei": {
-          "type": "image_block",
-          "settings": {
-            "image": "shopify://shop_images/Untitled-11_copy1_1.jpg"
-          }
-        },
-        "content_block_66yjkc": {
-          "type": "content_block",
-          "settings": {
-            "title": "Beauty That Works",
-            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.Ut nec scelerisque ex. Donec dignissim justo at tortor pellentesque posuere. Maecenas mollis vehicula pretium. Pellentesque maximus magna egestas, feugiat justo nec, facilisis ipsum.</p>",
-            "btn_label": "Shop Now",
-            "btn_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "image_block_MkHMei",
-        "content_block_66yjkc"
-      ],
-      "name": "Split Image & Text",
-      "settings": {
-        "bg_color": "#f9f1e7",
-        "border_radius": 20,
-        "v_align": "bottom",
-        "h_align": "left",
-        "padding_top": 80,
-        "padding_bottom": 50,
-        "padding_left": 80,
-        "padding_right": 80
       }
     },
     "updated_image_with_text_9rHQBP": {
@@ -451,8 +375,6 @@
     "updated_featured_collection_P4yjij",
     "updated_videosection_gzg74F",
     "icon_ticker_3N7kdL",
-    "about_us_6UXzCa",
-    "updated_image_with_text_tAGRUD",
     "updated_image_with_text_9rHQBP",
     "faq_section_URWjb8",
     "instagram_section_6RDbg4",
