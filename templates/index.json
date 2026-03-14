@@ -300,61 +300,53 @@
         "faq_item_e8NkfX": {
           "type": "faq_item",
           "settings": {
-            "question": "Lorem Ipsum has been the industry's standard dummy?",
-            "answer": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+            "question": "What is LINDÍSIMA’s mission?",
+            "answer": "<p>Our mission is to create conscious beauty products rooted in intention, purity, and care. We believe beauty should feel honest, accessible, and deeply connected to well-being — honoring both skin and self through clean, cruelty-free formulations. Every product is designed to support mindful rituals and encourage a more intentional way of caring for yourself.</p>"
+          }
+        },
+        "faq_item_449E9G": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What does “conscious beauty” mean to LINDÍSIMA?",
+            "answer": "<p>To us, conscious beauty means creating products with intention, transparency, and care. Our formulations prioritize skin health, ingredient integrity, and mindful self-care rituals.</p>"
           }
         },
         "faq_item_7LQTMR": {
           "type": "faq_item",
           "settings": {
-            "question": "Vivamus fermentum nisl ut risus vehicula, bibendum interdum sem sagittis.?",
-            "answer": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
-          }
-        },
-        "faq_item_Xf9GgP": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Aenean interdum mi a metus placerat consectetur?",
-            "answer": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+            "question": "Are LINDÍSIMA products cruelty-free?",
+            "answer": "<p>Yes. All LINDÍSIMA products are cruelty-free. We never test on animals and work with partners who share the same commitment to ethical beauty.</p>"
           }
         },
         "faq_item_EqagyL": {
           "type": "faq_item",
           "settings": {
-            "question": "Suspendisse facilisis ante quis risus semper dignissim?",
-            "answer": "<p>Detailed answer goes here.</p>"
+            "question": "Are all LINDÍSIMA products vegan?",
+            "answer": "<p>Not all of our products are vegan. Each product listing clearly indicates whether or not it is vegan so you can choose products that align with your preferences.</p>"
           }
         },
-        "faq_item_TAWr9K": {
+        "faq_item_Xf9GgP": {
           "type": "faq_item",
           "settings": {
-            "question": "Duis auctor eros vitae faucibus aliquet?",
-            "answer": "<p>Detailed answer goes here.</p>"
-          }
-        },
-        "faq_item_MwLUd9": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Cras eleifend urna vitae dui ultrices, vulputate auctor ipsum congue?",
-            "answer": "<p>Detailed answer goes here.</p>"
+            "question": "How do I know which products are right for my skin?",
+            "answer": "<p>Each product page includes ingredient information and guidance to help you understand how the product fits into your skincare routine and skin goals.</p>"
           }
         }
       },
       "block_order": [
         "faq_item_e8NkfX",
+        "faq_item_449E9G",
         "faq_item_7LQTMR",
-        "faq_item_Xf9GgP",
         "faq_item_EqagyL",
-        "faq_item_TAWr9K",
-        "faq_item_MwLUd9"
+        "faq_item_Xf9GgP"
       ],
       "custom_css": [
         "{background: #8f9c87;}"
       ],
       "name": "FAQ Split Section",
       "settings": {
-        "title": "FAQ's",
-        "description": "Lorem Ipsum has been the industry's standard dummy text ever since the when an unknown\nprinter took a galley of type and scrambled it to make a type specimen book Lorem Ipsum has\nbeen the industry's standard dummy text ever since the when an unknown printer took a\ngalley of type and scrambled it to make a type specimen book"
+        "title": "LINDÍSIMA FAQ",
+        "description": "About LINDÍSIMA"
       }
     },
     "instagram_section_6RDbg4": {
