@@ -128,18 +128,18 @@
             "text": "Beauty That Glows"
           }
         },
-        "item_n7wUDM": {
-          "type": "item",
-          "settings": {
-            "icon": "shopify://shop_images/Ellipse_4.svg",
-            "text": "Clean Beauty Essentials"
-          }
-        },
         "item_KbT9ML": {
           "type": "item",
           "settings": {
             "icon": "shopify://shop_images/Ellipse_4.svg",
             "text": "Vegan"
+          }
+        },
+        "item_qX3a8E": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/Ellipse_4.svg",
+            "text": "Cruelty Free Beauty"
           }
         },
         "item_68ycPr": {
@@ -149,11 +149,11 @@
             "text": "Skin That Loves You Back"
           }
         },
-        "item_qX3a8E": {
+        "item_n7wUDM": {
           "type": "item",
           "settings": {
             "icon": "shopify://shop_images/Ellipse_4.svg",
-            "text": "Cruelty Free Beauty"
+            "text": "Clean Beauty Essentials"
           }
         },
         "item_RXVyyB": {
@@ -167,7 +167,7 @@
           "type": "item",
           "settings": {
             "icon": "shopify://shop_images/Ellipse_4.svg",
-            "text": "Pure Beauty Essentials"
+            "text": "Paraben-Free"
           }
         }
       },
@@ -175,10 +175,10 @@
         "item_qzdhEc",
         "item_cP44rc",
         "item_bhYJEN",
-        "item_n7wUDM",
         "item_KbT9ML",
-        "item_68ycPr",
         "item_qX3a8E",
+        "item_68ycPr",
+        "item_n7wUDM",
         "item_RXVyyB",
         "item_EjtWwY"
       ],
