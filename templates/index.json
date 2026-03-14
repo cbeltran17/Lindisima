@@ -209,7 +209,7 @@
           "type": "content_block",
           "settings": {
             "title": "Healthy Skin Starts Here",
-            "text": "<p>Discover clean beauty that transforms your skin naturally. Our carefully curated collection of non-toxic skincare products is designed to nourish, protect, and rejuvenate without harsh chemicals or synthetic additives. From gentle cleansers to powerful serums, every product works in harmony with your skin's natural biology. Healthy skin starts here—where purity meets performance. Experience the difference that clean, cruelty free conscious beauty can make.</p>",
+            "text": "<p>Discover <strong>clean beauty skincare</strong> that transforms your skin naturally. Our carefully curated collection of <strong>non-toxic, cruelty-free skincare products</strong> is designed to <strong>nourish, hydrate, and rejuvenate</strong> without harsh chemicals, parabens, or synthetic additives. From <strong>gentle cleansers</strong> to <strong>powerful serums and moisturizers</strong>, every product works in harmony with your skin’s natural biology.</p><p>Experience <strong>healthy, radiant skin</strong> with <strong>vegan, clean skincare solutions</strong> that combine <strong>purity and performance</strong>. Elevate your daily routine with <strong>conscious, cruelty-free beauty products</strong> that protect, restore, and enhance your natural glow.</p>",
             "btn_label": "Shop Now",
             "btn_link": "shopify://collections/all"
           }
