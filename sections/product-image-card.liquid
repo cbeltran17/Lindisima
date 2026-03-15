@@ -28,22 +28,13 @@
   }
 
   /* Grid / Slider Layout */
-  /* keep original negative margin but make the container a flex row for desktop/tablet */
   .skin-goals-grid {
     margin: 0 -15.75px; /* Half of 31.5px gap */
-    display: flex;
-    gap: 31.5px; /* visual gap between cards */
-    align-items: stretch;
-    flex-wrap: nowrap; /* keep horizontal on desktop/tablet while slick is active */
   }
 
   .skin-goal-card {
     padding: 0 15.75px;
     outline: none;
-    box-sizing: border-box;
-    /* default to 3 columns on desktop */
-    flex: 0 0 calc((100% / 3) - 31.5px/3);
-    max-width: calc((100% / 3) - 31.5px/3);
   }
 
   .card-inner {
@@ -56,7 +47,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 23px 35px;
+        padding: 23px 35px;
   }
 
   .card-title {
@@ -96,35 +87,16 @@
     color: #fff;
   }
 
-  /* Tablet breakpoint: 2 columns horizontal */
-  @media (max-width: 1024px) and (min-width: 768px) {
-    .skin-goals-grid {
-      /* remain horizontal */
-      flex-wrap: nowrap;
-    }
-    .skin-goal-card {
-      flex: 0 0 calc((100% / 2) - 31.5px/2);
-      max-width: calc((100% / 2) - 31.5px/2);
-    }
-    .card-inner {
-      padding: 20px 28px;
-    }
-    .card-title {
-      font-size: 36px;
-    }
-  }
-
   /* Mobile Styles */
   @media (max-width: 767px) {
     .skin-goals-section{
-      padding: 0 17px;
+            padding: 0 17px;
     }
     .skin-goals-title {
       font-size: 26px;
       font-weight: 600;
     }
-
-    /* When unslicked on mobile we rely on this to stack the cards vertically */
+    
     .skin-goals-grid {
       margin: 0;
       display: flex;
@@ -135,23 +107,16 @@
     .skin-goal-card {
       padding: 0;
       width: 100%;
-      flex: 0 0 100%;
-      max-width: 100%;
     }
 
     .card-title {
       font-size: 28px; /* Downsized for mobile readability */
     }
-
+    
     .card-inner {
-      aspect-ratio: 1 / 1.2;
-      padding: 14px 21px;
+        aspect-ratio: 1 / 1.2;
+        padding: 14px 21px;
     }
-  }
-
-  /* Safety for when slick wraps slides (ensure slides take full height) */
-  .skin-goals-grid .slick-slide {
-    height: auto !important;
   }
 </style>
 
@@ -183,53 +148,25 @@
 
 <script>
   $(document).ready(function(){
-    var $slider = $('#SkinGoalsSlider-{{ section.id }}');
-
-    function initSlider() {
-      if ($slider.hasClass('slick-initialized')) {
-        return;
-      }
-
-      $slider.slick({
-        infinite: false,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        arrows: false,
-        dots: false,
-        responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
-              infinite: false
-            }
-          },
-          {
-            breakpoint: 767, /* below this we will unslick to show stacked vertical cards */
-            settings: "unslick"
+    $('#SkinGoalsSlider-{{ section.id }}').slick({
+      infinite: false,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      arrows: false,
+      dots: false,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2.2,
+            infinite: false
           }
-        ]
-      });
-    }
-
-    // Initialize on load if viewport > 767
-    if ($(window).width() > 767) {
-      initSlider();
-    }
-
-    // Re-init / destroy on resize (handle switching between slick and unslick cleanly)
-    $(window).on('resize.SkinGoalsSlider-{{ section.id }}', function() {
-      var w = $(window).width();
-      if (w > 767) {
-        if (!$slider.hasClass('slick-initialized')) {
-          initSlider();
+        },
+        {
+          breakpoint: 767, /* Change breakpoint to 767px to match CSS media query */
+          settings: "unslick" /* Unslick the slider on mobile */
         }
-      } else {
-        if ($slider.hasClass('slick-initialized')) {
-          $slider.slick('unslick');
-        }
-      }
+      ]
     });
   });
 </script>
