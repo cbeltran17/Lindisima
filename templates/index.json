@@ -300,7 +300,7 @@
       "name": "FAQ Split Section",
       "settings": {
         "title": "LINDÍSIMA FAQ",
-        "description": "About LINDÍSIMA"
+        "description": ""
       }
     },
     "updated_image_with_text_nBFccJ": {
@@ -387,7 +387,7 @@
       "name": "Instagram Gallery",
       "settings": {
         "title": "Follow us on Instagram",
-        "insta_link": "#"
+        "insta_link": "https://www.instagram.com/lindisimany/"
       }
     }
   },
