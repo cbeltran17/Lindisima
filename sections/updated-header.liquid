@@ -94,7 +94,7 @@
 
 <div id="mobile-sidebar" class="mobile-sidebar">
   <div class="sidebar-header">
-    <div class="close-icon" onclick="toggleMobileMenu( )">&times;</div>
+    <div class="close-icon" onclick="toggleMobileMenu(  )">&times;</div>
   </div>
   <nav class="sidebar-navigation">
     {% for link in linklists[section.settings.main_menu].links %}
@@ -140,7 +140,7 @@
     align-items: center;
   }
   .header-left .logo{
-    width: 309px;
+    width: 250px; /* Taille réduite ici (anciennement 309px) */
   }
   .header-left .logo img{
     width: 100%;
