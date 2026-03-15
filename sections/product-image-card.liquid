@@ -98,11 +98,15 @@
     }
     
     .skin-goals-grid {
-      margin: 0 -9.76px; /* Half of 19.52px gap */
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 20px; /* Add some space between cards */
     }
 
     .skin-goal-card {
-      padding: 0 9.76px;
+      padding: 0;
+      width: 100%;
     }
 
     .card-title {
@@ -159,13 +163,8 @@
           }
         },
         {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 1.2,
-            slidesToScroll: 1,
-            infinite: false,
-            centerMode: false
-          }
+          breakpoint: 767, /* Change breakpoint to 767px to match CSS media query */
+          settings: "unslick" /* Unslick the slider on mobile */
         }
       ]
     });
