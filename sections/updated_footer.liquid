@@ -1,6 +1,5 @@
 {% comment %} 
-  Modular Footer - Mobile Optimized Stacking
-  Matches uploaded reference: image_ca54fa.png
+  Modular Footer - Mobile Optimized Stacking with Official Shopify Payment Icons
 {% endcomment %}
 
 <style>
@@ -44,7 +43,7 @@
     max-width: 523px;
     margin: 0 auto;
     position: relative;
-    background: #fff; /* Matches white input box in mobile ref */
+    background: #fff;
     padding: 5px 15px;
   }
   .footer-email-form input {
@@ -138,13 +137,17 @@
   
   .payment-icons { 
     display: flex; 
-    gap: 10px; 
+    gap: 12px; 
     justify-content: center;
+    align-items: center;
     margin-bottom: 0;
+    flex-wrap: wrap;
   }
-  .payment-icons svg, .payment-icons img { 
-    height: 22px; 
+  
+  .payment-icons svg { 
+    height: 24px; 
     width: auto;
+    display: inline-block;
   }
 
   .copyright-text { 
@@ -154,10 +157,12 @@
     letter-spacing: 0%;
     text-transform: uppercase;
   }
-#contact_form{
+  
+  #contact_form {
     margin: 0;
-}
-  /* Specific Mobile Overrides to match image_ca54fa.png */
+  }
+
+  /* Specific Mobile Overrides */
   @media (max-width: 767px) {
       .footer-tier-top {
         margin-bottom: 34px;
@@ -165,7 +170,7 @@
     .footer-wrapper-{{ section.id }} {
         padding: 44px 0 15px 0;
     }
-    .footer-email-form{
+    .footer-email-form {
         padding: 0 15px;
     }
     .footer-menu-side {
@@ -174,15 +179,15 @@
     }
     .footer-column {
       display: flex;
-        justify-content: center; /* Image shows left aligned links on mobile */
+        justify-content: center;
     }
     .footer-menu-side .footer-column {
         flex-direction: column !important;
     }
-    .footer-column h3{
+    .footer-column h3 {
             font-weight: 500;   
     }
-    .footer-column ul li a{
+    .footer-column ul li a {
             font-size: 20px;
     }
     .footer-logo {
@@ -192,19 +197,25 @@
     .newsletter-title {
         font-size: 26px;
     }
-    .newsletter-sub{
+    .newsletter-sub {
         font-size: 20px;
     }
-    .footer-tier-middle{
+    .footer-tier-middle {
         grid-template-columns: 1fr;
     }
-    .footer-tier-bottom{
+    .footer-tier-bottom {
             flex-direction: column-reverse;
-    gap: 17px;
-    padding: 29px 0 16px 0;
+            gap: 17px;
+            padding: 29px 0 16px 0;
     }
-    .footer-tier-middle{
+    .footer-tier-middle {
         padding-bottom: 43px;
+    }
+    .payment-icons {
+        gap: 8px;
+    }
+    .payment-icons svg {
+        height: 20px;
     }
   }
 </style>
@@ -264,7 +275,19 @@
         </div>
         <div class="payment-icons">
             {% if section.settings.show_payment_icons %}
-                <img src="https://cdn.shopify.com/s/files/1/0790/8232/4206/files/Group_12.svg?v=1773387160"  alt="Visa">
+                {% comment %} 
+                  Cette section affiche les icônes de paiement activées dans votre admin Shopify.
+                  Pour forcer l'affichage des 7 icônes spécifiques même si elles ne sont pas activées, 
+                  utilisez le code ci-dessous :
+                {% endcomment %}
+                
+                {{ 'american_express' | payment_type_svg_tag: 'icon' }}
+                {{ 'apple_pay' | payment_type_svg_tag: 'icon' }}
+                {{ 'discover' | payment_type_svg_tag: 'icon' }}
+                {{ 'google_pay' | payment_type_svg_tag: 'icon' }}
+                {{ 'master' | payment_type_svg_tag: 'icon' }}
+                {{ 'shopify_pay' | payment_type_svg_tag: 'icon' }}
+                {{ 'visa' | payment_type_svg_tag: 'icon' }}
             {% endif %}
         </div>
     </div>
