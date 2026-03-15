@@ -45,7 +45,7 @@
     "share-widget-fancy": true,
     "share-widget-email": true,
     "product_hover": "image-flip",
-    "show_vendor": true,
+    "show_vendor": false,
     "ajax": false,
     "alternative-index-layout-title-color": "#ffffff",
     "alternative-index-layout": false,
