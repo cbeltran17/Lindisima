@@ -25,21 +25,21 @@
           "type": "link_list",
           "settings": {
             "heading": "Quick Links",
-            "menu": "main-menu-copy"
+            "menu": "column2"
           }
         },
         "link_list_FFcJV8": {
           "type": "link_list",
           "settings": {
             "heading": "Our Company",
-            "menu": "main-menu-1"
+            "menu": "ourcompany"
           }
         },
         "link_list_3gKBnF": {
           "type": "link_list",
           "settings": {
             "heading": "Our Policies",
-            "menu": "main-menu-1"
+            "menu": "column4"
           }
         }
       },
