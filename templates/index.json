@@ -27,7 +27,7 @@
         "button_link": "shopify://collections/all",
         "content_position": "pos-bottom-right",
         "text_align": "right",
-        "mobile_content_position": "m-pos-top-center",
+        "mobile_content_position": "m-pos-bottom-center",
         "mobile_text_align": "center",
         "text_color": "#000000",
         "btn_bg_color": "#a1c78a",
@@ -79,7 +79,7 @@
       "settings": {
         "title": "Shop by Skin Goals",
         "description": "",
-        "header_alignment": "center"
+        "header_alignment": "left"
       }
     },
     "updated_featured_collection_P4yjij": {
