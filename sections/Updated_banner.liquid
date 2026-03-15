@@ -39,32 +39,53 @@
   .pos-bottom-center { justify-content: center; align-items: flex-end; }
   .pos-bottom-right { justify-content: flex-end; align-items: flex-end; }
 
-
-
-  .text-box-{{ section.id }} {max-width: 770px; color: {{ section.settings.text_color }}; }
+  .text-box-{{ section.id }} { max-width: 770px; color: {{ section.settings.text_color }}; }
   .text-box-{{ section.id }} h2 {
-        font-size: 44px;
+    font-size: 44px;
     margin: 0 0 10px 0;
     line-height: 100%;
     letter-spacing: 2%;
-}
+  }
+
+  /* Button: transparent background by default, border and text use btn_text_color setting */
   .btn-{{ section.id }} {
     display: inline-block;
     padding: 10px 45px;
     text-decoration: none;
     border-radius: 100px;
-    border: 1px solid black;
-    color: {{ section.settings.btn_text_color }};
+    border: 1px solid {{ section.settings.btn_text_color | default: '#000000' }};
+    color: {{ section.settings.btn_text_color | default: '#000000' }};
+    background-color: transparent;
     font-size: 18px;
     font-weight: 500;
+    box-sizing: border-box;
   }
   .btn-{{ section.id }}:hover {
-    color: {{ section.settings.btn_text_color }};
+    color: {{ section.settings.btn_text_color | default: '#000000' }};
+    text-decoration: none;
+    opacity: 0.95;
   }
-    /* Mobile Positioning Classes */
+
+  /* Mobile Positioning Classes */
   @media (max-width: 767px) {
     .banner-id-{{ section.id }} { padding: 0 15px; }
-    
+
+    /* stacking so the image is on top and overlay flows below */
+    .banner-wrapper-{{ section.id }} { flex-direction: column; }
+
+    /* overlay becomes part of the flow (not absolute) so it appears under the image */
+    .overlay-{{ section.id }} {
+      position: static !important;
+      height: auto !important;
+      width: 100%;
+      z-index: auto;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .m-pos-top-left { justify-content: flex-start !important; align-items: flex-start !important; }
     .m-pos-top-center { justify-content: center !important; align-items: flex-start !important; }
     .m-pos-top-right { justify-content: flex-end !important; align-items: flex-start !important; }
@@ -75,14 +96,20 @@
     .m-pos-bottom-center { justify-content: center !important; align-items: flex-end !important; }
     .m-pos-bottom-right { justify-content: flex-end !important; align-items: flex-end !important; }
 
-    .overlay-{{ section.id }} { padding: 20px; }
     .text-box-{{ section.id }} { max-width: 100%; text-align: {{ section.settings.mobile_text_align }} !important; }
     .text-box-{{ section.id }} h2 { font-size: 40px !important; }
-     .btn-{{ section.id }} {
-        font-size: 26px !important;
-            padding: 14px 58px !important;
-                    line-height: 100%;
-     }
+
+    /* Keep background transparent, force black text & border on mobile so button is visible on white pages */
+    .btn-{{ section.id }} {
+      font-size: 26px !important;
+      padding: 14px 58px !important;
+      line-height: 100%;
+      display: block !important;
+      margin: 14px auto 0 !important;
+      color: #000000 !important; /* force black text on mobile */
+      border-color: #000000 !important;
+      background-color: transparent !important; /* KEEP TRANSPARENT */
+    }
   }
 {%- endstyle -%}
 
