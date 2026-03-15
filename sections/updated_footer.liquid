@@ -138,13 +138,16 @@
   
   .payment-icons { 
     display: flex; 
-    gap: 10px; 
+    gap: 12px; 
     justify-content: center;
+    align-items: center;
     margin-bottom: 0;
+    flex-wrap: wrap;
   }
   .payment-icons svg, .payment-icons img { 
-    height: 22px; 
+    height: 24px; 
     width: auto;
+    object-fit: contain;
   }
 
   .copyright-text { 
@@ -174,7 +177,7 @@
     }
     .footer-column {
       display: flex;
-        justify-content: center; /* Image shows left aligned links on mobile */
+        justify-content: center;
     }
     .footer-menu-side .footer-column {
         flex-direction: column !important;
@@ -205,6 +208,12 @@
     }
     .footer-tier-middle{
         padding-bottom: 43px;
+    }
+    .payment-icons {
+        gap: 8px;
+    }
+    .payment-icons svg, .payment-icons img {
+        height: 20px;
     }
   }
 </style>
@@ -264,7 +273,26 @@
         </div>
         <div class="payment-icons">
             {% if section.settings.show_payment_icons %}
-                <img src="https://cdn.shopify.com/s/files/1/0790/8232/4206/files/Group_12.svg?v=1773387160"  alt="Visa">
+                <!-- American Express -->
+                <img src="https://cdn.shopify.com/s/files/1/0790/8232/4206/files/amex.svg?v=1" alt="American Express">
+                
+                <!-- Apple Pay -->
+                <img src="https://cdn.shopify.com/s/files/1/0790/8232/4206/files/apple_pay.svg?v=1" alt="Apple Pay">
+                
+                <!-- Discover -->
+                <img src="https://cdn.shopify.com/s/files/1/0790/8232/4206/files/discover.svg?v=1" alt="Discover">
+                
+                <!-- Google Pay -->
+                <img src="https://cdn.shopify.com/s/files/1/0790/8232/4206/files/google_pay.svg?v=1" alt="Google Pay">
+                
+                <!-- Mastercard -->
+                <img src="https://cdn.shopify.com/s/files/1/0790/8232/4206/files/mastercard.svg?v=1" alt="Mastercard">
+                
+                <!-- Shop Pay -->
+                <img src="https://cdn.shopify.com/s/files/1/0790/8232/4206/files/shop_pay.svg?v=1" alt="Shop Pay">
+                
+                <!-- Visa -->
+                <img src="https://cdn.shopify.com/s/files/1/0790/8232/4206/files/visa.svg?v=1" alt="Visa">
             {% endif %}
         </div>
     </div>
