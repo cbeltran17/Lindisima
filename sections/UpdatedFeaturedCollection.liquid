@@ -1,251 +1,261 @@
-{% comment %} 
-  Bestsellers / Featured Collection Section 
-{% endcomment %}
-
 <style>
-  .bestseller-section {
+  .skin-goals-section {
     max-width: 1820px;
     margin: 0 auto;
-    padding: 0 15px; 
-    font-family: 'Roboto', sans-serif;
-  }
-
-  /* Header Styles */
-  .bestseller-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 30px;
-  }
-
-  .bestseller-title {
-    font-size: 34px;
-    font-weight: 700;
-    margin: 0;
-    line-height: 1;
-    letter-spacing: 0.03em;
-  }
-
-  .view-all-link {
-    font-size: 16px;
-    font-weight: 400;
-    color: #000;
-    text-decoration: underline;
-    text-underline-offset: 4px; 
-  }
-
-  /* Grid Layout (Desktop & Tablet) */
-  .product-grid {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 -15px;
-  }
-
-  .product-card {
-    width: 25%; /* 4 columns */
-    padding: 0 16px;
-    margin-bottom: 30px;
-    box-sizing: border-box;
-  }
-
-  .product-image-wrapper {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1; /* Force Square */
-    border-radius: 12px;
+    padding: 40px 10px;
     overflow: hidden;
-    background-color: #f5f5f5;
-    margin-bottom: 15px;
   }
 
-  .product-image-wrapper img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-    border-radius: 10px;
+  .skin-goals-header {
+    /* margin-bottom: 30px; */
+    text-align: {{ section.settings.header_alignment }};
   }
 
-  .product-card:hover img {
-    transform: scale(1.05);
+  .skin-goals-title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 100%;
+    letter-spacing: 0.03em;
+    margin: 0 0 19px 0;
+    color: #000;
   }
 
-  .product-info {
-    text-align: left;
-     margin-top: 16px;
-  }
-
-  .product-name {
+  .skin-goals-description {
+    font-family: 'Roboto', sans-serif;
     font-size: 16px;
-    font-weight: 400;
-    margin: 0 0 5px 0;
+    color: #666;
+  }
+
+  /* Grid / Slider Layout */
+  .skin-goals-grid {
+    margin: 0 -15.75px; /* Half of 31.5px gap */
+  }
+
+  .skin-goal-card {
+    padding: 0 15.75px;
+    outline: none;
+  }
+
+  .card-inner {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    aspect-ratio: 1 / 1.2; /* Adjust based on your image preference */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+        padding: 23px 35px;
+  }
+
+  .card-title {
+    color: rgba(143, 156, 135, 1);
+    font-family: 'ClimateCrisis';
+    font-weight: 400; 
+    font-size: 44px;
+    line-height: 100%;
+    letter-spacing: 0.03em;
+    margin: 0;
+    text-transform: capitalize;
+  }
+
+  .card-button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+  }
+
+  .card-btn {
+    display: inline-block;
+    padding: 10px 35px;
+    border: 1px solid #000;
+    border-radius: 50px;
+    background: transparent;
     color: #000;
     text-decoration: none;
-    display: block;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.3s ease;
   }
 
-  .product-price {
-    font-size: 16px;
-    font-weight: 400;
-    color: #000;
-  }
-.for-mobile-only{display: none;}
-
-  /* Tablet Adjustments */
-  @media (max-width: 1024px) and (min-width: 768px) {
-    .product-card {
-      width: 33.33%; /* 3 columns */
-    }
+  .card-btn:hover {
+    background: #000;
+    color: #fff;
   }
 
-  /* Mobile Styles & Slider Overrides */
+  /* Mobile Styles */
   @media (max-width: 767px) {
-    .product-info{
-            margin-top: 16px;
+    .skin-goals-section{
+            padding: 0 17px;
     }
-    .for-mobile-only{
-                display: block !important;
-        text-align: center;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 100%;
-        letter-spacing: 3%;
-        text-decoration: underline;
-        text-decoration-style: solid;
-        text-decoration-thickness: 0%;
-        text-decoration-skip-ink: auto;
+    .skin-goals-title {
+      font-size: 26px;
+      font-weight: 600;
     }
-    .bestseller-section{
-        padding: 0 17px;
-        margin-bottom: 56px;
+    
+    .skin-goals-grid {
+      margin: 0 -9.76px; /* Half of 19.52px gap */
     }
-    .bestseller-header {
-        justify-content: flex-start; /* Modified: Left aligned on mobile */
+
+    .skin-goal-card {
+      padding: 0 9.76px;
     }
-    .view-all-link {
-        display: none; /* Usually hidden on mobile if sliding */
+
+    .card-title {
+      font-size: 28px; /* Downsized for mobile readability */
     }
-    .bestseller-title {
-        font-size: 26px;
-        font-weight: 600;
+    
+    .card-inner {
+        aspect-ratio: 1 / 1.2;
+        padding: 14px 21px;
     }
-    .product-grid {
-        display: block; /* Required for Slick */
-        margin: 0 -10px;
+  }
+
+  /* Styles pour l'empilement vertical sur mobile lorsque le slider est désactivé */
+  @media (max-width: 767px) {
+    .skin-goals-grid:not(.slick-initialized) {
+      display: flex;
+      flex-direction: column;
+      gap: 20px; /* Espacement entre les cartes */
+      margin: 0;
     }
-    .product-card {
-        width: 100%;
-        padding: 0 10px;
-        margin-bottom: 0;
-    }
-    /* Show partial next slide on mobile */
-    .slick-list {
-        padding: 0 20% 0 0 !important;
+
+    .skin-goals-grid:not(.slick-initialized) .skin-goal-card {
+      width: 100%;
+      padding: 0;
     }
   }
 </style>
 
-<div class="bestseller-section" id="Bestseller-{{ section.id }}">
-  {%- assign collection = collections[section.settings.collection] -%}
-  {%- assign product_limit = 4 -%}
-
-  <div class="bestseller-header">
-    <h2 class="bestseller-title">{{ section.settings.title }}</h2>
-    
-    {% if collection.products_count > product_limit %}
-      <a href="{{ collection.url }}" class="view-all-link">View All</a>
+<div class="skin-goals-section">
+  <div class="skin-goals-header">
+    {% if section.settings.title != blank %}
+      <h2 class="skin-goals-title">{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.description != blank %}
+      <div class="skin-goals-description">{{ section.settings.description }}</div>
     {% endif %}
   </div>
 
-  <div class="product-grid {% if collection.products_count > 0 %}js-bestseller-slider{% endif %}">
-    {% for product in collection.products limit: product_limit %}
-      <div class="product-card">
-        <a href="{{ product.url }}" class="product-image-wrapper">
-          <img src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}" 
-               alt="{{ product.title | escape }}"
-               loading="lazy">
-        </a>
-        <div class="product-info">
-          <a href="{{ product.url }}" class="product-name">{{ product.title }}</a>
-          <span class="product-price">{{ product.price | money }}</span>
+  <div class="skin-goals-grid" id="SkinGoalsSlider-{{ section.id }}">
+    {% for block in section.blocks %}
+      <div class="skin-goal-card" {{ block.shopify_attributes }}>
+        <div class="card-inner" style="background-image: url('{{ block.settings.image | img_url: '800x' }}');">
+          <h3 class="card-title">{{ block.settings.title }}</h3>
+            {% if block.settings.button_text != blank %}
+                <div class="card-button-wrapper">
+                  <a href="{{ block.settings.link }}" class="card-btn">{{ block.settings.button_text }}</a>
+                </div>
+            {% endif %}
         </div>
       </div>
-    {% else %}
-      {% comment %} Placeholder for theme editor empty state {% endcomment %}
-      {% for i in (1..4) %}
-        <div class="product-card">
-          <div class="product-image-wrapper">
-            {{ 'product-' | append: i | placeholder_svg_tag }}
-          </div>
-          <div class="product-info">
-            <p class="product-name">Product Name Here</p>
-            <span class="product-price">$25.00</span>
-          </div>
-        </div>
-      {% endfor %}
     {% endfor %}
   </div>
-    {% if collection.products_count > product_limit %}
-      <a href="{{ collection.url }}" class="view-all-link for-mobile-only">View All</a>
-    {% endif %}
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    function initSlider() {
-      const $slider = $('#Bestseller-{{ section.id }} .js-bestseller-slider');
-      
-      if ($(window).width() < 768) {
-        if (!$slider.hasClass('slick-initialized')) {
-          $slider.slick({
+  $(document).ready(function(){
+    $('#SkinGoalsSlider-{{ section.id }}').slick({
+      infinite: false,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      arrows: false,
+      dots: false,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2.2,
+            infinite: false
+          }
+        },
+        {
+          breakpoint: 768,
+          settings: {
             slidesToShow: 1.2,
             slidesToScroll: 1,
-            arrows: false,
-            dots: false,
             infinite: false,
-            responsive: [
-              {
-                breakpoint: 768,
-                settings: {
-                  slidesToShow: 1.2,
-                  slidesToScroll: 1
-                }
-              }
-            ]
-          });
+            centerMode: false
+          }
+        },
+        {
+          breakpoint: 767, /* Désactiver le slider pour les mobiles */
+          settings: "unslick"
         }
-      } else {
-        if ($slider.hasClass('slick-initialized')) {
-          $slider.slick('unslick');
-        }
-      }
-    }
-
-    // Run on load and resize
-    initSlider();
-    $(window).on('resize', initSlider);
+      ]
+    });
   });
 </script>
 
 {% schema %}
 {
-  "name": "Bestsellers Collection",
+  "name": "Product Image Card",
   "settings": [
     {
       "type": "text",
       "id": "title",
       "label": "Section Title",
-      "default": "Bestsellers"
+      "default": "Shop by Skin Goals"
     },
     {
-      "type": "collection",
-      "id": "collection",
-      "label": "Select Collection"
+      "type": "richtext",
+      "id": "description",
+      "label": "Section Description"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Header Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "goal_block",
+      "name": "Skin Goal",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Goal Title",
+          "default": "Hydration"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button Link"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Bestsellers Collection"
+      "name": "Product Image Card",
+      "blocks": [
+        { "type": "goal_block" },
+        { "type": "goal_block" },
+        { "type": "goal_block" }
+      ]
     }
   ]
 }
