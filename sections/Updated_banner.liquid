@@ -64,7 +64,21 @@
     /* Mobile Positioning Classes */
   @media (max-width: 767px) {
     .banner-id-{{ section.id }} { padding: 0 15px; }
-    
+
+    /* <<< ADDED: make wrapper stack vertically on mobile so image is on top and overlay flows below >>> */
+    .banner-wrapper-{{ section.id }} { flex-direction: column; }
+
+    /* <<< ADDED: let overlay be in the normal flow (not absolute) on mobile) >>> */
+    .overlay-{{ section.id }} {
+      position: static !important;
+      height: auto !important;
+      width: 100%;
+      z-index: auto;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+    }
+
     .m-pos-top-left { justify-content: flex-start !important; align-items: flex-start !important; }
     .m-pos-top-center { justify-content: center !important; align-items: flex-start !important; }
     .m-pos-top-right { justify-content: flex-end !important; align-items: flex-start !important; }
@@ -82,6 +96,9 @@
         font-size: 26px !important;
             padding: 14px 58px !important;
                     line-height: 100%;
+            /* <<< ADDED: make button appear as its own block under the image and center it >>> */
+            display: block !important;
+            margin: 14px auto 0 !important;
      }
   }
 {%- endstyle -%}
