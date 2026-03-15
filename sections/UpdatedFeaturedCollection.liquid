@@ -89,7 +89,7 @@
     font-weight: 400;
     color: #000;
   }
-.for-mobile-only{display: none;}
+  .for-mobile-only{display: none;}
 
   /* Tablet Adjustments */
   @media (max-width: 1024px) and (min-width: 768px) {
@@ -98,7 +98,7 @@
     }
   }
 
-  /* Mobile Styles & Slider Overrides */
+  /* Mobile Styles: make a 2x2 grid and keep 'View All' mobile link */
   @media (max-width: 767px) {
     .product-info{
             margin-top: 16px;
@@ -114,6 +114,7 @@
         text-decoration-style: solid;
         text-decoration-thickness: 0%;
         text-decoration-skip-ink: auto;
+        margin-top: 18px;
     }
     .bestseller-section{
         padding: 0 17px;
@@ -123,24 +124,37 @@
         justify-content: flex-start; /* Modified: Left aligned on mobile */
     }
     .view-all-link {
-        display: none; /* Usually hidden on mobile if sliding */
+        display: none; /* Header view-all stays hidden on mobile (bottom mobile link used) */
     }
     .bestseller-title {
         font-size: 26px;
         font-weight: 600;
     }
+
+    /* Changed: show 2x2 grid on mobile */
     .product-grid {
-        display: block; /* Required for Slick */
-        margin: 0 -10px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin: 0;
     }
     .product-card {
-        width: 100%;
-        padding: 0 10px;
+        width: auto;
+        padding: 0;
         margin-bottom: 0;
+        box-sizing: border-box;
     }
-    /* Show partial next slide on mobile */
+
+    /* Make images nicely sized in grid items */
+    .product-image-wrapper {
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    /* remove any slick-specific layout override (we're using grid) */
     .slick-list {
-        padding: 0 20% 0 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box;
     }
   }
 </style>
@@ -192,38 +206,26 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    function initSlider() {
+    function ensureNoSlickOnMobileGrid() {
       const $slider = $('#Bestseller-{{ section.id }} .js-bestseller-slider');
-      
-      if ($(window).width() < 768) {
-        if (!$slider.hasClass('slick-initialized')) {
-          $slider.slick({
-            slidesToShow: 1.2,
-            slidesToScroll: 1,
-            arrows: false,
-            dots: false,
-            infinite: false,
-            responsive: [
-              {
-                breakpoint: 768,
-                settings: {
-                  slidesToShow: 1.2,
-                  slidesToScroll: 1
-                }
-              }
-            ]
-          });
-        }
-      } else {
-        if ($slider.hasClass('slick-initialized')) {
+
+      // If slick was initialized previously, remove it so the CSS grid takes over on mobile.
+      if ($slider.length && $slider.hasClass('slick-initialized')) {
+        try {
           $slider.slick('unslick');
+        } catch (e) {
+          // ignore errors from slick if it's not available
+          console.warn('slick unslick error', e);
         }
       }
+
+      // NOTE: we intentionally DO NOT initialize slick on mobile because the requirement
+      // is to show a 2x2 grid on mobile. Desktop/tablet behavior is controlled by CSS above.
     }
 
     // Run on load and resize
-    initSlider();
-    $(window).on('resize', initSlider);
+    ensureNoSlickOnMobileGrid();
+    $(window).on('resize', ensureNoSlickOnMobileGrid);
   });
 </script>
 
