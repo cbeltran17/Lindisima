@@ -61,7 +61,7 @@
         "enable_cart_redirection": false,
         "show_payment_button": true,
         "images_layout": "list",
-        "enable_zoom": false,
+        "enable_zoom": true,
         "enable_video_autoplay": false,
         "enable_video_looping": false
       }
