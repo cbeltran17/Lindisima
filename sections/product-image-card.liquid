@@ -37,6 +37,14 @@
     outline: none;
   }
 
+  /* Make the whole card link fill the card */
+  .card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+  }
+
   .card-inner {
     position: relative;
     border-radius: 14px;
@@ -47,13 +55,14 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-        padding: 23px 35px;
+    padding: 23px 35px;
+    height: 100%;
   }
 
   .card-title {
     color: rgba(143, 156, 135, 1);
     font-family: 'ClimateCrisis';
-    font-weight: 400; 
+    font-weight: 400;
     font-size: 44px;
     line-height: 100%;
     letter-spacing: 0.03em;
@@ -68,35 +77,47 @@
     padding-bottom: 10px;
   }
 
+  /* Styled button (now a span inside the link to avoid nested anchors) */
   .card-btn {
     display: inline-block;
     padding: 10px 35px;
-    border: 1px solid #000;
+    border: 1px solid transparent;
     border-radius: 50px;
-    background: transparent;
-    color: #000;
+    background: #E2CFCE; /* pink default */
+    color: #fff; /* white text by default */
     text-decoration: none;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
     font-size: 14px;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
+    cursor: pointer;
   }
 
-  .card-btn:hover {
+  /* Hover: when hovering button itself OR hovering the whole card */
+  .card-btn:hover,
+  .card-link:hover .card-btn {
     background: #000;
     color: #fff;
+    border-color: #000;
+  }
+
+  /* Disabled / non-link button style */
+  .card-btn.disabled {
+    opacity: 0.6;
+    cursor: default;
+    pointer-events: none;
   }
 
   /* Mobile Styles */
   @media (max-width: 767px) {
     .skin-goals-section{
-            padding: 0 17px;
+      padding: 0 17px;
     }
     .skin-goals-title {
       font-size: 26px;
       font-weight: 600;
     }
-    
+
     .skin-goals-grid {
       margin: 0;
       display: flex;
@@ -112,10 +133,10 @@
     .card-title {
       font-size: 28px; /* Downsized for mobile readability */
     }
-    
+
     .card-inner {
-        aspect-ratio: 1 / 1.2;
-        padding: 14px 21px;
+      aspect-ratio: 1 / 1.2;
+      padding: 14px 21px;
     }
   }
 </style>
@@ -133,20 +154,39 @@
   <div class="skin-goals-grid" id="SkinGoalsSlider-{{ section.id }}">
     {% for block in section.blocks %}
       <div class="skin-goal-card" {{ block.shopify_attributes }}>
-        <div class="card-inner" style="background-image: url('{{ block.settings.image | img_url: '800x' }}');">
-          <h3 class="card-title">{{ block.settings.title }}</h3>
-            {% if block.settings.button_text != blank %}
+        {% comment %}
+          If a link is provided, wrap the entire card in an anchor so the image is clickable.
+          The visible button is a <span> inside the link (so we avoid nested anchors).
+        {% endcomment %}
+        {% if block.settings.link != blank %}
+          <a href="{{ block.settings.link }}" class="card-link" title="{{ block.settings.title }}">
+            <div class="card-inner" style="background-image: url('{{ block.settings.image | img_url: '800x' }}');">
+              <h3 class="card-title">{{ block.settings.title }}</h3>
+              {% if block.settings.button_text != blank %}
                 <div class="card-button-wrapper">
-                  <a href="{{ block.settings.link }}" class="card-btn">{{ block.settings.button_text }}</a>
+                  <span class="card-btn" role="button" tabindex="0">{{ block.settings.button_text }}</span>
                 </div>
+              {% endif %}
+            </div>
+          </a>
+        {% else %}
+          <div class="card-inner" style="background-image: url('{{ block.settings.image | img_url: '800x' }}');">
+            <h3 class="card-title">{{ block.settings.title }}</h3>
+            {% if block.settings.button_text != blank %}
+              <div class="card-button-wrapper">
+                <!-- No link provided: show a disabled-looking button (non-clickable) -->
+                <span class="card-btn disabled" aria-disabled="true">{{ block.settings.button_text }}</span>
+              </div>
             {% endif %}
-        </div>
+          </div>
+        {% endif %}
       </div>
     {% endfor %}
   </div>
 </div>
 
 <script>
+  // Slick init (unchanged behavior except breakpoint matches CSS)
   $(document).ready(function(){
     $('#SkinGoalsSlider-{{ section.id }}').slick({
       infinite: false,
@@ -167,6 +207,20 @@
           settings: "unslick" /* Unslick the slider on mobile */
         }
       ]
+    });
+
+    // Keyboard accessibility:
+    // If user focuses the .card-btn (span) and presses Enter or Space, navigate to the parent link href.
+    $('#SkinGoalsSlider-{{ section.id }}').on('keydown', '.card-btn', function(e){
+      var key = e.key || e.keyCode;
+      if (key === 'Enter' || key === ' ' || key === 13 || key === 32) {
+        // find parent anchor (card-link) if exists
+        var $btn = $(this);
+        var $parentLink = $btn.closest('.card-link');
+        if ($parentLink.length) {
+          window.location = $parentLink.attr('href');
+        }
+      }
     });
   });
 </script>
