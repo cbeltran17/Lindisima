@@ -152,7 +152,7 @@
                   </label>
 
                   <div class="collection-dropdown collection-dropdown--sort select-wrapper {% if collection.current_vendor %}vendor-collection{% endif %}">
-                    {% assign current_sort = collection.sort_by | default: collection.default_sort_by %}
+                    {% assign current_sort = collection.sort_by | default: 'manual' %}
 
                     <span class="selected-text"></span>
 
