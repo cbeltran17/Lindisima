@@ -29,6 +29,13 @@
 %}
 
 <style>
+  /* AJUSTEMENT DES ESPACES (LÉGER ESPACEMENT) */
+  .page-title { margin-top: 10px !important; margin-bottom: 10px !important; } /* Petit espace sous le header et avant les filtres */
+  .collection-header { margin-top: 0 !important; padding-top: 0 !important; margin-bottom: 0 !important; } /* Réinitialiser les marges par défaut */
+  .collection { margin-top: 0 !important; padding-top: 0 !important; } /* Réinitialiser le conteneur principal */
+  .main-content, .shopify-section { padding-top: 0 !important; margin-top: 0 !important; } /* Supprimer les paddings parents excessifs */
+  .collection-filters { margin-top: 10px !important; } /* Petit espace au-dessus des filtres */
+
   /* DESIGN ULTRA-MINIMALISTE MOBILE UNIQUEMENT */
   @media screen and (max-width: 768px) {
     /* En-tête ultra compact */
@@ -36,6 +43,7 @@
     .breadcrumb { display: none !important; } /* Cache le fil d'ariane pour gagner de la place */
     
     .collection-header {
+      margin-top: 0 !important;
       margin-bottom: 5px !important;
       padding: 0 !important;
     }
