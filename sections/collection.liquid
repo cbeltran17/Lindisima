@@ -28,6 +28,56 @@
   endif
 %}
 
+<style>
+  /* Optimisation mobile pour les filtres */
+  @media screen and (max-width: 768px) {
+    .collection-filters {
+      display: flex !important;
+      flex-direction: row !important;
+      overflow-x: auto !important;
+      white-space: nowrap !important;
+      padding: 10px 15px !important; /* Ajout de padding horizontal pour éviter que les éléments ne soient coupés */
+      gap: 15px !important; /* Espace entre les éléments de filtre */
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      scroll-snap-type: x mandatory; /* Améliore l'expérience de défilement */
+    }
+
+    .collection-filters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .faceted-filters, 
+    .collection-sorting__wrapper {
+      flex: 0 0 auto !important; /* Empêche les éléments de rétrécir */
+      margin: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      scroll-snap-align: start; /* Aligne les éléments au début du défilement */
+    }
+
+    .collection-filters__title {
+      margin-right: 8px !important;
+      margin-bottom: 0 !important;
+      font-size: 13px !important;
+    }
+
+    .collection-dropdown .select {
+      padding: 6px 25px 6px 10px !important;
+      font-size: 13px !important;
+    }
+    
+    /* Réduction des marges d'en-tête sur mobile */
+    .collection-header {
+      margin-bottom: 15px !important;
+    }
+    
+    .collection-description {
+      margin-bottom: 10px !important;
+    }
+  }
+</style>
+
 <div>
   {% unless use_masonry %}
     <h1 class="page-title">{{ collection.title }}</h1>
