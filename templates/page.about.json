@@ -56,12 +56,48 @@
         "product-columns": 3,
         "product-rows": 1
       }
+    },
+    "updated_image_with_text_GE3TaG": {
+      "type": "Updated_image_with_text",
+      "blocks": {
+        "image_block_cqzWRT": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_4300.jpg"
+          }
+        },
+        "content_block_kKTRJ8": {
+          "type": "content_block",
+          "settings": {
+            "title": "Founder’s Favorite: Rosehip Anti-Aging Facial Oil",
+            "text": "<p>This <strong>lightweight, fast-absorbing vegan facial oil</strong> melts beautifully into the skin, delivering deep hydration and a natural radiant glow without feeling greasy.</p><p>And the finishing touch? A <strong>soft, naturally botanical aroma that smells absolutely divine</strong>, making every application feel like a calming self-care ritual.</p><p>Skin is left looking <strong>smoother, brighter, and deeply nourished</strong>.</p><p>✨ <em>Our founder’s go-to for luminous, healthy-looking skin.</em></p>",
+            "btn_label": "Shop Now",
+            "btn_link": "shopify://products/anti-aging-rose-gold-oil"
+          }
+        }
+      },
+      "block_order": [
+        "image_block_cqzWRT",
+        "content_block_kKTRJ8"
+      ],
+      "name": "Split Image & Text",
+      "settings": {
+        "bg_color": "#F9F1E7",
+        "border_radius": 20,
+        "v_align": "center",
+        "h_align": "left",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_left": 80,
+        "padding_right": 80
+      }
     }
   },
   "order": [
     "1634913302f4c0aaad",
     "16349133547a86ae30",
     "main",
-    "163491328431f143ba"
+    "163491328431f143ba",
+    "updated_image_with_text_GE3TaG"
   ]
 }
