@@ -28,6 +28,63 @@
   endif
 %}
 
+<style>
+  /* DESIGN ULTRA-MINIMALISTE MOBILE UNIQUEMENT */
+  @media screen and (max-width: 768px) {
+    /* En-tête ultra compact */
+    .page-title { margin: 5px 0 !important; font-size: 1.2rem !important; text-align: center; }
+    .breadcrumb { display: none !important; } /* Cache le fil d'ariane pour gagner de la place */
+    
+    .collection-header {
+      margin-bottom: 5px !important;
+      padding: 0 !important;
+    }
+
+    /* Filtres et Tri sur une seule ligne horizontale */
+    .collection-filters {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      overflow-x: auto !important;
+      padding: 5px 10px !important;
+      gap: 8px !important;
+      align-items: center !important;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .collection-filters::-webkit-scrollbar { display: none; }
+
+    /* Masquer les étiquettes "Filter by" et "Sort by" */
+    .collection-filters__title, 
+    .collection-filters label,
+    .faceted-filters .collection-filters__title {
+      display: none !important;
+    }
+
+    /* Boutons et Sélecteurs ultra compacts */
+    .faceted-filters, .collection-sorting__wrapper {
+      margin: 0 !important;
+      flex: 0 0 auto !important;
+    }
+
+    .collection-dropdown .select, 
+    .faceted-filters [data-filter-item],
+    .collection-dropdown.select-wrapper {
+      padding: 4px 20px 4px 8px !important;
+      font-size: 11px !important;
+      height: 28px !important;
+      min-width: 80px !important;
+      border-radius: 4px !important;
+      background-position: right 5px center !important;
+    }
+
+    /* Remonter les produits au maximum */
+    .collection-products {
+      margin-top: 5px !important;
+    }
+  }
+</style>
+
 <div>
   {% unless use_masonry %}
     <h1 class="page-title">{{ collection.title }}</h1>
