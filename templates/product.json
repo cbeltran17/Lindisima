@@ -170,12 +170,12 @@
       "type": "pxs-image-with-text-overlay",
       "settings": {
         "section_height": "small",
-        "image": "shopify://shop_images/image_2.png",
+        "image": "shopify://shop_images/IMG_4300.jpg",
         "title": "Give the gift of great skin",
         "text": "<p>Browse our best-selling face and body sets</p>",
         "content_position": "center-center",
         "color": "#262626",
-        "overlay_background": "#dadefe",
+        "overlay_background": "#e2cfce",
         "overlay_opacity": 15,
         "link": "",
         "button_text": "Shop Now"
