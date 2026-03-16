@@ -176,10 +176,27 @@
       </div>
     </section>
 
-    {%
-      render 'pagination',
-      paginate: paginate,
-    %}
+    <div class="pagination">
+      {% if paginate.previous %}
+        <a href="{{ paginate.previous.url }}" class="pagination-link pagination-link--prev">&laquo;</a>
+      {% else %}
+        <span class="pagination-link pagination-link--prev is-disabled">&laquo;</span>
+      {% endif %}
+
+      {% for page in paginate.pages %}
+        {% if page.is_link %}
+          <a href="{{ page.url }}" class="pagination-link">&#8226;</a>
+        {% else %}
+          <span class="pagination-link is-active">&#8226;</span>
+        {% endif %}
+      {% endfor %}
+
+      {% if paginate.next %}
+        <a href="{{ paginate.next.url }}" class="pagination-link pagination-link--next">&raquo;</a>
+      {% else %}
+        <span class="pagination-link pagination-link--next is-disabled">&raquo;</span>
+      {% endif %}
+    </div>
   {% endpaginate %}
 </div>
 
