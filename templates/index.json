@@ -389,6 +389,47 @@
         "title": "Follow us on Instagram",
         "insta_link": "https://www.instagram.com/lindisimany/"
       }
+    },
+    "updated_videosection_fcqKV3": {
+      "type": "updated_videosection",
+      "disabled": true,
+      "name": "Triggered Video",
+      "settings": {}
+    },
+    "updated_image_with_text_WTLPgF": {
+      "type": "Updated_image_with_text",
+      "blocks": {
+        "image_block_d4dQgz": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_4300.jpg"
+          }
+        },
+        "content_block_486hcN": {
+          "type": "content_block",
+          "settings": {
+            "title": "Rose Gold Anti-Aging Facial Oil – The Perfect Gift for Mom",
+            "text": "<p>Treat Mom to radiant, youthful-looking skin with our <strong>Rose Gold Anti-Aging Facial Oil</strong>. This luxurious, <strong>clean beauty facial oil</strong> is crafted with nourishing plant oils and a subtle rose gold shimmer to <strong>hydrate, smooth fine lines, and boost natural radiance</strong>. Obsessed with the scent, obsessed with the results—perfect for her daily skincare ritual.</p><p>✨ <strong>Hydrating anti-aging face oil</strong><br/><br/>✨ <strong>Lightweight, fast-absorbing botanical formula</strong><br/><br/>✨ <strong>Clean, non-toxic, luxury skincare gift</strong></p><p>Shop the ultimate <strong>Mother’s Day skincare gift</strong> and elevate her ritual with luminous, glowing skin.</p>",
+            "btn_label": "Shop Now",
+            "btn_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_block_d4dQgz",
+        "content_block_486hcN"
+      ],
+      "name": "Split Image & Text",
+      "settings": {
+        "bg_color": "#F9F1E7",
+        "border_radius": 20,
+        "v_align": "center",
+        "h_align": "left",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_left": 80,
+        "padding_right": 80
+      }
     }
   },
   "order": [
@@ -401,6 +442,8 @@
     "updated_image_with_text_9rHQBP",
     "faq_section_URWjb8",
     "updated_image_with_text_nBFccJ",
-    "instagram_section_6RDbg4"
+    "instagram_section_6RDbg4",
+    "updated_videosection_fcqKV3",
+    "updated_image_with_text_WTLPgF"
   ]
 }
