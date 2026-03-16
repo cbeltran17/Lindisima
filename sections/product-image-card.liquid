@@ -27,7 +27,7 @@
     color: #666;
   }
 
-  /* Grid / Slider Layout (KEEP original behavior - do NOT make flex) */
+  /* Grid / Slider Layout */
   .skin-goals-grid {
     margin: 0 -15.75px; /* Half of 31.5px gap */
   }
@@ -35,29 +35,25 @@
   .skin-goal-card {
     padding: 0 15.75px;
     outline: none;
-    box-sizing: border-box;
-    /* do NOT force display:flex here, let slick control slide sizing */
   }
 
   .card-inner {
     position: relative;
     border-radius: 14px;
     overflow: hidden;
-    aspect-ratio: 1 / 1.2; /* keep original card ratio */
+    aspect-ratio: 1 / 1.2; /* Adjust based on your image preference */
     background-size: cover;
     background-position: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 23px 35px;
-    box-sizing: border-box;
-    /* do NOT set fixed height so it won't stretch cards */
+        padding: 23px 35px;
   }
 
   .card-title {
     color: rgba(143, 156, 135, 1);
     font-family: 'ClimateCrisis';
-    font-weight: 400;
+    font-weight: 400; 
     font-size: 44px;
     line-height: 100%;
     letter-spacing: 0.03em;
@@ -65,56 +61,47 @@
     text-transform: capitalize;
   }
 
-  /* Button wrapper placed under the image (outside .card-inner) */
   .card-button-wrapper {
     width: 100%;
     display: flex;
     justify-content: center;
-    padding-top: 10px;
     padding-bottom: 10px;
-    box-sizing: border-box;
   }
 
   .card-btn {
     display: inline-block;
     padding: 10px 35px;
-    border: 1px solid transparent;
+    border: 1px solid #000;
     border-radius: 50px;
-    background: #E2CFCE; /* pink default */
-    color: #fff; /* white text by default */
+    background: transparent;
+    color: #000;
     text-decoration: none;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
     font-size: 14px;
-    transition: all 0.25s ease;
-    cursor: pointer;
+    transition: all 0.3s ease;
   }
 
   .card-btn:hover {
     background: #000;
     color: #fff;
-    border-color: #000;
-  }
-
-  .card-btn.disabled {
-    opacity: 0.6;
-    cursor: default;
-    pointer-events: none;
   }
 
   /* Mobile Styles */
   @media (max-width: 767px) {
     .skin-goals-section{
-      padding: 0 17px;
+            padding: 0 17px;
     }
     .skin-goals-title {
       font-size: 26px;
       font-weight: 600;
     }
-
+    
     .skin-goals-grid {
       margin: 0;
-      /* Unslicked on mobile, so we want column stacking */
+      display: flex;
+      flex-direction: column;
+      gap: 20px; /* Add some space between cards */
     }
 
     .skin-goal-card {
@@ -125,10 +112,10 @@
     .card-title {
       font-size: 28px; /* Downsized for mobile readability */
     }
-
+    
     .card-inner {
-      aspect-ratio: 1 / 1.2;
-      padding: 14px 21px;
+        aspect-ratio: 1 / 1.2;
+        padding: 14px 21px;
     }
   }
 </style>
@@ -146,31 +133,14 @@
   <div class="skin-goals-grid" id="SkinGoalsSlider-{{ section.id }}">
     {% for block in section.blocks %}
       <div class="skin-goal-card" {{ block.shopify_attributes }}>
-        {% comment %}
-          Image area: clickable if link exists. Button is placed under the image (outside .card-inner)
-        {% endcomment %}
-
-        {% if block.settings.link != blank %}
-          <a href="{{ block.settings.link }}" class="card-link" title="{{ block.settings.title }}">
-            <div class="card-inner" style="background-image: url('{{ block.settings.image | img_url: '800x' }}');">
-              <h3 class="card-title">{{ block.settings.title }}</h3>
-            </div>
-          </a>
-        {% else %}
-          <div class="card-inner" style="background-image: url('{{ block.settings.image | img_url: '800x' }}');">
-            <h3 class="card-title">{{ block.settings.title }}</h3>
-          </div>
-        {% endif %}
-
-        {% if block.settings.button_text != blank %}
-          <div class="card-button-wrapper">
-            {% if block.settings.link != blank %}
-              <a href="{{ block.settings.link }}" class="card-btn">{{ block.settings.button_text }}</a>
-            {% else %}
-              <span class="card-btn disabled" aria-disabled="true">{{ block.settings.button_text }}</span>
+        <div class="card-inner" style="background-image: url('{{ block.settings.image | img_url: '800x' }}');">
+          <h3 class="card-title">{{ block.settings.title }}</h3>
+            {% if block.settings.button_text != blank %}
+                <div class="card-button-wrapper">
+                  <a href="{{ block.settings.link }}" class="card-btn">{{ block.settings.button_text }}</a>
+                </div>
             {% endif %}
-          </div>
-        {% endif %}
+        </div>
       </div>
     {% endfor %}
   </div>
@@ -193,7 +163,7 @@
           }
         },
         {
-          breakpoint: 767,
+          breakpoint: 767, /* Change breakpoint to 767px to match CSS media query */
           settings: "unslick" /* Unslick the slider on mobile */
         }
       ]
