@@ -394,7 +394,9 @@
       "type": "updated_videosection",
       "disabled": true,
       "name": "Triggered Video",
-      "settings": {}
+      "settings": {
+        "video_url": ""
+      }
     },
     "updated_image_with_text_WTLPgF": {
       "type": "Updated_image_with_text",
@@ -402,7 +404,7 @@
         "image_block_d4dQgz": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/IMG_4300.jpg"
+            "image": "shopify://shop_images/Photoroom_20260315_222901.jpg"
           }
         },
         "content_block_486hcN": {
@@ -421,7 +423,7 @@
       ],
       "name": "Split Image & Text",
       "settings": {
-        "bg_color": "#F9F1E7",
+        "bg_color": "#f9f1e7",
         "border_radius": 20,
         "v_align": "center",
         "h_align": "left",
