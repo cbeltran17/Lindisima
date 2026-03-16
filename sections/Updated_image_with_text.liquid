@@ -55,8 +55,7 @@
     font-size: 34px;
     line-height: 100%;
     letter-spacing: 3%;
-        color: #8f9c87;
-
+    color: #8f9c87;
   } 
 
   .split-desc p {
@@ -65,7 +64,26 @@
     line-height: 32px;
     margin: 0 0 12px 0;
     max-width: 600px;
-        color: #8f9c87;
+    color: #8f9c87;
+  }
+
+  /* Styles pour le contenu repliable */
+  .split-desc.is-collapsed p:nth-of-type(n+2) {
+    display: none;
+  }
+
+  .read-more-toggle {
+    cursor: pointer;
+    color: #8f9c87;
+    font-weight: 600;
+    margin: 10px 0 20px 0;
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 18px;
+    text-decoration: underline;
+    font-family: inherit;
+    display: none; /* Affiché via JS si plusieurs paragraphes existent */
   }
 
   .split-btn {
@@ -79,11 +97,11 @@
     transition: 0.3s;
   }
 
-  /* Mobile Specific Styles (Under 768px) */
+  /* Styles mobiles (Moins de 768px) */
   @media (max-width: 767px) {
     .split-container-inner {
       flex-direction: column;
-      border-radius: 0 !important; /* Remove border radius on mobile */
+      border-radius: 0 !important;
     }
 
     .split-side {
@@ -91,7 +109,6 @@
       width: 100%;
     }
 
-    /* Logic to force Image to Top on Mobile only */
     .split-side--image_block {
       order: 1 !important;
     }
@@ -103,7 +120,7 @@
       padding: 60px 15px;
     }
     .split-section-{{ section.id }} {
-            margin: 0 0 22px 0;
+      margin: 0 0 22px 0;
     }
   }
 </style> 
@@ -111,7 +128,6 @@
 <div class="split-section-{{ section.id }} text-with-image-split">
   <div class="split-container-inner">
     {% for block in section.blocks %}
-      {%- comment -%} Assigning a class based on type to control mobile order {%- endcomment -%}
       <div class="split-side split-side--{{ block.type }}" {{ block.shopify_attributes }}>
         {% case block.type %}
           {% when 'image_block' %}
@@ -125,7 +141,9 @@
           {% when 'content_block' %}
             <div class="split-text-content">
               {% if block.settings.title != blank %}<h2 class="split-title">{{ block.settings.title }}</h2>{% endif %}
-              {% if block.settings.text != blank %}<div class="split-desc">{{ block.settings.text }}</div>{% endif %}
+              {% if block.settings.text != blank %}
+                <div class="split-desc">{{ block.settings.text }}</div>
+              {% endif %}
               {% if block.settings.btn_label != blank %}
                 <a href="{{ block.settings.btn_link }}" class="split-btn">{{ block.settings.btn_label }}</a>
               {% endif %}
@@ -135,6 +153,49 @@
     {% endfor %}
   </div>
 </div>
+
+<script>
+  (function() {
+    function initCollapsible() {
+      const sections = document.querySelectorAll('.split-section-{{ section.id }}');
+      sections.forEach(section => {
+        const descContainers = section.querySelectorAll('.split-desc');
+        descContainers.forEach(container => {
+          // Éviter les doublons dans l'éditeur de thème
+          if (container.nextElementSibling && container.nextElementSibling.classList.contains('read-more-toggle')) return;
+
+          const paragraphs = container.querySelectorAll('p');
+          if (paragraphs.length > 1) {
+            container.classList.add('is-collapsed');
+            
+            const btn = document.createElement('button');
+            btn.className = 'read-more-toggle';
+            btn.style.display = 'block';
+            btn.innerText = 'Read More';
+            
+            btn.addEventListener('click', function() {
+              if (container.classList.contains('is-collapsed')) {
+                container.classList.remove('is-collapsed');
+                btn.innerText = 'Read Less';
+              } else {
+                container.classList.add('is-collapsed');
+                btn.innerText = 'Read More';
+              }
+            });
+            
+            container.after(btn);
+          }
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', initCollapsible);
+    document.addEventListener('shopify:section:load', initCollapsible);
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      initCollapsible();
+    }
+  })();
+</script>
 
 {% schema %}
 {
