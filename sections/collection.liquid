@@ -2,13 +2,12 @@
   type="application/json"
   data-section-id="{{ section.id }}"
   data-section-type="static-collection"
->
-</script>
+></script>
 
 {% liquid
   assign products_per_page = section.settings.products_per_row | times: section.settings.number_of_rows
-  assign use_masonry = false
 
+  assign use_masonry = false
   if section.settings.layout == 'masonry'
     assign use_masonry = true
   endif
@@ -36,202 +35,154 @@
   {% endunless %}
 
   {% paginate collection.products by products_per_page %}
-    <section
-      class="collection collection-image--{{ show_collection_image }}"
-      data-product-hover="{{ settings.product_hover }}"
-      {% if use_masonry %}data-collection-masonry{% endif %}
-      data-section-id="{{ section.id }}"
-      data-section-type="collection">
 
-      {% if use_masonry or show_collection_image or collection.description != blank or show_sorting or show_filters %}
-        <div
-          class="
+  <section
+    class="collection collection-image--{{ show_collection_image }}"
+    data-product-hover="{{ settings.product_hover }}"
+    {% if use_masonry %}data-collection-masonry{% endif %}
+    data-section-id="{{ section.id }}"
+    data-section-type="collection"
+  >
+
+    {% if use_masonry or show_collection_image or collection.description != blank or show_sorting or show_filters %}
+      <div
+        class="
           collection-header
+          {% if use_masonry %} collection-header-alternate {% endif %}
+          {% if show_filters and show_sorting %} collection-header--filters-sort-enabled {% endif %}
+        "
+      >
+
+        {% if show_collection_image %}
+          <div class="collection-featured-image">
+            {% render 'rimg',
+              img: collection.image,
+              size: '1024x1024',
+              lazy: true
+            %}
+          </div>
+        {% endif %}
+
+        <div class="collection-header-content">
+
           {% if use_masonry %}
-            collection-header-alternate
+            {% render 'breadcrumbs' %}
+            <h1 class="page-title">{{ collection.title }}</h1>
           {% endif %}
-          {% if show_filters and show_sorting %}
-            collection-header--filters-sort-enabled
-          {% endif %}
-          "
-        >
-          {% if show_collection_image %}
-            <div class="collection-featured-image">
-              {%
-                render 'rimg',
-                img: collection.image,
-                size: '1024x1024',
-                lazy: true,
-              %}
+
+          {% if collection.description != blank and section.settings.show_description %}
+            <div class="collection-description rte">
+              {{ collection.description }}
             </div>
           {% endif %}
 
-          <div class="collection-header-content">
-            {% if use_masonry %}
-              {% render 'breadcrumbs' %}
-              <h1 class="page-title">{{ collection.title }}</h1>
-            {% endif %}
+          {% if show_filters or show_sorting %}
+            <div class="collection-filters">
 
-            {% if collection.description != blank and section.settings.show_description %}
-              <div class="collection-description rte">
-                {{ collection.description }}
-              </div>
-            {% endif %}
-
-            {% if show_filters or show_sorting %}
-              <div class="collection-filters">
-                {% if show_filters and collection.filters.size > 0 %}
-                  <div class="faceted-filters" data-faceted-filter>
-                    {%
-                      render "faceted-filters",
-                      filters: collection.filters,
-                      class_prefix: 'collection',
-                    %}
-                  </div>
-                {% endif %}
-                {% if show_sorting %}
-                  <div class="collection-sorting__wrapper">
-                    <label class="collection-filters__title label" for="sort-by">
-                      {{- 'collections.collection.sort_title' | t -}}:
-                    </label>
-
-                    <div
-                      class="
-                        collection-dropdown
-                        collection-dropdown--sort
-                        select-wrapper
-                        {% if collection.current_vendor %}
-                          vendor-collection
-                        {% endif %}
-                      "
-                    >
-                      {% assign current_sort = collection.sort_by | default: collection.default_sort_by %}
-
-                      <span class="selected-text"></span>
-
-                      <select id="sort-by" class="select" data-collection-sorting>
-                        {%- for option in collection.sort_options -%}
-                          {% if current_sort == option.value %}
-                            <option value="{{ option.value }}" selected="selected">{{ option.name }}</option>
-                          {% else %}
-                            <option value="{{ option.value }}">{{ option.name }}</option>
-                          {% endif %}
-                        {% endfor %}
-                      </select>
-                    </div>
-                  </div>
-                {% endif %}
-              </div>
-            {% endif %}
-          </div>
-
-          {% if show_filters and collection.filters.size > 0 %}
-            {% for filter in collection.filters %}
-              {% if filter.active_values.size > 0 or filter.min_value.value or filter.max_value.value %}
-                  {%-
-                    render 'faceted-filters-active',
-                    show_sorting: show_sorting,
-                    filter: filter,
+              {% if show_filters and collection.filters.size > 0 %}
+                <div class="faceted-filters" data-faceted-filter>
+                  {% render "faceted-filters",
                     filters: collection.filters,
-                    class_prefix: 'collection',
-                    clear_url: collection.url,
+                    class_prefix: 'collection'
                   %}
-                {% break %}
+                </div>
               {% endif %}
-            {% endfor %}
+
+              {% if show_sorting %}
+                <div class="collection-sorting__wrapper">
+                  <label class="collection-filters__title label" for="sort-by">
+                    {{ 'collections.collection.sort_title' | t }}:
+                  </label>
+
+                  <div class="collection-dropdown collection-dropdown--sort select-wrapper {% if collection.current_vendor %}vendor-collection{% endif %}">
+                    {% assign current_sort = collection.sort_by | default: collection.default_sort_by %}
+
+                    <span class="selected-text"></span>
+
+                    <select id="sort-by" class="select" data-collection-sorting>
+                      {% for option in collection.sort_options %}
+                        <option
+                          value="{{ option.value }}"
+                          {% if current_sort == option.value %}selected="selected"{% endif %}
+                        >
+                          {{ option.name }}
+                        </option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
           {% endif %}
+
         </div>
-      {% endif %}
 
-      <div
-        class="collection-products rows-of-{{ section.settings.products_per_row }}"
-        {% if use_masonry %}data-masonry-grid{% endif %}
-      >
-        {%- if use_masonry -%}
-          <div class="product-grid-masonry-sizer" data-masonry-sizer></div>
-        {%- endif -%}
-
-        {%- if collection.handle == 'all' and collection.all_vendors.size == 0 and collection.all_types.size == 0 -%}
-          {%- for i in (1..section.settings.products_per_row) -%}
-            {%- capture productImage -%}
-              {%- cycle 'product-1', 'product-2', 'product-3' -%}
-            {%- endcapture -%}
-            {%- assign image = productImage | placeholder_svg_tag: 'placeholder-svg' -%}
-
-            {%- render 'home-onboard-product', image: image -%}
-          {%- endfor -%}
-        {%- else -%}
-          {% for product in collection.products %}
-            {%
-              render 'product-list-item',
-              product: product,
-            %}
-          {% else %}
-            {% capture continueLink %}
-              <a href="{{ routes.all_products_collection_url }}">{{ 'collections.collection.continue_link' | t }}</a>
-            {% endcapture %}
-             <p class="empty">{{ 'collections.collection.empty_html' | t: continue_link: continueLink }}</p>
+        {% if show_filters and collection.filters.size > 0 %}
+          {% for filter in collection.filters %}
+            {% if filter.active_values.size > 0 or filter.min_value.value or filter.max_value.value %}
+              {% render 'faceted-filters-active',
+                show_sorting: show_sorting,
+                filter: filter,
+                filters: collection.filters,
+                class_prefix: 'collection',
+                clear_url: collection.url
+              %}
+              {% break %}
+            {% endif %}
           {% endfor %}
-        {%- endif -%}
-      </div>
-    </section>
-
-    <div class="pagination-dots">
-      {% if paginate.previous %}
-        <a href="{{ paginate.previous.url }}" class="pagination-arrow">&laquo;</a>
-      {% endif %}
-
-      {% for page in paginate.pages %}
-        {% if page.is_link %}
-          <a href="{{ page.url }}" class="pagination-dot"></a>
-        {% else %}
-          <span class="pagination-dot is-active"></span>
         {% endif %}
-      {% endfor %}
 
-      {% if paginate.next %}
-        <a href="{{ paginate.next.url }}" class="pagination-arrow">&raquo;</a>
+      </div>
+    {% endif %}
+
+    <div
+      class="collection-products rows-of-{{ section.settings.products_per_row }}"
+      {% if use_masonry %}data-masonry-grid{% endif %}
+    >
+
+      {% if use_masonry %}
+        <div class="product-grid-masonry-sizer" data-masonry-sizer></div>
       {% endif %}
+
+      {% if collection.handle == 'all' and collection.all_vendors.size == 0 and collection.all_types.size == 0 %}
+
+        {% for i in (1..section.settings.products_per_row) %}
+          {% capture productImage %}
+            {% cycle 'product-1', 'product-2', 'product-3' %}
+          {% endcapture %}
+
+          {% assign image = productImage | placeholder_svg_tag: 'placeholder-svg' %}
+
+          {% render 'home-onboard-product', image: image %}
+        {% endfor %}
+
+      {% else %}
+
+        {% for product in collection.products %}
+          {% render 'product-list-item', product: product %}
+        {% else %}
+
+          {% capture continueLink %}
+            <a href="{{ routes.all_products_collection_url }}">
+              {{ 'collections.collection.continue_link' | t }}
+            </a>
+          {% endcapture %}
+
+          <p class="empty">
+            {{ 'collections.collection.empty_html' | t: continue_link: continueLink }}
+          </p>
+
+        {% endfor %}
+
+      {% endif %}
+
     </div>
 
-    <style>
-      .pagination-dots {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 30px;
-        padding: 20px 0;
-      }
+  </section>
 
-      .pagination-dot {
-        display: inline-block;
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background-color: transparent;
-        margin: 0 6px;
-        cursor: pointer;
-        border: 2px solid #333; /* Couleur de la bordure pour les points inactifs */
-        transition: all 0.3s ease;
-      }
+  {% render 'pagination', paginate: paginate %}
 
-      .pagination-dot.is-active {
-        background-color: #333; /* Couleur pleine pour le point actif */
-        border-color: #333;
-      }
-
-      .pagination-dot:hover {
-        transform: scale(1.2);
-      }
-
-      .pagination-arrow {
-        font-size: 24px;
-        text-decoration: none;
-        color: #333;
-        margin: 0 15px;
-        line-height: 1;
-      }
-    </style>
   {% endpaginate %}
 </div>
 
@@ -266,14 +217,8 @@
       "id": "layout",
       "label": "Layout",
       "options": [
-        {
-          "value": "default",
-          "label": "Default"
-        },
-        {
-          "value": "masonry",
-          "label": "Masonry"
-        }
+        { "value": "default", "label": "Default" },
+        { "value": "masonry", "label": "Masonry" }
       ],
       "default": "default"
     },
@@ -297,5 +242,4 @@
     }
   ]
 }
-
 {% endschema %}
