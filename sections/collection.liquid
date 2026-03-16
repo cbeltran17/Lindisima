@@ -28,6 +28,57 @@
   endif
 %}
 
+<style>
+  /* Optimisation mobile pour les filtres */
+  @media screen and (max-width: 768px) {
+    .collection-filters {
+      display: flex !important;
+      flex-direction: column !important; /* Empile les éléments verticalement */
+      padding: 10px 15px !important; /* Padding horizontal pour l'esthétique */
+      gap: 10px !important; /* Espace entre les groupes de filtres et de tri */
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .collection-filters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .faceted-filters, 
+    .collection-sorting__wrapper {
+      flex: 0 0 auto !important; /* Empêche les éléments de rétrécir */
+      width: 100% !important; /* Prend toute la largeur disponible */
+      margin: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between; /* Aligne le label à gauche et le sélecteur à droite */
+    }
+
+    .collection-filters__title {
+      margin-right: 8px !important;
+      margin-bottom: 0 !important;
+      font-size: 13px !important;
+      white-space: nowrap; /* Empêche le titre de se casser sur plusieurs lignes */
+    }
+
+    .collection-dropdown .select {
+      padding: 6px 25px 6px 10px !important;
+      font-size: 13px !important;
+      min-width: 120px; /* Assure une largeur minimale pour le sélecteur */
+    }
+    
+    /* Réduction des marges d'en-tête sur mobile */
+    .collection-header {
+      margin-bottom: 15px !important;
+    }
+    
+    .collection-description {
+      margin-bottom: 10px !important;
+    }
+  }
+</style>
+
 <div>
   {% unless use_masonry %}
     <h1 class="page-title">{{ collection.title }}</h1>
