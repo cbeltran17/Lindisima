@@ -70,6 +70,84 @@
   </div>
 </section>
 
+{% comment %} --- DEBUT AJOUT QUICK VIEW --- {% endcomment %}
+<style>
+  .product-quickview-lightbox {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .product-quickview-lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    cursor: default;
+  }
+  .product-quickview-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  /* Curseur loupe sur les images produits */
+  .product-container img {
+    cursor: zoom-in !important;
+  }
+</style>
+
+<div id="ProductQuickview" class="product-quickview-lightbox" onclick="closeQuickView()">
+  <span class="product-quickview-close">&times;</span>
+  <img id="QuickviewImage" src="" alt="Aperçu produit">
+</div>
+
+<script>
+  function openQuickView(src) {
+    const lightbox = document.getElementById('ProductQuickview');
+    const img = document.getElementById('QuickviewImage');
+    img.src = src;
+    lightbox.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeQuickView() {
+    const lightbox = document.getElementById('ProductQuickview');
+    lightbox.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const productContainer = document.querySelector('.product-container');
+    if (productContainer) {
+      productContainer.addEventListener('click', function(e) {
+        const target = e.target;
+        if (target.tagName === 'IMG') {
+          let imgSrc = target.currentSrc || target.src;
+          // Tente de charger la version haute définition de Shopify
+          imgSrc = imgSrc.replace(/(_small|_medium|_large|_grande|_compact|_\d+x\d*)/g, '_2048x');
+          openQuickView(imgSrc);
+          e.preventDefault();
+        }
+      });
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeQuickView();
+    });
+  });
+</script>
+{% comment %} --- FIN AJOUT QUICK VIEW --- {% endcomment %}
+
 {% schema %}
 {
   "name": "Product pages",
@@ -85,7 +163,7 @@
       "type": "checkbox",
       "id": "show_payment_button",
       "label": "Show dynamic checkout button",
-      "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+      "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout )",
       "default": true
     },
     {
@@ -94,7 +172,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Learn more about [media types](https://help.shopify.com/en/manual/products/product-media/product-media-types)"
+      "content": "Learn more about [media types](https://help.shopify.com/en/manual/products/product-media/product-media-types )"
     },
     {
       "type": "select",
@@ -279,7 +357,7 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "To display a rating, add a product rating app. [Learn more](https://apps.shopify.com/product-reviews)"
+          "content": "To display a rating, add a product rating app. [Learn more](https://apps.shopify.com/product-reviews )"
         }
       ]
     },
@@ -290,7 +368,7 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "To select complementary products, add the Search & Discovery app. [Learn more](https:\/\/shopify.dev\/themes\/product-merchandising\/recommendations)"
+          "content": "To select complementary products, add the Search & Discovery app. [Learn more](https:\/\/shopify.dev\/themes\/product-merchandising\/recommendations )"
         },
         {
           "type": "text",
@@ -318,5 +396,4 @@
     }
   ]
 }
-
 {% endschema %}
