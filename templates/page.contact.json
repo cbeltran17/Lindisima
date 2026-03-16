@@ -15,12 +15,15 @@
     },
     "1634914363c9428bd7": {
       "type": "pxs-map",
+      "disabled": true,
       "settings": {
         "section_height": "medium",
         "title": "Location",
+        "content": "<p>1221 Broad St<br>Victoria, BC</p>",
         "text_alignment": "center",
         "layout": "overlay-center-center",
         "layout_mobile": "below",
+        "address": "1221 Broad St, Victoria, BC",
         "api_key": "",
         "enable_custom_colors": false,
         "foreground_color": "#292929",
