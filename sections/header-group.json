@@ -13,7 +13,6 @@
   "sections": {
     "announcement_bar": {
       "type": "pxs-announcement-bar",
-      "disabled": true,
       "settings": {
         "show_announcement": true,
         "announcement_home_only": false,
