@@ -176,10 +176,62 @@
       </div>
     </section>
 
-    {%
-      render 'pagination',
-      paginate: paginate,
-    %}
+    <div class="pagination-dots">
+      {% if paginate.previous %}
+        <a href="{{ paginate.previous.url }}" class="pagination-arrow">&laquo;</a>
+      {% endif %}
+
+      {% for page in paginate.pages %}
+        {% if page.is_link %}
+          <a href="{{ page.url }}" class="pagination-dot"></a>
+        {% else %}
+          <span class="pagination-dot is-active"></span>
+        {% endif %}
+      {% endfor %}
+
+      {% if paginate.next %}
+        <a href="{{ paginate.next.url }}" class="pagination-arrow">&raquo;</a>
+      {% endif %}
+    </div>
+
+    <style>
+      .pagination-dots {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+        padding: 20px 0;
+      }
+
+      .pagination-dot {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: transparent;
+        margin: 0 6px;
+        cursor: pointer;
+        border: 2px solid #333; /* Couleur de la bordure pour les points inactifs */
+        transition: all 0.3s ease;
+      }
+
+      .pagination-dot.is-active {
+        background-color: #333; /* Couleur pleine pour le point actif */
+        border-color: #333;
+      }
+
+      .pagination-dot:hover {
+        transform: scale(1.2);
+      }
+
+      .pagination-arrow {
+        font-size: 24px;
+        text-decoration: none;
+        color: #333;
+        margin: 0 15px;
+        line-height: 1;
+      }
+    </style>
   {% endpaginate %}
 </div>
 
