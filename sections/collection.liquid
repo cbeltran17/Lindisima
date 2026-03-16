@@ -29,13 +29,20 @@
 %}
 
 <style>
+  /* RÉDUCTION AGRESSIVE DE L'ESPACE SUPÉRIEUR */
+  .page-title { margin-top: 0 !important; margin-bottom: 5px !important; }
+  .collection-header { margin-top: 0 !important; padding-top: 0 !important; }
+  .collection { margin-top: -20px !important; padding-top: 0 !important; }
+  .main-content, .shopify-section { padding-top: 0 !important; margin-top: 0 !important; }
+
   /* DESIGN ULTRA-MINIMALISTE MOBILE UNIQUEMENT */
   @media screen and (max-width: 768px) {
     /* En-tête ultra compact */
-    .page-title { margin: 5px 0 !important; font-size: 1.2rem !important; text-align: center; }
+    .page-title { margin: 0 !important; font-size: 1.2rem !important; text-align: center; }
     .breadcrumb { display: none !important; } /* Cache le fil d'ariane pour gagner de la place */
     
     .collection-header {
+      margin-top: 0 !important;
       margin-bottom: 5px !important;
       padding: 0 !important;
     }
