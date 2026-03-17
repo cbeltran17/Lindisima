@@ -30,25 +30,23 @@
 
 <style>
   /* AJUSTEMENT DES ESPACES (LÉGER ESPACEMENT) */
-  .page-title { margin-top: 10px !important; margin-bottom: 10px !important; } /* Petit espace sous le header et avant les filtres */
-  .collection-header { margin-top: 0 !important; padding-top: 0 !important; margin-bottom: 0 !important; } /* Réinitialiser les marges par défaut */
-  .collection { margin-top: 0 !important; padding-top: 0 !important; } /* Réinitialiser le conteneur principal */
-  .main-content, .shopify-section { padding-top: 0 !important; margin-top: 0 !important; } /* Supprimer les paddings parents excessifs */
-  .collection-filters { margin-top: 10px !important; } /* Petit espace au-dessus des filtres */
+  .page-title { margin-top: 10px !important; margin-bottom: 10px !important; }
+  .collection-header { margin-top: 0 !important; padding-top: 0 !important; margin-bottom: 0 !important; }
+  .collection { margin-top: 0 !important; padding-top: 0 !important; }
+  .main-content, .shopify-section { padding-top: 0 !important; margin-top: 0 !important; }
+  .collection-filters { margin-top: 10px !important; }
 
   /* DESIGN ULTRA-MINIMALISTE MOBILE UNIQUEMENT */
   @media screen and (max-width: 768px) {
-    /* En-tête ultra compact */
     .page-title { margin: 5px 0 !important; font-size: 1.2rem !important; text-align: center; }
-    .breadcrumb { display: none !important; } /* Cache le fil d'ariane pour gagner de la place */
-    
+    .breadcrumb { display: none !important; }
+
     .collection-header {
       margin-top: 0 !important;
       margin-bottom: 5px !important;
       padding: 0 !important;
     }
 
-    /* Filtres et Tri sur une seule ligne horizontale */
     .collection-filters {
       display: flex !important;
       flex-direction: row !important;
@@ -62,20 +60,18 @@
     }
     .collection-filters::-webkit-scrollbar { display: none; }
 
-    /* Masquer les étiquettes "Filter by" et "Sort by" */
-    .collection-filters__title, 
+    .collection-filters__title,
     .collection-filters label,
     .faceted-filters .collection-filters__title {
       display: none !important;
     }
 
-    /* Boutons et Sélecteurs ultra compacts */
     .faceted-filters, .collection-sorting__wrapper {
       margin: 0 !important;
       flex: 0 0 auto !important;
     }
 
-    .collection-dropdown .select, 
+    .collection-dropdown .select,
     .faceted-filters [data-filter-item],
     .collection-dropdown.select-wrapper {
       padding: 4px 20px 4px 8px !important;
@@ -86,10 +82,80 @@
       background-position: right 5px center !important;
     }
 
-    /* Remonter les produits au maximum */
     .collection-products {
       margin-top: 5px !important;
     }
+  }
+
+  /* =============================================
+     PAGINATION POINTS — DOT NAVIGATION
+  ============================================= */
+  .dot-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 0 10px;
+    list-style: none;
+    margin: 0;
+  }
+
+  .dot-pagination__item {
+    display: inline-flex;
+  }
+
+  .dot-pagination__dot {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #cccccc;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
+    text-decoration: none;
+    outline: none;
+  }
+
+  .dot-pagination__dot:hover {
+    background-color: #888888;
+    transform: scale(1.25);
+  }
+
+  .dot-pagination__dot--active {
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
+    transform: scale(1.35);
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .dot-pagination__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 1.5px solid #cccccc;
+    color: #555555;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    line-height: 1;
+  }
+
+  .dot-pagination__arrow:hover {
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .dot-pagination__arrow--disabled {
+    opacity: 0.3;
+    pointer-events: none;
+    cursor: default;
   }
 </style>
 
@@ -246,10 +312,85 @@
 
   </section>
 
-  {% render 'pagination', paginate: paginate %}
+  {% if paginate.pages > 1 %}
+    <nav aria-label="Pagination" class="dot-pagination-wrapper">
+      <ul class="dot-pagination">
+
+        <!-- Flèche précédente -->
+        <li class="dot-pagination__item">
+          {% if paginate.previous %}
+            <a
+              href="{{ paginate.previous.url }}"
+              class="dot-pagination__arrow"
+              aria-label="Page précédente"
+            >&#8249;</a>
+          {% else %}
+            <span class="dot-pagination__arrow dot-pagination__arrow--disabled" aria-hidden="true">&#8249;</span>
+          {% endif %}
+        </li>
+
+        <!-- Points de page -->
+        {% for part in paginate.parts %}
+          <li class="dot-pagination__item">
+            {% if part.is_link %}
+              <a
+                href="{{ part.url }}"
+                class="dot-pagination__dot"
+                aria-label="Page {{ part.title }}"
+                title="Page {{ part.title }}"
+              ></a>
+            {% else %}
+              {% if part.title == paginate.current_page %}
+                <span
+                  class="dot-pagination__dot dot-pagination__dot--active"
+                  aria-current="page"
+                  aria-label="Page {{ part.title }} (actuelle)"
+                  title="Page {{ part.title }}"
+                ></span>
+              {% else %}
+                <span
+                  class="dot-pagination__dot dot-pagination__arrow--disabled"
+                  aria-hidden="true"
+                  title="…"
+                ></span>
+              {% endif %}
+            {% endif %}
+          </li>
+        {% endfor %}
+
+        <!-- Flèche suivante -->
+        <li class="dot-pagination__item">
+          {% if paginate.next %}
+            <a
+              href="{{ paginate.next.url }}"
+              class="dot-pagination__arrow"
+              aria-label="Page suivante"
+            >&#8250;</a>
+          {% else %}
+            <span class="dot-pagination__arrow dot-pagination__arrow--disabled" aria-hidden="true">&#8250;</span>
+          {% endif %}
+        </li>
+
+      </ul>
+    </nav>
+  {% endif %}
 
   {% endpaginate %}
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var dots = document.querySelectorAll('.dot-pagination__dot:not(.dot-pagination__dot--active)');
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function () {
+        document.querySelectorAll('.dot-pagination__dot').forEach(function (d) {
+          d.classList.remove('dot-pagination__dot--active');
+        });
+        dot.classList.add('dot-pagination__dot--active');
+      });
+    });
+  });
+</script>
 
 {% schema %}
 {
