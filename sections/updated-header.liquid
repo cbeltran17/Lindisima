@@ -108,9 +108,7 @@
       {% if section.settings.show_cart %}
         <a href="/cart" class="icon-cart">
           <img src="https://cdn.shopify.com/s/files/1/0790/8232/4206/files/Group_1.png?v=1773398481" alt="Cart" class="custom-icon">
-          {% if cart.item_count > 0 %}
-            <span class="cart-count">{{ cart.item_count }}</span>
-          {% endif %}
+          <span class="cart-count" {% if cart.item_count == 0 %}style="display:none;"{% endif %}>{{ cart.item_count }}</span>
         </a>
       {% endif %}
     </div>
@@ -563,6 +561,86 @@
 </style>
 
 <script>
+  /* ── Cart badge: instant update without page refresh ── */
+  function updateCartBadge(count) {
+    var badge = document.querySelector('.cart-count');
+    if (!badge) return;
+    if (count > 0) {
+      badge.textContent = count;
+      badge.style.display = 'flex';
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
+  function fetchCartCount() {
+    fetch('/cart.js')
+      .then(function(r){ return r.json(); })
+      .then(function(cart){ updateCartBadge(cart.item_count); })
+      .catch(function(){});
+  }
+
+  /* Listen to Shopify native cart events (Dawn / OS 2.0 themes) */
+  document.addEventListener('cart:updated', function(e){
+    var count = e.detail && e.detail.cart ? e.detail.cart.item_count : null;
+    if (count !== null) { updateCartBadge(count); } else { fetchCartCount(); }
+  });
+
+  /* Listen to custom "add to cart" fetch calls used by most themes */
+  (function() {
+    var _fetch = window.fetch;
+    window.fetch = function() {
+      var url = arguments[0];
+      var isCartChange = typeof url === 'string' && (
+        url.indexOf('/cart/add') !== -1 ||
+        url.indexOf('/cart/change') !== -1 ||
+        url.indexOf('/cart/update') !== -1 ||
+        url.indexOf('/cart/clear') !== -1
+      );
+      var result = _fetch.apply(this, arguments);
+      if (isCartChange) {
+        result.then(function(response) {
+          var clone = response.clone();
+          clone.json().then(function(data) {
+            /* /cart/add returns the added item, not the full cart */
+            if (data.item_count !== undefined) {
+              updateCartBadge(data.item_count);
+            } else {
+              fetchCartCount();
+            }
+          }).catch(function(){ fetchCartCount(); });
+        }).catch(function(){});
+      }
+      return result;
+    };
+  })();
+
+  /* Also intercept XMLHttpRequest for older themes */
+  (function() {
+    var _open = XMLHttpRequest.prototype.open;
+    var _send = XMLHttpRequest.prototype.send;
+    XMLHttpRequest.prototype.open = function(method, url) {
+      this._cartUrl = url;
+      return _open.apply(this, arguments);
+    };
+    XMLHttpRequest.prototype.send = function() {
+      var url = this._cartUrl || '';
+      var isCartChange = typeof url === 'string' && (
+        url.indexOf('/cart/add') !== -1 ||
+        url.indexOf('/cart/change') !== -1 ||
+        url.indexOf('/cart/update') !== -1 ||
+        url.indexOf('/cart/clear') !== -1
+      );
+      if (isCartChange) {
+        this.addEventListener('load', function() {
+          fetchCartCount();
+        });
+      }
+      return _send.apply(this, arguments);
+    };
+  })();
+
+  /* ── Mobile menu ── */
   function toggleMobileMenu() {
     const sidebar = document.getElementById('mobile-sidebar');
     const overlay = document.getElementById('sidebar-overlay');
