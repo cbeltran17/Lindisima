@@ -58,7 +58,7 @@
         "description"
       ],
       "settings": {
-        "enable_cart_redirection": false,
+        "enable_cart_redirection": true,
         "show_payment_button": true,
         "images_layout": "list",
         "enable_zoom": true,
