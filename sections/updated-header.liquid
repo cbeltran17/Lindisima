@@ -108,6 +108,9 @@
       {% if section.settings.show_cart %}
         <a href="/cart" class="icon-cart">
           <img src="https://cdn.shopify.com/s/files/1/0790/8232/4206/files/Group_1.png?v=1773398481" alt="Cart" class="custom-icon">
+          {% if cart.item_count > 0 %}
+            <span class="cart-count">{{ cart.item_count }}</span>
+          {% endif %}
         </a>
       {% endif %}
     </div>
@@ -116,7 +119,7 @@
 
 <div id="mobile-sidebar" class="mobile-sidebar">
   <div class="sidebar-header">
-    <div class="close-icon" onclick="toggleMobileMenu(  )">&times;</div>
+    <div class="close-icon" onclick="toggleMobileMenu(   )">&times;</div>
   </div>
   <nav class="sidebar-navigation">
     {% for link in linklists[section.settings.main_menu].links %}
@@ -157,6 +160,25 @@
   }
   .icon-cart{
     display: flex;
+    position: relative;
+  }
+  .cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #e00000;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0 3px;
+    pointer-events: none;
   }
   .header-container {
     max-width: 1820px;
