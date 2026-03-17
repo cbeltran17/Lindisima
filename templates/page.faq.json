@@ -197,11 +197,18 @@
             "answer": "At this time we ship only within the United States. International shipping is not available.\n\nInspecting Your Order\nWe kindly ask that you review your order upon arrival. If your package appears damaged, defective, or incorrect, please contact us as soon as possible so we can assist you promptly.\n\nTo ensure we can properly evaluate the issue, concerns must be reported within 48 hours of delivery.\n\nQuality Assurance\nEach LINDÍSIMA product undergoes a meticulous quality review before it leaves our studio. While issues are rare, we take every concern seriously and will review claims with care.\n\nReporting a Concern\nWhen contacting us, please include:\n• Your order number\n• A description of the issue\n• Clear photos of the product and packaging\nThis allows our team to review the matter quickly and provide the best resolution.\n\nApproved Returns\nIf your claim is approved, we will provide a prepaid return shipping label along with instructions for returning the item.\nPlease note that returns sent without prior authorization cannot be accepted."
           }
         },
+        "faq_item_NM8Fy9": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Your question here?",
+            "answer": "Your answer here."
+          }
+        },
         "faq_item_PR4Un7": {
           "type": "faq_item",
           "settings": {
             "question": "How much does shipping cost?",
-            "answer": "Standard Shipping: $5.99\nPriority Shipping: $12.99"
+            "answer": "Standard Shipping $7.99\nPriority Shipping $14.99\nExpedite Shipping $19.98"
           }
         },
         "faq_item_QB3eB6": {
@@ -228,6 +235,7 @@
       },
       "block_order": [
         "faq_item_UcxfVJ",
+        "faq_item_NM8Fy9",
         "faq_item_PR4Un7",
         "faq_item_QB3eB6",
         "faq_item_gcq8kM",
