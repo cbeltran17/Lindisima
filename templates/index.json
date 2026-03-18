@@ -439,7 +439,7 @@
       "settings": {
         "title": "News",
         "blog": "news",
-        "number_of_columns": 3,
+        "number_of_columns": 2,
         "number_of_rows": 1
       }
     },
