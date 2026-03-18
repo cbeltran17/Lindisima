@@ -18,7 +18,7 @@
       "name": "Custom Flexible Banner",
       "settings": {
         "desktop_image": "shopify://shop_images/1_-_Batch_Image_Ads_-_Simple_Beauty_1.jpg",
-        "mobile_image": "shopify://shop_images/1_-_Batch_Image_Ads_-_Simple_Beauty.jpg",
+        "mobile_image": "shopify://shop_images/1_-_Batch_Image_Ads_-_Simple_Beauty_1.jpg",
         "max_width": 1820,
         "border_radius": 10,
         "title": "",
