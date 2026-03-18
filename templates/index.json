@@ -432,6 +432,16 @@
         "padding_left": 80,
         "padding_right": 80
       }
+    },
+    "home_blog_39feH9": {
+      "type": "home-blog",
+      "name": "Blog posts",
+      "settings": {
+        "title": "News",
+        "blog": "news",
+        "number_of_columns": 3,
+        "number_of_rows": 1
+      }
     }
   },
   "order": [
@@ -446,6 +456,7 @@
     "updated_image_with_text_nBFccJ",
     "instagram_section_6RDbg4",
     "updated_videosection_fcqKV3",
-    "updated_image_with_text_WTLPgF"
+    "updated_image_with_text_WTLPgF",
+    "home_blog_39feH9"
   ]
 }
