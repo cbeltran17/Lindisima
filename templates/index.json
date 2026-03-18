@@ -32,7 +32,7 @@
         "text_color": "#000000",
         "btn_bg_color": "#a1c78a",
         "btn_text_color": "#080808",
-        "padding_horizontal_desktop": 10,
+        "padding_horizontal_desktop": 20,
         "padding_vertical_desktop": 0
       }
     },
