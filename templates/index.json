@@ -442,6 +442,13 @@
         "number_of_columns": 3,
         "number_of_rows": 1
       }
+    },
+    "custom_liquid_XbJmMp": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "<style>\n  .home-blog .article-card__title {\n    display: -webkit-box;\n    -webkit-line-clamp: 2;\n    -webkit-box-orient: vertical;\n    overflow: hidden;\n    word-wrap: break-word;\n  }\n  \n  .home-blog .article-card__excerpt {\n    display: none;\n  }\n</style>"
+      }
     }
   },
   "order": [
@@ -457,6 +464,7 @@
     "instagram_section_6RDbg4",
     "updated_videosection_fcqKV3",
     "updated_image_with_text_WTLPgF",
-    "home_blog_39feH9"
+    "home_blog_39feH9",
+    "custom_liquid_XbJmMp"
   ]
 }
