@@ -1,15 +1,15 @@
 {% comment %}
   Refined Icon Ticker Section
-  Matches design from image_bb5c60.png and image_bb589d.png
 {% endcomment %}
 
 <style>
   .icon-ticker-wrapper-{{ section.id }} {
-    background: {{ section.settings.bg_color }};
-    padding: 20px 0 18px 0;
+    background: transparent;
+    padding: 15px 0;
     overflow: hidden;
     width: 100%;
-    border-bottom: 1px solid #e0e0e0;
+    border-top: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
   }
 
   .icon-ticker-{{ section.id }} {
@@ -18,63 +18,55 @@
     align-items: center;
   }
 
-  /* Item Layout */
   .icon-ticker-item {
     display: flex !important;
     align-items: center;
     justify-content: center;
     gap: 12px;
-    padding: 0 30px; /* Increased padding to prevent overlapping */
+    padding: 0 40px;
     outline: none;
   }
 
-  /* Dot/Icon Styling */
   .icon-ticker-item img {
-    width: 24px; /* Small dots as seen in image_bb5c60.png */
-    height: 24px;
+    width: 8px;
+    height: 8px;
     object-fit: contain;
     flex-shrink: 0;
   }
 
-  /* Fallback for small dot if no icon is selected */
   .ticker-dot-fallback {
-    width: 12px;
-    height: 12px;
-    background-color: #9BA695; /* Matches your brand green */
+    width: 8px;
+    height: 8px;
+    background-color: #a0a69a;
     border-radius: 50%;
     display: inline-block;
   }
 
   .icon-ticker-text {
-        font-weight: 500;
-    font-size: 29px;
-    color: {{ section.settings.text_color }};
+    font-family: inherit;
+    font-weight: 400;
+    font-size: 18px;
+    color: #000000;
     white-space: nowrap;
     text-transform: none;
     line-height: 100%;
-    letter-spacing: 3%;
+    letter-spacing: 0.5px;
   }
 
-  /* Fixing the overlapping from image_bb589d.png */
   @media (max-width: 768px) {
     .icon-ticker-item {
-      padding: 0 15px;
+      padding: 0 20px;
       gap: 8px;
     }
     .icon-ticker-text {
-      font-size: 13px;
+      font-size: 14px;
     }
-    .icon-ticker-item img {
-      width: 16px;
-      height: 16px;
-    }
-    .ticker-dot-fallback {
-      width: 8px;
-      height: 8px;
+    .ticker-dot-fallback, .icon-ticker-item img {
+      width: 6px;
+      height: 6px;
     }
   }
 
-  /* Slick initialization fix: prevents flash of unstyled content */
   .icon-ticker-{{ section.id }}:not(.slick-initialized) {
     display: flex;
     overflow: hidden;
@@ -99,7 +91,6 @@
   <div class="icon-ticker-wrapper-{{ section.id }}">
     <div class="icon-ticker-{{ section.id }} multiple-items-{{ section.id }}">
       {{ ticker_content }}
-      {% comment %} Duplicate content for smoother infinite loop if few blocks {% endcomment %}
       {% if section.blocks.size < 6 %}
         {{ ticker_content }}
       {% endif %}
@@ -121,13 +112,13 @@
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 0,
-        speed: 6000, /* Smooth continuous scroll */
+        speed: 6000,
         cssEase: 'linear',
         arrows: false,
         dots: false,
         pauseOnHover: false,
         pauseOnFocus: false,
-        variableWidth: true, /* Crucial for varying text lengths to prevent overlapping */
+        variableWidth: true,
         responsive: [
           {
             breakpoint: 1024,
@@ -152,7 +143,7 @@
       "type": "color",
       "id": "bg_color",
       "label": "Background color",
-      "default": "#ffffff"
+      "default": "transparent"
     },
     {
       "type": "color",
@@ -175,7 +166,7 @@
           "type": "text",
           "id": "text",
           "label": "Text",
-          "default": "High-Quality"
+          "default": "Treat Your Skin"
         }
       ]
     }
@@ -184,10 +175,11 @@
     {
       "name": "Icon Ticker Slider",
       "blocks": [
+        { "type": "item", "settings": { "text": "Treat Your Skin" } },
         { "type": "item", "settings": { "text": "Beauty That Glows" } },
-        { "type": "item", "settings": { "text": "Pure Beauty Essentials" } },
-        { "type": "item", "settings": { "text": "Luxury Beauty Rituals" } },
-        { "type": "item", "settings": { "text": "Skin That Loves You Back" } }
+        { "type": "item", "settings": { "text": "Vegan" } },
+        { "type": "item", "settings": { "text": "Cruelty Free Beauty" } },
+        { "type": "item", "settings": { "text": "Skin That Loves You" } }
       ]
     }
   ]
