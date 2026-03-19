@@ -28,8 +28,8 @@
   }
 
   .icon-ticker-item img {
-    width: 8px;
-    height: 8px;
+    width: 24px;
+    height: 24px;
     object-fit: contain;
     flex-shrink: 0;
   }
@@ -61,7 +61,11 @@
     .icon-ticker-text {
       font-size: 14px;
     }
-    .ticker-dot-fallback, .icon-ticker-item img {
+    .icon-ticker-item img {
+      width: 18px;
+      height: 18px;
+    }
+    .ticker-dot-fallback {
       width: 6px;
       height: 6px;
     }
@@ -78,7 +82,7 @@
   {% for block in section.blocks %}
     <div class="icon-ticker-item" {{ block.shopify_attributes }}>
       {% if block.settings.icon != blank %}
-        <img src="{{ block.settings.icon | image_url: width: 30 }}" alt="" loading="lazy">
+        <img src="{{ block.settings.icon | image_url: width: 50 }}" alt="" loading="lazy">
       {% else %}
         <span class="ticker-dot-fallback"></span>
       {% endif %}
@@ -160,7 +164,7 @@
         {
           "type": "image_picker",
           "id": "icon",
-          "label": "Icon (Small Dot)"
+          "label": "Icon"
         },
         {
           "type": "text",
