@@ -75,11 +75,31 @@
     margin-top: 16px;
   }
 
+  /* BADGES */
   .product-badges {
+    margin-bottom: 12px;
+  }
+
+  .product-badges.is-single {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 12px;
+  }
+
+  .product-badges.is-double {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .product-badges.is-multi {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .product-badges.is-double .product-badge {
+    width: 100%;
   }
 
   .product-badge {
@@ -100,6 +120,8 @@
     border: none;
     cursor: default;
     user-select: none;
+    box-sizing: border-box;
+    min-width: 0;
   }
 
   .product-name {
@@ -179,15 +201,25 @@
       box-sizing: border-box;
     }
 
-    /* Make images nicely sized in grid items */
     .product-image-wrapper {
       border-radius: 10px;
       margin-bottom: 10px;
     }
 
     .product-badges {
-      gap: 8px;
       margin-bottom: 10px;
+    }
+
+    .product-badges.is-single {
+      gap: 8px;
+    }
+
+    .product-badges.is-double {
+      gap: 8px;
+    }
+
+    .product-badges.is-multi {
+      gap: 8px;
     }
 
     .product-badge {
@@ -227,7 +259,8 @@
 
         <div class="product-info">
           {% if product.metafields.custom.badges != blank and product.metafields.custom.badges.value != blank %}
-            <div class="product-badges">
+            {% assign badge_count = product.metafields.custom.badges.value.size %}
+            <div class="product-badges {% if badge_count == 1 %}is-single{% elsif badge_count == 2 %}is-double{% else %}is-multi{% endif %}">
               {% for badge in product.metafields.custom.badges.value %}
                 <span class="product-badge">{{ badge }}</span>
               {% endfor %}
@@ -264,21 +297,15 @@
     function ensureNoSlickOnMobileGrid() {
       const $slider = $('#Bestseller-{{ section.id }} .js-bestseller-slider');
 
-      // If slick was initialized previously, remove it so the CSS grid takes over on mobile.
       if ($slider.length && $slider.hasClass('slick-initialized')) {
         try {
           $slider.slick('unslick');
         } catch (e) {
-          // ignore errors from slick if it's not available
           console.warn('slick unslick error', e);
         }
       }
-
-      // NOTE: we intentionally DO NOT initialize slick on mobile because the requirement
-      // is to show a 2x2 grid on mobile. Desktop/tablet behavior is controlled by CSS above.
     }
 
-    // Run on load and resize
     ensureNoSlickOnMobileGrid();
     $(window).on('resize', ensureNoSlickOnMobileGrid);
   });
