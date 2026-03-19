@@ -586,8 +586,13 @@
     .desktop-only { display: none !important; }
     .mobile-menu-trigger { display: flex; }
     .header-left, .header-right { flex: 1; }
-    .logo img { max-width: 150px; }
-    .cart-drawer { width: 100vw; }
+    .logo img { max-width: 170px; }
+    /* .cart-drawer { width: 100vw; } */
+    .header-center .logo{
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
   }
   @media (min-width: 769px) {
     .mobile-menu-trigger { display: none; }

@@ -5,7 +5,7 @@
 <style>
   .footer-wrapper-{{ section.id }} {
     background-color: {{ section.settings.footer_bg_color }};
-    padding: 103px 0 15px 0;
+    padding: 50px 0 15px 0;
     width: 100%;
     color: #000;
   }
@@ -18,45 +18,60 @@
 
   /* Tier 1: Email Signup */
   .footer-tier-top {
-    text-align: center;
-    margin-bottom: 71px;
+   text-align: center;
+    padding-bottom: 35px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
   .newsletter-title {
    margin-bottom: 12px;
     margin-top: 0;
-    font-weight: 700;
-    font-size: 34px;
+    font-weight: 600;
+    font-size: 32px;
     line-height: 100%;
     letter-spacing: 2%;
     text-transform: none;
   }
+  .newsletter-block{
+        display: flex;
+            align-items: center;
+    justify-content: space-between;
+  }
   .newsletter-sub {
-        margin-bottom: 25px;
+        margin-bottom: 18px;
     font-weight: 400;
-    font-size: 25px;
+    font-size: 18px;
     line-height: 24px;
     letter-spacing: 0%;
-    text-align: center;
+    text-align: left;
     margin-top: 0;
+    margin-bottom:0;
   }
-  .footer-email-form {
-    max-width: 523px;
-    margin: 0 auto;
+
+  .newsletter-content{
+        max-width: 690px;
+    text-align: left;
+  }
+  .footer-email-form form{
+        display: grid;
+    justify-items: center;
+    grid-gap: 10px;
+  }
+   .footer-email-form .submit-button{
+    background-color: black; 
+        width: fit-content;
+    color: white;
+    padding: 13px 40px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 700;
+   }
+  .footer-email-form input {
+      width: 523px;
     position: relative;
     background: #fff;
-    padding: 5px 15px;
-  }
-  .footer-email-form input {
-       width: 100%;
-    background: transparent;
-    border: none;
-    padding: 12px 0;
-    color: #A7B2A2;
-    outline: none;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0%;
+    padding: 15px 15px;
+    border-radius: 5px;
+        font-size: 16px;
   }
   .footer-email-form .submit-arrow {
     position: absolute;
@@ -71,8 +86,10 @@
 
   /* Tier 2: Logo and Menus */
   .footer-tier-middle {
-    padding-bottom: 105px;
+   padding-bottom: 35px;
+    padding-top: 35px;
     display: grid;
+    align-items: center; 
     grid-template-columns: 583px 1fr;
   }
   
@@ -161,17 +178,34 @@
   #contact_form {
     margin: 0;
   }
-
+ul, li{
+    list-style-type: none;
+}
+.footer-logo{
+        width: fit-content;
+    display: grid;
+    justify-items: center;
+}
+.social-media-icons{
+        display: flex;
+    align-items: center;
+    gap: 10px;
+}
   /* Specific Mobile Overrides */
-  @media (max-width: 767px) {
-      .footer-tier-top {
-        margin-bottom: 34px;
-      }
+  @media (max-width: 768px) {
+    .footer-brand-side{
+        padding-bottom: 20px;
+    }
     .footer-wrapper-{{ section.id }} {
         padding: 44px 0 15px 0;
     }
-    .footer-email-form {
-        padding: 0 15px;
+    .footer-email-form input{
+        padding: 12px 15px;
+            width: 320px;
+    }
+    .footer-email-form .submit-button{
+               padding: 8px 28px;
+                   font-size: 16px;
     }
     .footer-menu-side {
       flex-direction: column;
@@ -191,14 +225,24 @@
             font-size: 20px;
     }
     .footer-logo {
-        display: flex;
+                display: flex;
         justify-content: center;
+        flex-direction: column;
+        align-items: anchor-center;
     }
     .newsletter-title {
         font-size: 26px;
     }
     .newsletter-sub {
-        font-size: 20px;
+        font-size: 16px;
+        text-align: center;
+    }
+    .newsletter-content{
+        text-align: center;
+    }
+    .newsletter-block{
+            flex-direction: column;
+    gap: 10px;
     }
     .footer-tier-middle {
         grid-template-columns: 1fr;
@@ -218,6 +262,75 @@
         height: 20px;
     }
   }
+  #localization_form .select-wrapper{
+        background: none;
+    border: 0;
+    padding: 0;
+    outline: 0;
+    max-width: fit-content;
+  }
+  #localization_form .select-wrapper .selected-text{
+    display: none
+  }
+  .social-link:hover{
+    color: black;
+  }
+  .social-link{
+    color: black;
+  }
+  .custom-country-selector .select-wrapper select{
+        width: 153px;
+    padding: 9px;
+    color: #9ba695;
+    cursor: pointer;
+  }
+  .success-message {
+  margin-top: 10px;
+  color: #00c853;
+  font-weight: 600;
+}
+.discount-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.discount-modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px 25px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 320px;
+  width: 90%;
+}
+
+.success-text {
+  color: #000;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+#copyBtn {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: 600;
+}
 </style>
 
 <footer class="footer-wrapper-{{ section.id }}">
@@ -227,16 +340,25 @@
       {% for block in section.blocks %}
         {% if block.type == 'newsletter' %}
           <div class="newsletter-block" {{ block.shopify_attributes }}>
-            <h2 class="newsletter-title">{{ block.settings.heading }}</h2>
-            <p class="newsletter-sub">{{ block.settings.subheading }}</p>
-            <div class="footer-email-form">
-              {% form 'customer' %}
-                <input type="email" name="contact[email]" placeholder="Your Email Address" required>
-                <button type="submit" class="submit-arrow">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
-              {% endform %}
+            <div class="newsletter-content">
+                <h2 class="newsletter-title">{{ block.settings.heading }}</h2>
+                <p class="newsletter-sub">{{ block.settings.subheading }}</p>
             </div>
+            <div class="footer-email-form">
+                {% form 'customer', id: 'FooterSubscribeForm' %}
+                    <input type="email" name="contact[email]" id="emailInput" placeholder="Your Email Address" required>
+                    <button type="submit" class="submit-button">
+                    Subscribe
+                    </button>
+                {% endform %}
+            </div>
+            <!-- Success Modal -->
+            <div id="discountModal" class="discount-modal">
+                <div class="modal-content">
+                    <p class="success-text">🎉 Your discount code: <strong id="discountCode">VIP10</strong></p>
+                    <button id="copyBtn">Copy Code</button>
+                </div>
+            </div> 
           </div>
         {% endif %}
       {% endfor %}
@@ -250,6 +372,35 @@
           {% else %}
             <h2 style="margin:0; font-size: 28px; letter-spacing: 2px;">LINDÍSIMA.</h2>
           {% endif %}
+          <div class="social-media-icons">
+                {%- if settings.social-instagram-link != blank -%}
+                    {% render 'social-link', id: 'instagram', title: 'Instagram', url: settings.social-instagram-link %}
+                {%- endif -%}
+                {%- if settings.social-facebook-link != blank -%}
+                    {% render 'social-link', id: 'facebook', title: 'Facebook', url: settings.social-facebook-link %}
+                {%- endif -%}
+                {%- if settings.social-youtube-link != blank -%}
+                    {% render 'social-link', id: 'youtube', title: 'YouTube', url: settings.social-youtube-link %}
+                {%- endif -%}
+                {%- if settings.social-pinterest-link != blank -%}
+                    {% render 'social-link', id: 'pinterest', title: 'Pinterest', url: settings.social-pinterest-link %}
+                {%- endif -%}
+                {%- if settings.social-tiktok-link != blank -%}
+                    {% render 'social-link', id: 'tiktok', title: 'TikTok', url: settings.social-tiktok-link %}
+                {%- endif -%}
+          </div>
+            <form method="post" action="/localization" id="localization_form">
+                <input type="hidden" name="form_type" value="localization">
+                <div class="custom-country-selector">
+                    <select name="country_code" onchange="this.form.submit()">
+                        {% for country in localization.available_countries %}
+                            <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
+                            {{ country.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </form>
         </div>
       </div>
 
@@ -294,7 +445,62 @@
 
   </div>
 </footer>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const form = document.getElementById("FooterSubscribeForm");
+  const emailInput = document.getElementById("emailInput");
+  const modal = document.getElementById("discountModal");
+  const copyBtn = document.getElementById("copyBtn");
+  const discountCode = document.getElementById("discountCode").innerText;
 
+  if (!form || !modal || !copyBtn) return;
+
+  // Make sure the submit button does not trigger page navigation
+  form.querySelectorAll('button, input[type="submit"]').forEach(btn => {
+    btn.type = 'button';
+  });
+
+  // Handle form "submit" manually
+  form.addEventListener("submit", function(e) {
+    e.preventDefault(); // ✅ Stop page reload completely
+
+    const email = emailInput.value;
+
+    if (localStorage.getItem("subscribedEmail") === email) {
+      alert("You have already used this email.");
+      return;
+    }
+
+    // Save email locally
+    localStorage.setItem("subscribedEmail", email);
+
+    // Show modal in center
+    modal.classList.add("active");
+
+    // Optional: send via AJAX without page reload
+    /*
+    const formData = new FormData(form);
+    fetch('/contact#contact_form', {
+      method: 'POST',
+      body: formData
+    }).catch(() => console.log("Email not sent to server, page won't reload"));
+    */
+  });
+
+  // Copy code & close modal
+  copyBtn.addEventListener("click", function(e) {
+    e.preventDefault(); // ✅ Stop any default action
+    navigator.clipboard.writeText(discountCode)
+      .then(() => {
+        modal.classList.remove("active"); // Close modal
+        alert("Discount code copied!");
+      })
+      .catch(() => {
+        alert("Failed to copy. Please try manually.");
+      });
+  });
+});
+</script>
 {% schema %}
 {
   "name": "Updated Footer",
