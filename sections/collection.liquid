@@ -36,6 +36,102 @@
   .main-content, .shopify-section { padding-top: 0 !important; margin-top: 0 !important; }
   .collection-filters { margin-top: 10px !important; }
 
+  /* PRODUCT CARDS */
+  .collection-products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+
+  .collection-product-card {
+    width: calc(100% / {{ section.settings.products_per_row }});
+    box-sizing: border-box;
+    padding: 0 12px 24px;
+  }
+
+  .collection-product-card__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .collection-product-card__image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+    background: #f5f5f5;
+  }
+
+  .collection-product-card__info {
+    margin-top: 14px;
+    text-align: left;
+  }
+
+  .collection-product-card__badges {
+    margin-bottom: 12px;
+  }
+
+  .collection-product-card__badges.is-single {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .collection-product-card__badges.is-double {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .collection-product-card__badges.is-multi {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .collection-product-card__badges.is-double .collection-product-card__badge {
+    width: 100%;
+  }
+
+  .collection-product-card__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #7f9474;
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border-radius: 6px;
+    line-height: 1;
+    white-space: nowrap;
+    font-family: inherit;
+    border: none;
+    cursor: default;
+    user-select: none;
+    box-sizing: border-box;
+    min-width: 0;
+  }
+
+  .collection-product-card__title {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 5px 0;
+    color: #000;
+    text-decoration: none;
+    display: block;
+  }
+
+  .collection-product-card__price {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+  }
+
   /* DESIGN ULTRA-MINIMALISTE MOBILE UNIQUEMENT */
   @media screen and (max-width: 768px) {
     .page-title { margin: 5px 0 !important; font-size: 1.2rem !important; text-align: center; }
@@ -84,6 +180,49 @@
 
     .collection-products {
       margin-top: 5px !important;
+    }
+
+    .collection-product-card {
+      width: 50%;
+      padding: 0 6px 14px;
+    }
+
+    .collection-product-card__image {
+      border-radius: 10px;
+    }
+
+    .collection-product-card__info {
+      margin-top: 10px;
+    }
+
+    .collection-product-card__badges {
+      margin-bottom: 10px;
+    }
+
+    .collection-product-card__badges.is-single {
+      gap: 8px;
+    }
+
+    .collection-product-card__badges.is-double {
+      gap: 8px;
+    }
+
+    .collection-product-card__badges.is-multi {
+      gap: 8px;
+    }
+
+    .collection-product-card__badge {
+      font-size: 10px;
+      padding: 7px 12px;
+      letter-spacing: 0.10em;
+    }
+
+    .collection-product-card__title {
+      font-size: 14px;
+    }
+
+    .collection-product-card__price {
+      font-size: 14px;
     }
   }
 
@@ -285,13 +424,55 @@
 
           {% assign image = productImage | placeholder_svg_tag: 'placeholder-svg' %}
 
-          {% render 'home-onboard-product', image: image %}
+          <div class="collection-product-card">
+            <div class="collection-product-card__link">
+              <div class="collection-product-card__image">
+                {{ image }}
+              </div>
+              <div class="collection-product-card__info">
+                <div class="collection-product-card__badges is-single">
+                  <span class="collection-product-card__badge">Badge</span>
+                </div>
+                <a href="#" class="collection-product-card__title">Product name here</a>
+                <span class="collection-product-card__price">$25.00</span>
+              </div>
+            </div>
+          </div>
         {% endfor %}
 
       {% else %}
 
         {% for product in collection.products %}
-          {% render 'product-list-item', product: product %}
+          <div class="collection-product-card">
+            <a href="{{ product.url }}" class="collection-product-card__link">
+              {% if product.featured_image != blank %}
+                <img
+                  class="collection-product-card__image"
+                  src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}"
+                  alt="{{ product.title | escape }}"
+                  loading="lazy"
+                >
+              {% else %}
+                <div class="collection-product-card__image">
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {% endif %}
+            </a>
+
+            <div class="collection-product-card__info">
+              {% if product.metafields.custom.badges != blank and product.metafields.custom.badges.value != blank %}
+                {% assign badge_count = product.metafields.custom.badges.value.size %}
+                <div class="collection-product-card__badges {% if badge_count == 1 %}is-single{% elsif badge_count == 2 %}is-double{% else %}is-multi{% endif %}">
+                  {% for badge in product.metafields.custom.badges.value %}
+                    <span class="collection-product-card__badge">{{ badge }}</span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              <a href="{{ product.url }}" class="collection-product-card__title">{{ product.title }}</a>
+              <span class="collection-product-card__price">{{ product.price | money }}</span>
+            </div>
+          </div>
         {% else %}
 
           {% capture continueLink %}
@@ -316,7 +497,6 @@
     <nav aria-label="Pagination" class="dot-pagination-wrapper">
       <ul class="dot-pagination">
 
-        <!-- Flèche précédente -->
         <li class="dot-pagination__item">
           {% if paginate.previous %}
             <a
@@ -329,7 +509,6 @@
           {% endif %}
         </li>
 
-        <!-- Points de page -->
         {% for part in paginate.parts %}
           <li class="dot-pagination__item">
             {% if part.is_link %}
@@ -358,7 +537,6 @@
           </li>
         {% endfor %}
 
-        <!-- Flèche suivante -->
         <li class="dot-pagination__item">
           {% if paginate.next %}
             <a
