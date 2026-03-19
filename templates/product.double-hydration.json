@@ -19,10 +19,6 @@
             "custom_liquid": "{% assign badges = product.metafields.custom.product_badges.value %}\n{% if badges and badges.size > 0 %}\n<div class=\"custom-product-tags\">\n  {% for badge in badges %}\n    <span class=\"custom-tag\">{{ badge }}</span>\n  {% endfor %}\n</div>\n{% endif %}\n\n<style>\n  .custom-product-tags {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 10px;\n    margin-bottom: 14px;\n  }\n\n  .custom-tag {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    background-color: #7f9474;\n    color: #fff;\n    font-size: 11px;\n    font-weight: 600;\n    letter-spacing: 0.08em;\n    text-transform: uppercase;\n    padding: 6px 14px;\n    border-radius: 4px;\n  }\n</style>"
           }
         },
-        "vendor": {
-          "type": "vendor",
-          "settings": {}
-        },
         "title": {
           "type": "title",
           "settings": {}
@@ -57,7 +53,6 @@
       },
       "block_order": [
         "custom_liquid_afwiD3",
-        "vendor",
         "title",
         "price",
         "form",
