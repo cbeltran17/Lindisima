@@ -72,7 +72,34 @@
 
   .product-info {
     text-align: left;
-     margin-top: 16px;
+    margin-top: 16px;
+  }
+
+  .product-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .product-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #7f9474;
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border-radius: 6px;
+    line-height: 1;
+    white-space: nowrap;
+    font-family: inherit;
+    border: none;
+    cursor: default;
+    user-select: none;
   }
 
   .product-name {
@@ -89,6 +116,7 @@
     font-weight: 400;
     color: #000;
   }
+
   .for-mobile-only{display: none;}
 
   /* Tablet Adjustments */
@@ -101,60 +129,77 @@
   /* Mobile Styles: make a 2x2 grid and keep 'View All' mobile link */
   @media (max-width: 767px) {
     .product-info{
-            margin-top: 16px;
+      margin-top: 16px;
     }
+
     .for-mobile-only{
-                display: block !important;
-        text-align: center;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 100%;
-        letter-spacing: 3%;
-        text-decoration: underline;
-        text-decoration-style: solid;
-        text-decoration-thickness: 0%;
-        text-decoration-skip-ink: auto;
-        margin-top: 18px;
+      display: block !important;
+      text-align: center;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 100%;
+      letter-spacing: 3%;
+      text-decoration: underline;
+      text-decoration-style: solid;
+      text-decoration-thickness: 0%;
+      text-decoration-skip-ink: auto;
+      margin-top: 18px;
     }
+
     .bestseller-section{
-        padding: 0 17px;
-        margin-bottom: 56px;
+      padding: 0 17px;
+      margin-bottom: 56px;
     }
+
     .bestseller-header {
-        justify-content: flex-start; /* Modified: Left aligned on mobile */
+      justify-content: flex-start;
     }
+
     .view-all-link {
-        display: none; /* Header view-all stays hidden on mobile (bottom mobile link used) */
+      display: none;
     }
+
     .bestseller-title {
-        font-size: 26px;
-        font-weight: 600;
+      font-size: 26px;
+      font-weight: 600;
     }
 
     /* Changed: show 2x2 grid on mobile */
     .product-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        margin: 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 0;
     }
+
     .product-card {
-        width: auto;
-        padding: 0;
-        margin-bottom: 0;
-        box-sizing: border-box;
+      width: auto;
+      padding: 0;
+      margin-bottom: 0;
+      box-sizing: border-box;
     }
 
     /* Make images nicely sized in grid items */
     .product-image-wrapper {
-        border-radius: 10px;
-        margin-bottom: 10px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .product-badges {
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .product-badge {
+      font-size: 10px;
+      padding: 7px 12px;
+      letter-spacing: 0.10em;
     }
 
     /* remove any slick-specific layout override (we're using grid) */
     .slick-list {
-        padding: 0 !important;
-        box-sizing: border-box;
+      padding: 0 !important;
+      box-sizing: border-box;
     }
   }
 </style>
@@ -179,7 +224,16 @@
                alt="{{ product.title | escape }}"
                loading="lazy">
         </a>
+
         <div class="product-info">
+          {% if product.metafields.custom.badges != blank and product.metafields.custom.badges.value != blank %}
+            <div class="product-badges">
+              {% for badge in product.metafields.custom.badges.value %}
+                <span class="product-badge">{{ badge }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+
           <a href="{{ product.url }}" class="product-name">{{ product.title }}</a>
           <span class="product-price">{{ product.price | money }}</span>
         </div>
@@ -199,9 +253,10 @@
       {% endfor %}
     {% endfor %}
   </div>
-    {% if collection.products_count > product_limit %}
-      <a href="{{ collection.url }}" class="view-all-link for-mobile-only">View All</a>
-    {% endif %}
+
+  {% if collection.products_count > product_limit %}
+    <a href="{{ collection.url }}" class="view-all-link for-mobile-only">View All</a>
+  {% endif %}
 </div>
 
 <script>
