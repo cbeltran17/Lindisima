@@ -425,6 +425,10 @@
         "image_block_d4dQgz",
         "content_block_486hcN"
       ],
+      "custom_css": [
+        "h2 {font-size: 32px;}",
+        ".text-with-image-split {transform: scale(0.75); transform-origin: top center; margin-bottom: -12.5%; }"
+      ],
       "name": "Split Image & Text",
       "settings": {
         "bg_color": "#f9f1e7",
