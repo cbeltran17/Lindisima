@@ -10385,7 +10385,9 @@ body.lock-scroll {
 .product-gallery {
   overflow: hidden;
 }
-
+.product-add-to-cart .Primary-Btn{
+      background: #ff7783 !important;
+}
 body:not(.user-is-tabbing) .product-gallery--viewport {
   outline: none;
   display: flex;
