@@ -17,14 +17,14 @@
       ],
       "name": "Custom Flexible Banner",
       "settings": {
-        "desktop_image": "shopify://shop_images/1_-_Batch_Image_Ads_-_Simple_Beauty_1.jpg",
+        "desktop_image": "shopify://shop_images/Photoroom_20260321_020311.png",
         "mobile_image": "shopify://shop_images/1_-_Batch_Image_Ads_-_Simple_Beauty_1.jpg",
         "max_width": 1820,
         "border_radius": 10,
-        "title": "",
+        "title": "clean formulas",
         "paragraph": "",
         "button_label": "Shop Now",
-        "button_link": "shopify://products/embrace-collagen-moisturizer",
+        "button_link": "shopify://products/all-in-one-facial-oil",
         "content_position": "pos-bottom-right",
         "text_align": "right",
         "mobile_content_position": "m-pos-bottom-center",
@@ -427,7 +427,7 @@
       ],
       "custom_css": [
         "h2 {font-size: 32px;}",
-        ".text-with-image-split {transform: scale(0.75); transform-origin: top center; margin-bottom: -12.5%; }"
+        ".text-with-image-split {transform: scale(0.75); transform-origin: top center; margin-bottom: -12.5%;}"
       ],
       "name": "Split Image & Text",
       "settings": {
