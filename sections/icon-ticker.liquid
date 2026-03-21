@@ -4,7 +4,7 @@
 
 <style>
   .icon-ticker-wrapper-{{ section.id }} {
-    background: transparent;
+    background: {{ section.settings.bg_color }};
     padding: 15px 0;
     overflow: hidden;
     width: 100%;
@@ -32,21 +32,14 @@
     height: 24px;
     object-fit: contain;
     flex-shrink: 0;
-  }
-
-  .ticker-dot-fallback {
-    width: 8px;
-    height: 8px;
-    background-color: #a0a69a;
-    border-radius: 50%;
-    display: inline-block;
+    display: block;
   }
 
   .icon-ticker-text {
     font-family: inherit;
     font-weight: 400;
     font-size: 18px;
-    color: #000000;
+    color: {{ section.settings.text_color }};
     white-space: nowrap;
     text-transform: none;
     line-height: 100%;
@@ -58,16 +51,14 @@
       padding: 0 20px;
       gap: 8px;
     }
+
     .icon-ticker-text {
       font-size: 14px;
     }
+
     .icon-ticker-item img {
       width: 18px;
       height: 18px;
-    }
-    .ticker-dot-fallback {
-      width: 6px;
-      height: 6px;
     }
   }
 
@@ -83,8 +74,6 @@
     <div class="icon-ticker-item" {{ block.shopify_attributes }}>
       {% if block.settings.icon != blank %}
         <img src="{{ block.settings.icon | image_url: width: 50 }}" alt="" loading="lazy">
-      {% else %}
-        <span class="ticker-dot-fallback"></span>
       {% endif %}
       <span class="icon-ticker-text">{{ block.settings.text }}</span>
     </div>
@@ -110,7 +99,11 @@
         return;
       }
 
-      $('.multiple-items-{{ section.id }}').slick({
+      const $ticker = $('.multiple-items-{{ section.id }}');
+
+      if ($ticker.hasClass('slick-initialized')) return;
+
+      $ticker.slick({
         infinite: true,
         slidesToShow: 5,
         slidesToScroll: 1,
@@ -135,6 +128,7 @@
         ]
       });
     };
+
     initTicker();
   });
 </script>
@@ -179,11 +173,11 @@
     {
       "name": "Icon Ticker Slider",
       "blocks": [
+        { "type": "item", "settings": { "text": "Pataben Free" } },
         { "type": "item", "settings": { "text": "Treat Your Skin" } },
         { "type": "item", "settings": { "text": "Beauty That Glows" } },
         { "type": "item", "settings": { "text": "Vegan" } },
-        { "type": "item", "settings": { "text": "Cruelty Free Beauty" } },
-        { "type": "item", "settings": { "text": "Skin That Loves You" } }
+        { "type": "item", "settings": { "text": "Cruelty Free Beauty" } }
       ]
     }
   ]
