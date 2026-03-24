@@ -60,7 +60,7 @@
     enable_linked_options: enable_linked_options,
     show_vendor: show_vendor,
     show_social_media_icons: show_social_media_icons,
-    show_payment_button: show_payment_button
+    show_payment_button: show_payment_button,
   %}
 
   <div
@@ -85,7 +85,6 @@
     align-items: center;
     cursor: pointer;
   }
-
   .product-quickview-lightbox img {
     max-width: 90%;
     max-height: 90%;
@@ -93,7 +92,6 @@
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
     cursor: default;
   }
-
   .product-quickview-close {
     position: absolute;
     top: 20px;
@@ -103,59 +101,46 @@
     font-weight: bold;
     cursor: pointer;
   }
-
   /* Curseur loupe sur les images produits */
   .product-container img {
     cursor: zoom-in !important;
   }
-
-  /* Add to Cart - target the real Shopify product form button */
-  .product-container form[action*="/cart/add"] button[type="submit"],
-  .product-container form[action*="/cart/add"] input[type="submit"],
-  .product-container .product-form__submit,
-  .product-container .product-form--add-to-cart,
-  .product-container .add-to-cart,
-  .product-container .btn--add-to-cart,
-  .product-container button[name="add"],
-  .product-container [data-add-to-cart],
-  .product-container .Primary-Btn {
-    background-color: #e2cfce !important;
-    border-color: #e2cfce !important;
-    color: black !important;
-    font-weight: bold !important;
-    box-shadow: none !important;
-    text-shadow: none !important;
-  }
-
-  .product-container form[action*="/cart/add"] button[type="submit"]:hover,
-  .product-container form[action*="/cart/add"] input[type="submit"]:hover,
-  .product-container .product-form__submit:hover,
-  .product-container .product-form--add-to-cart:hover,
-  .product-container .add-to-cart:hover,
-  .product-container .btn--add-to-cart:hover,
-  .product-container button[name="add"]:hover,
-  .product-container [data-add-to-cart]:hover,
-  .product-container .Primary-Btn:hover {
+  
+  /* Add to Cart Hover Effect */
+  button.product-form--add-to-cart:hover,
+  .product-form--add-to-cart:hover,
+  [name="add"]:hover,
+  .add-to-cart:hover,
+  .btn--add-to-cart:hover {
     background-color: #a8b2a2 !important;
-    border-color: #a8b2a2 !important;
     color: black !important;
     font-weight: bold !important;
-    box-shadow: none !important;
-    text-shadow: none !important;
   }
 
-  /* Keep radius controlled */
-  .product-container form[action*="/cart/add"] button[type="submit"],
-  .product-container form[action*="/cart/add"] input[type="submit"],
-  .product-container .product-form__submit,
-  .product-container .product-form--add-to-cart,
-  .product-container .add-to-cart,
-  .product-container .btn--add-to-cart,
-  .product-container button[name="add"],
-  .product-container [data-add-to-cart],
-  .product-container .Primary-Btn {
-    border-radius: 0 !important;
+   /* Add to Cart Text Color */
+  button.product-form--add-to-cart,
+  .product-form--add-to-cart,
+  [name="add"],
+  .add-to-cart,
+  .btn--add-to-cart,
+  .Primary-Btn {
+    background-color: #e2cfce !important;
+    color: black !important;
+    font-weight: bold !important;
+   }
+
+
+
+  /* Add to Cart Border Radius */
+  button.product-form--add-to-cart,
+  .product-form--add-to-cart,
+  [name="add"],
+  .add-to-cart,
+  .btn--add-to-cart {
+    border-radius: 0 !important; 
+    background-color: #e2cfce !important;
   }
+  
 </style>
 
 <div id="ProductQuickview" class="product-quickview-lightbox" onclick="closeQuickView()">
@@ -185,13 +170,13 @@
         const target = e.target;
         if (target.tagName === 'IMG') {
           let imgSrc = target.currentSrc || target.src;
+          // Tente de charger la version haute définition de Shopify
           imgSrc = imgSrc.replace(/(_small|_medium|_large|_grande|_compact|_\d+x\d*)/g, '_2048x');
           openQuickView(imgSrc);
           e.preventDefault();
         }
       });
     }
-
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeQuickView();
     });
