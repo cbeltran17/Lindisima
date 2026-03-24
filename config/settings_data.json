@@ -399,5 +399,12 @@
       "share-widget-twitter": true,
       "show_vendor": false
     }
+  },
+  "platform_customizations": {
+    "custom_css": [
+      "/* Add to Cart Hover Effect */ button.product-form--add-to-cart:hover, .product-form--add-to-cart:hover, [name=\"add\"]:hover, .add-to-cart:hover, .btn--add-to-cart:hover {background-color: #a8b2a2 !important; color: black !important; font-weight: bold !important; }",
+      " /* Add to Cart Text Color */ button.product-form--add-to-cart, .product-form--add-to-cart, [name=\"add\"], .add-to-cart, .btn--add-to-cart, .Primary-Btn {background-color: #e2cfce !important; color: black !important; font-weight: bold !important; }",
+      " /* Add to Cart Border Radius */ button.product-form--add-to-cart, .product-form--add-to-cart, [name=\"add\"], .add-to-cart, .btn--add-to-cart {border-radius: 0 !important; }"
+    ]
   }
 }
