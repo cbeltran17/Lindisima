@@ -59,6 +59,9 @@
         "50a0828c-24fe-483d-bdd6-ffe922b8a26c",
         "description"
       ],
+      "custom_css": [
+        "button.product-form--add-to-cart, .product-form--add-to-cart, [name=\"add\"], .add-to-cart, .btn--add-to-cart, .Primary-Btn {background-color: #e2cfce !important; color: black !important; font-weight: bold !important; }"
+      ],
       "settings": {
         "enable_cart_redirection": false,
         "show_payment_button": true,
