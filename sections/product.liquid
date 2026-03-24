@@ -117,19 +117,15 @@
     font-weight: bold !important;
   }
 
-  /* Add to Cart Background Color */
+  /* Add to Cart Text Color */
   button.product-form--add-to-cart,
   .product-form--add-to-cart,
   [name="add"],
   .add-to-cart,
-  .btn--add-to-cart,
-  form[action="/cart/add"] button[type="submit"],
-  form[action*="/cart/add"] [type="submit"],
-  .product-form button[type="submit"],
-  .product-form [type="submit"] {
-    background-color: #e2cfce !important;
+  .btn--add-to-cart {
     color: black !important;
     font-weight: bold !important;
+   
   }
 
   /* Add to Cart Border Radius */
@@ -162,32 +158,7 @@
     document.body.style.overflow = '';
   }
 
-  // Force Add to Cart button background color
-  function forceAddToCartColor() {
-    const selectors = [
-      'button.product-form--add-to-cart',
-      '.product-form--add-to-cart',
-      '[name="add"]',
-      '.add-to-cart',
-      '.btn--add-to-cart',
-      'form[action*="/cart/add"] [type="submit"]',
-      '.product-form button[type="submit"]'
-    ];
-    selectors.forEach(function(sel) {
-      document.querySelectorAll(sel).forEach(function(btn) {
-        btn.style.setProperty('background-color', '#e2cfce', 'important');
-        btn.style.setProperty('color', 'black', 'important');
-        btn.style.setProperty('font-weight', 'bold', 'important');
-      });
-    });
-  }
-
   document.addEventListener('DOMContentLoaded', function() {
-    forceAddToCartColor();
-    // Re-apply after a short delay in case the theme re-renders the button
-    setTimeout(forceAddToCartColor, 500);
-    setTimeout(forceAddToCartColor, 1500);
-
     const productContainer = document.querySelector('.product-container');
     if (productContainer) {
       productContainer.addEventListener('click', function(e) {
