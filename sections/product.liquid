@@ -136,6 +136,20 @@
   .btn--add-to-cart {
     border-radius: 0 !important; 
   }
+  
+    button.product-form--add-to-cart,
+  .product-form--add-to-cart,
+  [name="add"],
+  .add-to-cart,
+  .btn--add-to-cart,
+  form[action="/cart/add"] button[type="submit"],
+  form[action*="/cart/add"] [type="submit"],
+  .product-form button[type="submit"],
+  .product-form [type="submit"] {
+    background-color: #e2cfce !important;
+    color: black !important;
+    font-weight: bold !important;
+  }
 </style>
 
 <div id="ProductQuickview" class="product-quickview-lightbox" onclick="closeQuickView()">
