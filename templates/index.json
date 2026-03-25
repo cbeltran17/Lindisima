@@ -36,76 +36,6 @@
         "padding_vertical_desktop": 0
       }
     },
-    "product_image_card_YqBdUj": {
-      "type": "product-image-card",
-      "blocks": {
-        "goal_block_Kt3enL": {
-          "type": "goal_block",
-          "settings": {
-            "image": "shopify://shop_images/Body_Face_Scrub_Instagram_2.webp",
-            "title": "Hydration",
-            "button_text": "Shop Hydration",
-            "link": "shopify://collections/moisturizers"
-          }
-        },
-        "goal_block_jHLN69": {
-          "type": "goal_block",
-          "settings": {
-            "image": "shopify://shop_images/Mask_group_3.png",
-            "title": "Glow",
-            "button_text": "Shop Glow",
-            "link": "shopify://products/daily-radiance-collection-box"
-          }
-        },
-        "goal_block_MbVxkz": {
-          "type": "goal_block",
-          "settings": {
-            "image": "shopify://shop_images/Mask_group_2.jpg",
-            "title": "Timeless",
-            "button_text": "Shop Timeless",
-            "link": "shopify://collections/anti-aging"
-          }
-        }
-      },
-      "block_order": [
-        "goal_block_Kt3enL",
-        "goal_block_jHLN69",
-        "goal_block_MbVxkz"
-      ],
-      "custom_css": [
-        "@media (max-width: 767px) {{margin: 31px 0 0 0 !important; }}"
-      ],
-      "name": "Product Image Card",
-      "settings": {
-        "title": "Shop by Skin Goals",
-        "description": "",
-        "header_alignment": "left"
-      }
-    },
-    "updated_featured_collection_P4yjij": {
-      "type": "UpdatedFeaturedCollection",
-      "custom_css": [
-        "@media (max-width: 767px) {{margin: 31px 0 0 0 !important; }}"
-      ],
-      "name": "Bestsellers Collection",
-      "settings": {
-        "title": "Bestsellers",
-        "collection": "frontpage"
-      }
-    },
-    "updated_videosection_gzg74F": {
-      "type": "updated_videosection",
-      "disabled": true,
-      "custom_css": [
-        "@media (max-width: 767px) {{margin: 31px 0 0 0 !important; }}"
-      ],
-      "name": "Triggered Video",
-      "settings": {
-        "cover_image": "shopify://shop_images/Mask_group_4.jpg",
-        "play_icon": "shopify://shop_images/Vector_1.svg",
-        "video_url": ""
-      }
-    },
     "icon_ticker_3N7kdL": {
       "type": "icon-ticker",
       "blocks": {
@@ -192,6 +122,76 @@
       "settings": {
         "bg_color": "rgba(0,0,0,0)",
         "text_color": "#000000"
+      }
+    },
+    "product_image_card_YqBdUj": {
+      "type": "product-image-card",
+      "blocks": {
+        "goal_block_Kt3enL": {
+          "type": "goal_block",
+          "settings": {
+            "image": "shopify://shop_images/Body_Face_Scrub_Instagram_2.webp",
+            "title": "Hydration",
+            "button_text": "Shop Hydration",
+            "link": "shopify://collections/moisturizers"
+          }
+        },
+        "goal_block_jHLN69": {
+          "type": "goal_block",
+          "settings": {
+            "image": "shopify://shop_images/Mask_group_3.png",
+            "title": "Glow",
+            "button_text": "Shop Glow",
+            "link": "shopify://products/daily-radiance-collection-box"
+          }
+        },
+        "goal_block_MbVxkz": {
+          "type": "goal_block",
+          "settings": {
+            "image": "shopify://shop_images/Mask_group_2.jpg",
+            "title": "Timeless",
+            "button_text": "Shop Timeless",
+            "link": "shopify://collections/anti-aging"
+          }
+        }
+      },
+      "block_order": [
+        "goal_block_Kt3enL",
+        "goal_block_jHLN69",
+        "goal_block_MbVxkz"
+      ],
+      "custom_css": [
+        "@media (max-width: 767px) {{margin: 31px 0 0 0 !important; }}"
+      ],
+      "name": "Product Image Card",
+      "settings": {
+        "title": "Shop by Skin Goals",
+        "description": "",
+        "header_alignment": "left"
+      }
+    },
+    "updated_featured_collection_P4yjij": {
+      "type": "UpdatedFeaturedCollection",
+      "custom_css": [
+        "@media (max-width: 767px) {{margin: 31px 0 0 0 !important; }}"
+      ],
+      "name": "Bestsellers Collection",
+      "settings": {
+        "title": "Bestsellers",
+        "collection": "frontpage"
+      }
+    },
+    "updated_videosection_gzg74F": {
+      "type": "updated_videosection",
+      "disabled": true,
+      "custom_css": [
+        "@media (max-width: 767px) {{margin: 31px 0 0 0 !important; }}"
+      ],
+      "name": "Triggered Video",
+      "settings": {
+        "cover_image": "shopify://shop_images/Mask_group_4.jpg",
+        "play_icon": "shopify://shop_images/Vector_1.svg",
+        "video_url": ""
       }
     },
     "updated_featured_collection_nU96dt": {
@@ -461,12 +461,12 @@
   },
   "order": [
     "updated_banner_kX38tm",
-    "product_image_card_YqBdUj",
-    "updated_featured_collection_P4yjij",
-    "updated_videosection_gzg74F",
     "icon_ticker_3N7kdL",
+    "product_image_card_YqBdUj",
+    "updated_videosection_gzg74F",
     "updated_featured_collection_nU96dt",
     "updated_image_with_text_9rHQBP",
+    "updated_featured_collection_P4yjij",
     "faq_section_URWjb8",
     "updated_image_with_text_nBFccJ",
     "instagram_section_6RDbg4",
