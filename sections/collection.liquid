@@ -29,7 +29,7 @@
 %}
 
 <style>
-  /* AJUSTEMENT DES ESPACES (LÉGER ESPACEMENT) */
+  /* AJUSTEMENT DES ESPACES */
   .page-title { margin-top: 10px !important; margin-bottom: 10px !important; }
   .collection-header { margin-top: 0 !important; padding-top: 0 !important; margin-bottom: 0 !important; }
   .collection { margin-top: 0 !important; padding-top: 0 !important; }
@@ -44,7 +44,7 @@
   }
 
   .collection-product-card {
-    width: calc(100% / {{ section.settings.products_per_row }});
+    width: 33.33%;
     box-sizing: border-box;
     padding: 0 12px 24px;
   }
@@ -55,7 +55,6 @@
     color: inherit;
   }
 
-  /* Image wrapper — needed for absolute positioning of the OOS label */
   .collection-product-card__image-wrapper {
     position: relative;
     display: block;
@@ -166,7 +165,7 @@
     color: #000;
   }
 
-  /* DESIGN ULTRA-MINIMALISTE MOBILE UNIQUEMENT */
+  /* MOBILE */
   @media screen and (max-width: 768px) {
     .page-title { margin: 5px 0 !important; font-size: 1.2rem !important; text-align: center; }
     .breadcrumb { display: none !important; }
@@ -217,7 +216,7 @@
     }
 
     .collection-product-card {
-      width: 50%;
+      width: 50% !important;
       padding: 0 6px 14px;
     }
 
@@ -229,7 +228,6 @@
       border-radius: 10px;
     }
 
-    /* Smaller OOS label on mobile */
     .out-of-stock-label {
       font-size: 8px;
       padding: 3px 6px;
@@ -256,18 +254,11 @@
       letter-spacing: 0.10em;
     }
 
-    .collection-product-card__title {
-      font-size: 14px;
-    }
-
-    .collection-product-card__price {
-      font-size: 14px;
-    }
+    .collection-product-card__title { font-size: 14px; }
+    .collection-product-card__price { font-size: 14px; }
   }
 
-  /* =============================================
-     PAGINATION POINTS — DOT NAVIGATION
-  ============================================= */
+  /* PAGINATION */
   .dot-pagination {
     display: flex;
     justify-content: center;
@@ -278,9 +269,7 @@
     margin: 0;
   }
 
-  .dot-pagination__item {
-    display: inline-flex;
-  }
+  .dot-pagination__item { display: inline-flex; }
 
   .dot-pagination__dot {
     display: block;
@@ -334,6 +323,12 @@
     opacity: 0.3;
     pointer-events: none;
     cursor: default;
+  }
+</style>
+
+<style>
+  #collection-{{ section.id }} .collection-product-card {
+    width: calc(100% / {{ section.settings.products_per_row }});
   }
 </style>
 
@@ -446,6 +441,7 @@
     {% endif %}
 
     <div
+      id="collection-{{ section.id }}"
       class="collection-products rows-of-{{ section.settings.products_per_row }}"
       {% if use_masonry %}data-masonry-grid{% endif %}
     >
@@ -460,7 +456,6 @@
           {% capture productImage %}
             {% cycle 'product-1', 'product-2', 'product-3' %}
           {% endcapture %}
-
           {% assign image = productImage | placeholder_svg_tag: 'placeholder-svg' %}
 
           <div class="collection-product-card">
@@ -541,11 +536,7 @@
 
         <li class="dot-pagination__item">
           {% if paginate.previous %}
-            
-              href="{{ paginate.previous.url }}"
-              class="dot-pagination__arrow"
-              aria-label="Page précédente"
-            >&#8249;</a>
+            <a href="{{ paginate.previous.url }}" class="dot-pagination__arrow" aria-label="Page précédente">&#8249;</a>
           {% else %}
             <span class="dot-pagination__arrow dot-pagination__arrow--disabled" aria-hidden="true">&#8249;</span>
           {% endif %}
@@ -554,26 +545,12 @@
         {% for part in paginate.parts %}
           <li class="dot-pagination__item">
             {% if part.is_link %}
-              
-                href="{{ part.url }}"
-                class="dot-pagination__dot"
-                aria-label="Page {{ part.title }}"
-                title="Page {{ part.title }}"
-              ></a>
+              <a href="{{ part.url }}" class="dot-pagination__dot" aria-label="Page {{ part.title }}" title="Page {{ part.title }}"></a>
             {% else %}
               {% if part.title == paginate.current_page %}
-                <span
-                  class="dot-pagination__dot dot-pagination__dot--active"
-                  aria-current="page"
-                  aria-label="Page {{ part.title }} (actuelle)"
-                  title="Page {{ part.title }}"
-                ></span>
+                <span class="dot-pagination__dot dot-pagination__dot--active" aria-current="page" aria-label="Page {{ part.title }} (actuelle)" title="Page {{ part.title }}"></span>
               {% else %}
-                <span
-                  class="dot-pagination__dot dot-pagination__arrow--disabled"
-                  aria-hidden="true"
-                  title="…"
-                ></span>
+                <span class="dot-pagination__dot dot-pagination__arrow--disabled" aria-hidden="true" title="…"></span>
               {% endif %}
             {% endif %}
           </li>
@@ -581,11 +558,7 @@
 
         <li class="dot-pagination__item">
           {% if paginate.next %}
-            
-              href="{{ paginate.next.url }}"
-              class="dot-pagination__arrow"
-              aria-label="Page suivante"
-            >&#8250;</a>
+            <a href="{{ paginate.next.url }}" class="dot-pagination__arrow" aria-label="Page suivante">&#8250;</a>
           {% else %}
             <span class="dot-pagination__arrow dot-pagination__arrow--disabled" aria-hidden="true">&#8250;</span>
           {% endif %}
