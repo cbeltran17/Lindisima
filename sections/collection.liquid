@@ -55,13 +55,47 @@
     color: inherit;
   }
 
-  .collection-product-card__image {
+  /* Image wrapper — needed for absolute positioning of the OOS label */
+  .collection-product-card__image-wrapper {
+    position: relative;
+    display: block;
     width: 100%;
     aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f5f5f5;
+  }
+
+  .collection-product-card__image {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     display: block;
     border-radius: 12px;
     background: #f5f5f5;
+    transition: transform 0.5s ease;
+  }
+
+  .collection-product-card:hover .collection-product-card__image {
+    transform: scale(1.05);
+  }
+
+  /* Out of Stock Label */
+  .out-of-stock-label {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background-color: #e02020;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 4px;
+    z-index: 10;
+    line-height: 1;
+    pointer-events: none;
   }
 
   .collection-product-card__info {
@@ -187,8 +221,21 @@
       padding: 0 6px 14px;
     }
 
+    .collection-product-card__image-wrapper {
+      border-radius: 10px;
+    }
+
     .collection-product-card__image {
       border-radius: 10px;
+    }
+
+    /* Smaller OOS label on mobile */
+    .out-of-stock-label {
+      font-size: 8px;
+      padding: 3px 6px;
+      top: 6px;
+      left: 6px;
+      border-radius: 3px;
     }
 
     .collection-product-card__info {
@@ -199,17 +246,9 @@
       margin-bottom: 10px;
     }
 
-    .collection-product-card__badges.is-single {
-      gap: 8px;
-    }
-
-    .collection-product-card__badges.is-double {
-      gap: 8px;
-    }
-
-    .collection-product-card__badges.is-multi {
-      gap: 8px;
-    }
+    .collection-product-card__badges.is-single { gap: 8px; }
+    .collection-product-card__badges.is-double { gap: 8px; }
+    .collection-product-card__badges.is-multi  { gap: 8px; }
 
     .collection-product-card__badge {
       font-size: 10px;
@@ -426,7 +465,7 @@
 
           <div class="collection-product-card">
             <div class="collection-product-card__link">
-              <div class="collection-product-card__image">
+              <div class="collection-product-card__image-wrapper">
                 {{ image }}
               </div>
               <div class="collection-product-card__info">
@@ -445,18 +484,21 @@
         {% for product in collection.products %}
           <div class="collection-product-card">
             <a href="{{ product.url }}" class="collection-product-card__link">
-              {% if product.featured_image != blank %}
-                <img
-                  class="collection-product-card__image"
-                  src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}"
-                  alt="{{ product.title | escape }}"
-                  loading="lazy"
-                >
-              {% else %}
-                <div class="collection-product-card__image">
+              <div class="collection-product-card__image-wrapper">
+                {% unless product.available %}
+                  <span class="out-of-stock-label">Out of Stock</span>
+                {% endunless %}
+                {% if product.featured_image != blank %}
+                  <img
+                    class="collection-product-card__image"
+                    src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}"
+                    alt="{{ product.title | escape }}"
+                    loading="lazy"
+                  >
+                {% else %}
                   {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                </div>
-              {% endif %}
+                {% endif %}
+              </div>
             </a>
 
             <div class="collection-product-card__info">
@@ -499,7 +541,7 @@
 
         <li class="dot-pagination__item">
           {% if paginate.previous %}
-            <a
+            
               href="{{ paginate.previous.url }}"
               class="dot-pagination__arrow"
               aria-label="Page précédente"
@@ -512,7 +554,7 @@
         {% for part in paginate.parts %}
           <li class="dot-pagination__item">
             {% if part.is_link %}
-              <a
+              
                 href="{{ part.url }}"
                 class="dot-pagination__dot"
                 aria-label="Page {{ part.title }}"
@@ -539,7 +581,7 @@
 
         <li class="dot-pagination__item">
           {% if paginate.next %}
-            <a
+            
               href="{{ paginate.next.url }}"
               class="dot-pagination__arrow"
               aria-label="Page suivante"
