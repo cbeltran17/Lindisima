@@ -8,7 +8,6 @@
     margin: 0 auto;
     padding: 0 15px; 
     font-family: 'Roboto', sans-serif;
-    
   }
 
   /* Header Styles */
@@ -43,7 +42,7 @@
   }
 
   .product-card {
-    width: 25%; /* 4 columns */
+    width: 25%;
     padding: 0 16px;
     margin-bottom: 30px;
     box-sizing: border-box;
@@ -51,8 +50,9 @@
 
   .product-image-wrapper {
     position: relative;
+    display: block;
     width: 100%;
-    aspect-ratio: 1 / 1; /* Force Square */
+    aspect-ratio: 1 / 1;
     border-radius: 12px;
     overflow: hidden;
     background-color: #f5f5f5;
@@ -61,14 +61,33 @@
 
   .product-image-wrapper img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
     border-radius: 10px;
+    display: block;
   }
 
   .product-card:hover img {
     transform: scale(1.05);
+  }
+
+  /* Out of Stock Label */
+  .out-of-stock-label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background-color: #e02020;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 6px;
+    z-index: 10;
+    line-height: 1;
+    pointer-events: none;
   }
 
   .product-info {
@@ -140,22 +159,22 @@
     color: #000;
   }
 
-  .for-mobile-only{display: none;}
+  .for-mobile-only { display: none; }
 
   /* Tablet Adjustments */
   @media (max-width: 1024px) and (min-width: 768px) {
     .product-card {
-      width: 33.33%; /* 3 columns */
+      width: 33.33%;
     }
   }
 
-  /* Mobile Styles: make a 2x2 grid and keep 'View All' mobile link */
+  /* Mobile Styles */
   @media (max-width: 767px) {
-    .product-info{
+    .product-info {
       margin-top: 16px;
     }
 
-    .for-mobile-only{
+    .for-mobile-only {
       display: block !important;
       text-align: center;
       font-weight: 400;
@@ -169,7 +188,7 @@
       margin-top: 18px;
     }
 
-    .bestseller-section{
+    .bestseller-section {
       padding: 0 17px;
       margin-bottom: 56px;
     }
@@ -187,7 +206,6 @@
       font-weight: 600;
     }
 
-    /* Changed: show 2x2 grid on mobile */
     .product-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -211,17 +229,9 @@
       margin-bottom: 10px;
     }
 
-    .product-badges.is-single {
-      gap: 8px;
-    }
-
-    .product-badges.is-double {
-      gap: 8px;
-    }
-
-    .product-badges.is-multi {
-      gap: 8px;
-    }
+    .product-badges.is-single { gap: 8px; }
+    .product-badges.is-double { gap: 8px; }
+    .product-badges.is-multi  { gap: 8px; }
 
     .product-badge {
       font-size: 10px;
@@ -229,7 +239,15 @@
       letter-spacing: 0.10em;
     }
 
-    /* remove any slick-specific layout override (we're using grid) */
+    /* Smaller label on mobile */
+    .out-of-stock-label {
+      font-size: 9px;
+      padding: 5px 8px;
+      top: 8px;
+      left: 8px;
+      border-radius: 4px;
+    }
+
     .slick-list {
       padding: 0 !important;
       box-sizing: border-box;
@@ -243,7 +261,6 @@
 
   <div class="bestseller-header">
     <h2 class="bestseller-title">{{ section.settings.title }}</h2>
-    
     {% if collection.products_count > product_limit %}
       <a href="{{ collection.url }}" class="view-all-link">View All</a>
     {% endif %}
@@ -252,10 +269,15 @@
   <div class="product-grid {% if collection.products_count > 0 %}js-bestseller-slider{% endif %}">
     {% for product in collection.products limit: product_limit %}
       <div class="product-card">
+
         <a href="{{ product.url }}" class="product-image-wrapper">
-          <img src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}" 
-               alt="{{ product.title | escape }}"
-               loading="lazy">
+          {% unless product.available %}
+            <span class="out-of-stock-label">Out of Stock</span>
+          {% endunless %}
+          <img
+            src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}"
+            alt="{{ product.title | escape }}"
+            loading="lazy">
         </a>
 
         <div class="product-info">
@@ -271,9 +293,9 @@
           <a href="{{ product.url }}" class="product-name">{{ product.title }}</a>
           <span class="product-price">{{ product.price | money }}</span>
         </div>
+
       </div>
     {% else %}
-      {% comment %} Placeholder for theme editor empty state {% endcomment %}
       {% for i in (1..4) %}
         <div class="product-card">
           <div class="product-image-wrapper">
@@ -297,7 +319,6 @@
   document.addEventListener('DOMContentLoaded', function() {
     function ensureNoSlickOnMobileGrid() {
       const $slider = $('#Bestseller-{{ section.id }} .js-bestseller-slider');
-
       if ($slider.length && $slider.hasClass('slick-initialized')) {
         try {
           $slider.slick('unslick');
@@ -306,7 +327,6 @@
         }
       }
     }
-
     ensureNoSlickOnMobileGrid();
     $(window).on('resize', ensureNoSlickOnMobileGrid);
   });
