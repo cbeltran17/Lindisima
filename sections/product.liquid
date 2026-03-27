@@ -20,7 +20,6 @@
 %}
 
 {% if images_layout == 'masonry' %}
-  {% comment %}Related products in masonry grid must be below product{% endcomment %}
   {% assign related_products_position_right = false %}
 {% endif %}
 
@@ -51,6 +50,7 @@
 </script>
 
 {% render 'product-success-labels' %}
+
 <section class="product-container">
   {%
     render 'product',
@@ -63,6 +63,12 @@
     show_payment_button: show_payment_button
   %}
 
+  {% unless product.available %}
+    <div class="product-oos-banner">
+      <span class="product-oos-label">Out of Stock</span>
+    </div>
+  {% endunless %}
+
   <div
     class="product-recommendations-wrapper--right"
     data-product-recommendations-right
@@ -70,8 +76,32 @@
   </div>
 </section>
 
-{% comment %} --- DEBUT AJOUT QUICK VIEW --- {% endcomment %}
 <style>
+  /* ── OUT OF STOCK LABEL ON PRODUCT PAGE ── */
+  .product-oos-banner {
+    display: flex;
+    justify-content: flex-start;
+    margin: 12px 0 0 0;
+    padding: 0;
+  }
+
+  .product-oos-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e02020;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 4px;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  /* ── QUICKVIEW LIGHTBOX ── */
   .product-quickview-lightbox {
     display: none;
     position: fixed;
@@ -109,7 +139,7 @@
     cursor: zoom-in !important;
   }
 
-  /* Add to Cart - target the real Shopify product form button */
+  /* ── ADD TO CART BUTTON ── */
   .product-container form[action*="/cart/add"] button[type="submit"],
   .product-container form[action*="/cart/add"] input[type="submit"],
   .product-container .product-form__submit,
@@ -125,6 +155,7 @@
     font-weight: bold !important;
     box-shadow: none !important;
     text-shadow: none !important;
+    border-radius: 0 !important;
   }
 
   .product-container form[action*="/cart/add"] button[type="submit"]:hover,
@@ -142,19 +173,6 @@
     font-weight: bold !important;
     box-shadow: none !important;
     text-shadow: none !important;
-  }
-
-  /* Keep radius controlled */
-  .product-container form[action*="/cart/add"] button[type="submit"],
-  .product-container form[action*="/cart/add"] input[type="submit"],
-  .product-container .product-form__submit,
-  .product-container .product-form--add-to-cart,
-  .product-container .add-to-cart,
-  .product-container .btn--add-to-cart,
-  .product-container button[name="add"],
-  .product-container [data-add-to-cart],
-  .product-container .Primary-Btn {
-    border-radius: 0 !important;
   }
 </style>
 
@@ -197,7 +215,6 @@
     });
   });
 </script>
-{% comment %} --- FIN AJOUT QUICK VIEW --- {% endcomment %}
 
 {% schema %}
 {
