@@ -8,7 +8,7 @@
     margin: 0 auto;
     padding: 0 15px; 
     font-family: 'Roboto', sans-serif;
-    background-color:#F9F1E7
+    
   }
 
   /* Header Styles */
@@ -65,6 +65,24 @@
     object-fit: cover;
     transition: transform 0.5s ease;
     border-radius: 10px;
+  }
+
+  /* Out of Stock Label */
+  .out-of-stock-label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background-color: #e02020;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 6px;
+    z-index: 2;
+    line-height: 1;
+    pointer-events: none;
   }
 
   .product-card:hover img {
@@ -229,6 +247,13 @@
       letter-spacing: 0.10em;
     }
 
+    .out-of-stock-label {
+      font-size: 10px;
+      padding: 5px 9px;
+      top: 8px;
+      left: 8px;
+    }
+
     /* remove any slick-specific layout override (we're using grid) */
     .slick-list {
       padding: 0 !important;
@@ -253,6 +278,9 @@
     {% for product in collection.products limit: product_limit %}
       <div class="product-card">
         <a href="{{ product.url }}" class="product-image-wrapper">
+          {% unless product.available %}
+            <span class="out-of-stock-label">Out of Stock</span>
+          {% endunless %}
           <img src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}" 
                alt="{{ product.title | escape }}"
                loading="lazy">
