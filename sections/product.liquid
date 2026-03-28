@@ -10,6 +10,7 @@
   assign show_vendor = settings.show_vendor
   assign show_social_media_icons = section.settings.show_social_media_icons
   assign show_payment_button = section.settings.show_payment_button
+  assign notify_me_url = 'https://lindisimany.com/pages/notify-me'
 
   for block in section.blocks
     if block.type == 'complementary_products'
@@ -51,7 +52,7 @@
 
 {% render 'product-success-labels' %}
 
-<section class="product-container">
+<section class="product-container{% unless product.available %} product-container--sold-out{% endunless %}">
   {%
     render 'product',
     product: product,
@@ -77,7 +78,6 @@
 {% endunless %}
 
 <style>
-  /* ── OUT OF STOCK LABEL ── */
   .product-oos-wrapper {
     display: flex;
     justify-content: flex-start;
@@ -101,7 +101,40 @@
     pointer-events: none;
   }
 
-  /* ── QUICKVIEW LIGHTBOX ── */
+  .product-container .notify-me-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    background-color: #000 !important;
+    color: #fff !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+    text-transform: none !important;
+    padding: 12px 18px !important;
+    border-radius: 0 !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+    border: 1px solid #000 !important;
+    cursor: pointer !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    box-sizing: border-box !important;
+  }
+
+  .product-container .notify-me-button:hover {
+    background-color: #111 !important;
+    color: #fff !important;
+  }
+
+  .product-container--sold-out .shopify-payment-button,
+  .product-container--sold-out .shopify-payment-button__button,
+  .product-container--sold-out .shopify-payment-button__button--unbranded,
+  .product-container--sold-out [data-shopify="payment-button"] {
+    display: none !important;
+  }
+
   .product-quickview-lightbox {
     display: none;
     position: fixed;
@@ -138,7 +171,6 @@
     cursor: zoom-in !important;
   }
 
-  /* ── ADD TO CART BUTTON ── */
   .product-container form[action*="/cart/add"] button[type="submit"],
   .product-container form[action*="/cart/add"] input[type="submit"],
   .product-container .product-form__submit,
@@ -181,6 +213,8 @@
 </div>
 
 <script>
+  const notifyMeUrl = {{ notify_me_url | json }};
+
   function openQuickView(src) {
     const lightbox = document.getElementById('ProductQuickview');
     const img = document.getElementById('QuickviewImage');
@@ -193,6 +227,46 @@
     const lightbox = document.getElementById('ProductQuickview');
     lightbox.style.display = 'none';
     document.body.style.overflow = '';
+  }
+
+  function upgradeSoldOutCta() {
+    const productContainer = document.querySelector('.product-container--sold-out');
+    if (!productContainer) return;
+
+    const selectors = [
+      'form[action*="/cart/add"] button[type="submit"]',
+      'form[action*="/cart/add"] input[type="submit"]',
+      '.product-form__submit',
+      '.product-form--add-to-cart',
+      '.add-to-cart',
+      '.btn--add-to-cart',
+      'button[name="add"]',
+      '[data-add-to-cart]',
+      '.Primary-Btn'
+    ];
+
+    selectors.forEach((selector) => {
+      productContainer.querySelectorAll(selector).forEach((el) => {
+        const text = ((el.textContent || el.value || '') + '').trim().toLowerCase();
+        const isSoldOutButton =
+          el.disabled ||
+          el.getAttribute('aria-disabled') === 'true' ||
+          text.includes('sold out') ||
+          text.includes('out of stock') ||
+          text.includes('unavailable');
+
+        if (!isSoldOutButton) return;
+
+        const notifyLink = document.createElement('a');
+        notifyLink.href = notifyMeUrl;
+        notifyLink.className = 'notify-me-button';
+        notifyLink.setAttribute('role', 'button');
+        notifyLink.setAttribute('aria-label', 'Notify me');
+        notifyLink.textContent = 'Notify me';
+
+        el.replaceWith(notifyLink);
+      });
+    });
   }
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -213,7 +287,6 @@
       if (e.key === 'Escape') closeQuickView();
     });
 
-    // Move OOS label just before the product title
     const oosWrapper = document.querySelector('.product-oos-wrapper');
     if (oosWrapper) {
       const titleSelectors = [
@@ -235,7 +308,11 @@
         titleEl.parentNode.insertBefore(oosWrapper, titleEl);
       }
     }
+
+    upgradeSoldOutCta();
   });
+
+  window.addEventListener('load', upgradeSoldOutCta);
 </script>
 
 {% schema %}
