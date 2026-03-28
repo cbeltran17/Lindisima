@@ -10,6 +10,7 @@
   assign show_vendor = settings.show_vendor
   assign show_social_media_icons = section.settings.show_social_media_icons
   assign show_payment_button = section.settings.show_payment_button
+  assign notify_me_url = 'https://lindisimany.com/pages/notify-me'
 
   for block in section.blocks
     if block.type == 'complementary_products'
@@ -51,7 +52,7 @@
 
 {% render 'product-success-labels' %}
 
-<section class="product-container">
+<section class="product-container{% unless product.available %} product-container--sold-out{% endunless %}">
   {%
     render 'product',
     product: product,
@@ -72,12 +73,12 @@
 
 {% unless product.available %}
   <div class="product-oos-wrapper">
-    <span class="product-oos-label">Out of Stock</span>
+    <a class="product-oos-label" href="{{ notify_me_url }}">Notify me</a>
   </div>
 {% endunless %}
 
 <style>
-  /* ── OUT OF STOCK LABEL ── */
+  /* ── OUT OF STOCK / NOTIFY ME BUTTON ── */
   .product-oos-wrapper {
     display: flex;
     justify-content: flex-start;
@@ -85,20 +86,31 @@
     margin: 16px 0 0 0;
   }
 
-  .product-oos-label {
+  .product-oos-label,
+  .product-container .notify-me-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: #e02020;
-    color: #fff;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 4px 8px;
-    border-radius: 4px;
+    background-color: #000 !important;
+    color: #fff !important;
+    font-size: 14px;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    padding: 12px 18px;
+    border-radius: 0;
     line-height: 1;
-    pointer-events: none;
+    text-decoration: none !important;
+    border: 1px solid #000;
+    cursor: pointer;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  .product-oos-label:hover,
+  .product-container .notify-me-button:hover {
+    background-color: #111 !important;
+    color: #fff !important;
   }
 
   /* ── QUICKVIEW LIGHTBOX ── */
@@ -181,6 +193,8 @@
 </div>
 
 <script>
+  const notifyMeUrl = {{ notify_me_url | json }};
+
   function openQuickView(src) {
     const lightbox = document.getElementById('ProductQuickview');
     const img = document.getElementById('QuickviewImage');
@@ -193,6 +207,47 @@
     const lightbox = document.getElementById('ProductQuickview');
     lightbox.style.display = 'none';
     document.body.style.overflow = '';
+  }
+
+  function upgradeSoldOutCta() {
+    const productContainer = document.querySelector('.product-container--sold-out');
+    if (!productContainer) return;
+
+    const selectors = [
+      'form[action*="/cart/add"] button[type="submit"]',
+      'form[action*="/cart/add"] input[type="submit"]',
+      '.product-form__submit',
+      '.product-form--add-to-cart',
+      '.add-to-cart',
+      '.btn--add-to-cart',
+      'button[name="add"]',
+      '[data-add-to-cart]',
+      '.Primary-Btn'
+    ];
+
+    selectors.forEach((selector) => {
+      document.querySelectorAll(selector).forEach((el) => {
+        const text = ((el.textContent || el.value || '') + '').trim().toLowerCase();
+        const isSoldOutButton =
+          el.disabled ||
+          el.getAttribute('aria-disabled') === 'true' ||
+          text.includes('sold out') ||
+          text.includes('out of stock');
+
+        if (!isSoldOutButton) return;
+
+        const notifyLink = document.createElement('a');
+        notifyLink.href = notifyMeUrl;
+        notifyLink.className = el.className;
+        notifyLink.classList.add('notify-me-button');
+        notifyLink.setAttribute('role', 'button');
+        notifyLink.setAttribute('aria-label', 'Notify me');
+        notifyLink.setAttribute('data-notify-me', 'true');
+        notifyLink.textContent = 'Notify me';
+
+        el.replaceWith(notifyLink);
+      });
+    });
   }
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -235,7 +290,11 @@
         titleEl.parentNode.insertBefore(oosWrapper, titleEl);
       }
     }
+
+    upgradeSoldOutCta();
   });
+
+  window.addEventListener('load', upgradeSoldOutCta);
 </script>
 
 {% schema %}
