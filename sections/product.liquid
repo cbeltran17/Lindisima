@@ -20,7 +20,6 @@
 %}
 
 {% if images_layout == 'masonry' %}
-  {% comment %}Related products in masonry grid must be below product{% endcomment %}
   {% assign related_products_position_right = false %}
 {% endif %}
 
@@ -51,6 +50,7 @@
 </script>
 
 {% render 'product-success-labels' %}
+
 <section class="product-container">
   {%
     render 'product',
@@ -70,8 +70,37 @@
   </div>
 </section>
 
-{% comment %} --- DEBUT AJOUT QUICK VIEW --- {% endcomment %}
 <style>
+  /* ── OUT OF STOCK LABEL ── */
+  .product-oos-label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background-color: #e02020;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 4px;
+    z-index: 100;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  /* Make sure the image wrapper can hold the absolute label */
+  .product-container .product-image,
+  .product-container .product-slideshow,
+  .product-container .product-images,
+  .product-container [class*="product-media"],
+  .product-container [class*="product-photo"],
+  .product-container [class*="product-gallery"],
+  .product-container [class*="product-image"] {
+    position: relative !important;
+  }
+
+  /* ── QUICKVIEW LIGHTBOX ── */
   .product-quickview-lightbox {
     display: none;
     position: fixed;
@@ -104,12 +133,11 @@
     cursor: pointer;
   }
 
-  /* Curseur loupe sur les images produits */
   .product-container img {
     cursor: zoom-in !important;
   }
 
-  /* Add to Cart - target the real Shopify product form button */
+  /* ── ADD TO CART BUTTON ── */
   .product-container form[action*="/cart/add"] button[type="submit"],
   .product-container form[action*="/cart/add"] input[type="submit"],
   .product-container .product-form__submit,
@@ -125,6 +153,7 @@
     font-weight: bold !important;
     box-shadow: none !important;
     text-shadow: none !important;
+    border-radius: 0 !important;
   }
 
   .product-container form[action*="/cart/add"] button[type="submit"]:hover,
@@ -143,20 +172,60 @@
     box-shadow: none !important;
     text-shadow: none !important;
   }
-
-  /* Keep radius controlled */
-  .product-container form[action*="/cart/add"] button[type="submit"],
-  .product-container form[action*="/cart/add"] input[type="submit"],
-  .product-container .product-form__submit,
-  .product-container .product-form--add-to-cart,
-  .product-container .add-to-cart,
-  .product-container .btn--add-to-cart,
-  .product-container button[name="add"],
-  .product-container [data-add-to-cart],
-  .product-container .Primary-Btn {
-    border-radius: 0 !important;
-  }
 </style>
+
+{% unless product.available %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Try to find the main product image wrapper
+    const selectors = [
+      '.product-container .product-image',
+      '.product-container .product-slideshow',
+      '.product-container .product-images',
+      '.product-container .product-media',
+      '.product-container .product-photo-container',
+      '.product-container .product-gallery',
+      '.product-container [class*="product-image"]',
+      '.product-container [class*="product-media"]',
+      '.product-container [class*="product-photo"]',
+      '.product-container [class*="product-gallery"]',
+      '.product-container [class*="product-slideshow"]'
+    ];
+
+    let imageWrapper = null;
+
+    for (let selector of selectors) {
+      const el = document.querySelector(selector);
+      if (el) {
+        imageWrapper = el;
+        break;
+      }
+    }
+
+    // Fallback: find the first img inside product-container and use its parent
+    if (!imageWrapper) {
+      const firstImg = document.querySelector('.product-container img');
+      if (firstImg) {
+        imageWrapper = firstImg.closest('div') || firstImg.parentElement;
+      }
+    }
+
+    if (imageWrapper) {
+      // Make sure the wrapper is positioned relatively
+      const pos = window.getComputedStyle(imageWrapper).position;
+      if (pos === 'static') {
+        imageWrapper.style.position = 'relative';
+      }
+
+      // Create and inject the label
+      const label = document.createElement('span');
+      label.className = 'product-oos-label';
+      label.textContent = 'Out of Stock';
+      imageWrapper.appendChild(label);
+    }
+  });
+</script>
+{% endunless %}
 
 <div id="ProductQuickview" class="product-quickview-lightbox" onclick="closeQuickView()">
   <span class="product-quickview-close">&times;</span>
@@ -197,7 +266,6 @@
     });
   });
 </script>
-{% comment %} --- FIN AJOUT QUICK VIEW --- {% endcomment %}
 
 {% schema %}
 {
