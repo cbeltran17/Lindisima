@@ -1,0 +1,41 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page-contact",
+      "settings": {}
+    },
+    "1634914363c9428bd7": {
+      "type": "pxs-map",
+      "disabled": true,
+      "settings": {
+        "section_height": "medium",
+        "title": "Location",
+        "content": "<p>1221 Broad St<br>Victoria, BC</p>",
+        "text_alignment": "center",
+        "layout": "overlay-center-center",
+        "layout_mobile": "below",
+        "address": "1221 Broad St, Victoria, BC",
+        "api_key": "",
+        "enable_custom_colors": false,
+        "foreground_color": "#292929",
+        "background_color": "#ffffff",
+        "zoom": 2,
+        "overlay_color": "#000000",
+        "opacity": 10
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1634914363c9428bd7"
+  ]
+}
