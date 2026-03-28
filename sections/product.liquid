@@ -71,16 +71,18 @@
 </section>
 
 {% unless product.available %}
-<div class="product-oos-notify-block">
-  <span class="product-oos-label">Out of Stock</span>
-  <a href="https://lindisimany.com/pages/notify-me" class="product-notify-btn">Notify Me</a>
-</div>
+  <div class="product-oos-wrapper">
+    <span class="product-oos-label">Out of Stock</span>
+  </div>
 {% endunless %}
 
 <style>
-  /* ── OOS + NOTIFY BLOCK ── */
-  .product-oos-notify-block {
-    display: none; /* hidden by default, shown via JS after we find the right spot */
+  /* ── OUT OF STOCK LABEL ── */
+  .product-oos-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 16px 0 0 0;
   }
 
   .product-oos-label {
@@ -97,33 +99,6 @@
     border-radius: 4px;
     line-height: 1;
     pointer-events: none;
-    margin-bottom: 12px;
-  }
-
-  .product-notify-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    background-color: #000000;
-    color: #ffffff !important;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    text-decoration: none !important;
-    padding: 16px 32px;
-    border-radius: 0;
-    border: none;
-    cursor: pointer;
-    box-sizing: border-box;
-    transition: background-color 0.2s ease;
-    margin-top: 10px;
-  }
-
-  .product-notify-btn:hover {
-    background-color: #333333;
-    color: #ffffff !important;
   }
 
   /* ── QUICKVIEW LIGHTBOX ── */
@@ -221,8 +196,6 @@
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-
-    // ── QUICKVIEW ──
     const productContainer = document.querySelector('.product-container');
     if (productContainer) {
       productContainer.addEventListener('click', function(e) {
@@ -240,51 +213,27 @@
       if (e.key === 'Escape') closeQuickView();
     });
 
-    // ── OOS + NOTIFY ME PLACEMENT ──
-    const oosBlock = document.querySelector('.product-oos-notify-block');
-    if (oosBlock && productContainer) {
+    // Move OOS label just before the product title
+    const oosWrapper = document.querySelector('.product-oos-wrapper');
+    if (oosWrapper) {
+      const titleSelectors = [
+        '.product-container .product-title',
+        '.product-container .product__title',
+        '.product-container h1.title',
+        '.product-container h1',
+        '.product-container [class*="product-title"]',
+        '.product-container [class*="product__title"]'
+      ];
 
-      // Find the sold out button — look only for disabled buttons inside the form
-      const form = productContainer.querySelector('form[action*="/cart/add"]');
-      let soldOutBtn = null;
-
-      if (form) {
-        // A sold-out button is typically disabled
-        const allBtns = form.querySelectorAll('button[type="submit"], input[type="submit"], button[name="add"], [data-add-to-cart]');
-        allBtns.forEach(function(btn) {
-          if (btn.disabled || btn.hasAttribute('disabled') || (btn.dataset && btn.dataset.addToCart === '')) {
-            soldOutBtn = btn;
-          }
-        });
-        // Fallback: just grab the submit button
-        if (!soldOutBtn) {
-          soldOutBtn = form.querySelector('button[type="submit"], input[type="submit"]');
-        }
+      let titleEl = null;
+      for (let sel of titleSelectors) {
+        titleEl = document.querySelector(sel);
+        if (titleEl) break;
       }
 
-      if (soldOutBtn) {
-        // Insert our block right after the sold out button, inside the form container
-        const btnParent = soldOutBtn.parentNode;
-        // Make the block flex column to stack label then button
-        oosBlock.style.display = 'flex';
-        oosBlock.style.flexDirection = 'column';
-        oosBlock.style.width = '100%';
-        // Insert after the sold out button
-        btnParent.insertBefore(oosBlock, soldOutBtn.nextSibling);
-      } else {
-        // Fallback: show it after the product section
-        oosBlock.style.display = 'flex';
-        oosBlock.style.flexDirection = 'column';
-        oosBlock.style.width = '100%';
+      if (titleEl) {
+        titleEl.parentNode.insertBefore(oosWrapper, titleEl);
       }
-
-      // Hide Shop Pay / dynamic checkout buttons on OOS products — do NOT click them
-      const dynamicCheckout = productContainer.querySelectorAll(
-        '.shopify-payment-button, [data-shopify="payment-button"], .dynamic-checkout, .dynamic-checkout__button, shop-pay-button, [data-payment-button]'
-      );
-      dynamicCheckout.forEach(function(el) {
-        el.style.display = 'none';
-      });
     }
   });
 </script>
