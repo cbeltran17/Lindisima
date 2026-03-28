@@ -20,7 +20,6 @@
 %}
 
 {% if images_layout == 'masonry' %}
-  {% comment %}Related products in masonry grid must be below product{% endcomment %}
   {% assign related_products_position_right = false %}
 {% endif %}
 
@@ -51,6 +50,7 @@
 </script>
 
 {% render 'product-success-labels' %}
+
 <section class="product-container">
   {%
     render 'product',
@@ -70,8 +70,38 @@
   </div>
 </section>
 
-{% comment %} --- DEBUT AJOUT QUICK VIEW --- {% endcomment %}
+{% unless product.available %}
+  <div class="product-oos-wrapper">
+    <span class="product-oos-label">Out of Stock</span>
+  </div>
+{% endunless %}
+
 <style>
+  /* ── OUT OF STOCK LABEL ── */
+  .product-oos-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 16px 0 0 0;
+  }
+
+  .product-oos-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e02020;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 4px;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  /* ── QUICKVIEW LIGHTBOX ── */
   .product-quickview-lightbox {
     display: none;
     position: fixed;
@@ -104,12 +134,11 @@
     cursor: pointer;
   }
 
-  /* Curseur loupe sur les images produits */
   .product-container img {
     cursor: zoom-in !important;
   }
 
-  /* Add to Cart - target the real Shopify product form button */
+  /* ── ADD TO CART BUTTON ── */
   .product-container form[action*="/cart/add"] button[type="submit"],
   .product-container form[action*="/cart/add"] input[type="submit"],
   .product-container .product-form__submit,
@@ -125,6 +154,7 @@
     font-weight: bold !important;
     box-shadow: none !important;
     text-shadow: none !important;
+    border-radius: 0 !important;
   }
 
   .product-container form[action*="/cart/add"] button[type="submit"]:hover,
@@ -142,19 +172,6 @@
     font-weight: bold !important;
     box-shadow: none !important;
     text-shadow: none !important;
-  }
-
-  /* Keep radius controlled */
-  .product-container form[action*="/cart/add"] button[type="submit"],
-  .product-container form[action*="/cart/add"] input[type="submit"],
-  .product-container .product-form__submit,
-  .product-container .product-form--add-to-cart,
-  .product-container .add-to-cart,
-  .product-container .btn--add-to-cart,
-  .product-container button[name="add"],
-  .product-container [data-add-to-cart],
-  .product-container .Primary-Btn {
-    border-radius: 0 !important;
   }
 </style>
 
@@ -195,9 +212,31 @@
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeQuickView();
     });
+
+    // Move OOS label just before the product title
+    const oosWrapper = document.querySelector('.product-oos-wrapper');
+    if (oosWrapper) {
+      const titleSelectors = [
+        '.product-container .product-title',
+        '.product-container .product__title',
+        '.product-container h1.title',
+        '.product-container h1',
+        '.product-container [class*="product-title"]',
+        '.product-container [class*="product__title"]'
+      ];
+
+      let titleEl = null;
+      for (let sel of titleSelectors) {
+        titleEl = document.querySelector(sel);
+        if (titleEl) break;
+      }
+
+      if (titleEl) {
+        titleEl.parentNode.insertBefore(oosWrapper, titleEl);
+      }
+    }
   });
 </script>
-{% comment %} --- FIN AJOUT QUICK VIEW --- {% endcomment %}
 
 {% schema %}
 {
