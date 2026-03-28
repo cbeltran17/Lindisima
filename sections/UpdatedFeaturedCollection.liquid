@@ -272,7 +272,7 @@
 
         <a href="{{ product.url }}" class="product-image-wrapper">
           {% unless product.available %}
-            <span class="out-of-stock-label">Out of Stock</span>
+            <span class="out-of-stock-label">Sold Out </span>
           {% endunless %}
           <img
             src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}"
