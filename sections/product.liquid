@@ -74,9 +74,6 @@
   <div class="product-oos-wrapper">
     <span class="product-oos-label">Out of Stock</span>
   </div>
-  <div class="product-notify-wrapper">
-    <a href="https://lindisimany.com/pages/notify-me" class="product-notify-btn">Notify Me</a>
-  </div>
 {% endunless %}
 
 <style>
@@ -85,7 +82,7 @@
     display: flex;
     justify-content: flex-start;
     padding: 0;
-    margin: 16px 0 8px 0;
+    margin: 16px 0 0 0;
   }
 
   .product-oos-label {
@@ -102,40 +99,6 @@
     border-radius: 4px;
     line-height: 1;
     pointer-events: none;
-  }
-
-  /* ── NOTIFY ME BUTTON ── */
-  .product-notify-wrapper {
-    display: flex;
-    justify-content: flex-start;
-    margin: 0 0 16px 0;
-    padding: 0;
-  }
-
-  .product-notify-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #000000;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 14px 32px;
-    border-radius: 0;
-    border: 2px solid #000000;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .product-notify-btn:hover {
-    background-color: #333333;
-    border-color: #333333;
-    color: #ffffff;
   }
 
   /* ── QUICKVIEW LIGHTBOX ── */
@@ -250,11 +213,9 @@
       if (e.key === 'Escape') closeQuickView();
     });
 
-    // Move OOS label and Notify Me button just before the product title
+    // Move OOS label just before the product title
     const oosWrapper = document.querySelector('.product-oos-wrapper');
-    const notifyWrapper = document.querySelector('.product-notify-wrapper');
-
-    if (oosWrapper || notifyWrapper) {
+    if (oosWrapper) {
       const titleSelectors = [
         '.product-container .product-title',
         '.product-container .product__title',
@@ -271,21 +232,7 @@
       }
 
       if (titleEl) {
-        const parent = titleEl.parentNode;
-        // Insert OOS label before title
-        if (oosWrapper) parent.insertBefore(oosWrapper, titleEl);
-        // Insert Notify Me button after title — find the add to cart button area and insert there
-        // Try to place it after the sold out / add to cart button
-        const soldOutBtn = productContainer
-          ? productContainer.querySelector('[data-add-to-cart], button[name="add"], .add-to-cart, .btn--add-to-cart, .Primary-Btn')
-          : null;
-
-        if (soldOutBtn && notifyWrapper) {
-          soldOutBtn.parentNode.insertBefore(notifyWrapper, soldOutBtn.nextSibling);
-        } else if (titleEl && notifyWrapper) {
-          // Fallback: place after title
-          parent.insertBefore(notifyWrapper, titleEl.nextSibling);
-        }
+        titleEl.parentNode.insertBefore(oosWrapper, titleEl);
       }
     }
   });
