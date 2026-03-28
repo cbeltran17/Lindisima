@@ -11,6 +11,7 @@
   "sections": {
     "main": {
       "type": "page-contact",
+      "disabled": true,
       "settings": {}
     },
     "1634914363c9428bd7": {
@@ -32,10 +33,62 @@
         "overlay_color": "#000000",
         "opacity": 10
       }
+    },
+    "1774657458e7cf0d7e": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_2a5a826_dJt7pm": {
+          "type": "ai_gen_block_2a5a826",
+          "settings": {
+            "heading": "Stay in touch",
+            "description": "Subscribe to get updates and special offers",
+            "placeholder": "Enter your email",
+            "button_text": "Submit",
+            "success_message": "Thank you for subscribing!",
+            "desktop_width_percent": 100,
+            "max_width": 600,
+            "padding": 40,
+            "spacing": 20,
+            "text_alignment": "center",
+            "layout": "row",
+            "field_gap": 10,
+            "background_color": "#ffffff",
+            "heading_color": "#262626",
+            "text_color": "#656565",
+            "input_background": "#ffffff",
+            "input_text_color": "#262626",
+            "input_border_color": "#e4e4e4",
+            "placeholder_color": "#999999",
+            "input_padding": 14,
+            "input_border_width": 1,
+            "input_border_radius": 4,
+            "input_font_size": 14,
+            "button_background": "#a1c78a",
+            "button_hover_background": "#8fb574",
+            "button_text_color": "#080808",
+            "button_padding": 14,
+            "button_border_radius": 4,
+            "button_font_size": 14,
+            "success_background": "#d4edda",
+            "success_text_color": "#155724",
+            "error_background": "#f8d7da",
+            "error_text_color": "#721c24",
+            "heading_size": 28,
+            "description_size": 14,
+            "border_radius": 8
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_2a5a826_dJt7pm"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "main",
-    "1634914363c9428bd7"
+    "1634914363c9428bd7",
+    "1774657458e7cf0d7e"
   ]
 }
