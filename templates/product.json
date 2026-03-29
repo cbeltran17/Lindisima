@@ -56,7 +56,7 @@
       "settings": {
         "enable_cart_redirection": false,
         "show_payment_button": true,
-        "images_layout": "list",
+        "images_layout": "adaptive",
         "enable_zoom": true,
         "enable_video_autoplay": false,
         "enable_video_looping": false

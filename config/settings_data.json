@@ -402,6 +402,9 @@
     }
   },
   "platform_customizations": {
-    "custom_css": []
+    "custom_css": [
+      "/* --- NOUVELLE OPTION : MISE EN PAGE ADAPTATIVE --- */ /* Sur mobile (max 767px) : On cache la liste et on affiche le diaporama */ @media screen and (max-width: 767px) {.product-layout--adaptive [data-product-gallery-list] {display: none !important; } .product-layout--adaptive [data-product-gallery-slideshow] {display: block !important; } }",
+      " /* Sur bureau (min 768px) : On cache le diaporama et on affiche la liste */ @media screen and (min-width: 768px) {.product-layout--adaptive [data-product-gallery-slideshow] {display: none !important; } .product-layout--adaptive [data-product-gallery-list] {display: block !important; } }"
+    ]
   }
 }
