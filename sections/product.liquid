@@ -53,24 +53,24 @@
 {% render 'product-success-labels' %}
 
 <section class="product-container{% unless product.available %} product-container--sold-out{% endunless %}">
-  {%
-    render 'product',
-    product: product,
-    enable_zoom: enable_zoom,
-    images_layout: images_layout,
-    enable_linked_options: enable_linked_options,
-    show_vendor: show_vendor,
-    show_social_media_icons: show_social_media_icons,
-    show_payment_button: show_payment_button
-  %}
-
-  <div
-    class="product-recommendations-wrapper--right"
-    data-product-recommendations-right
-  >
-  </div>
-</section>
-
+    {%
+        render 'product',
+            product: product,
+                enable_zoom: enable_zoom,
+                    images_layout: images_layout,
+                        enable_linked_options: enable_linked_options,
+                            show_vendor: show_vendor,
+                                show_social_media_icons: show_social_media_icons,
+                                    show_payment_button: show_payment_button
+                                      %}
+                                      
+                                        <div
+                                            class="product-recommendations-wrapper--right"
+                                                data-product-recommendations-right
+                                                  >
+                                                    </div>
+                                                    </section>
+                                                     %} %}">
 {% unless product.available %}
   <div class="product-oos-wrapper">
     <span class="product-oos-label">Sold Out </span>
