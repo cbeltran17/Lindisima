@@ -12238,6 +12238,13 @@ https://apps.shopify.com/coin
 
 /* Mobile: slideshow */
 @media (max-width: 749px) {
+  /* Limit main image height on mobile */
+.product-gallery--viewport--figure.active-slide img {
+  max-height: 420px !important;
+  width: 100% !important;
+  object-fit: contain !important;
+}
+
   .product-gallery--viewport {
     display: flex !important;
     flex-wrap: nowrap !important;
