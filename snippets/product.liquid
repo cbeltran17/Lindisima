@@ -1,15 +1,6 @@
 {% assign use_masonry = false %}
 {% assign link_to = link_to | default: nil %}
 
-{% assign images_layout_desktop = images_layout_desktop | default: images_layout | default: 'slideshow' %}
-{% assign images_layout_mobile = images_layout_mobile | default: images_layout | default: 'slideshow' %}
-
-<script>
-  window.productLayout = window.innerWidth <= 749
-    ? "{{ images_layout_mobile }}"
-    : "{{ images_layout_desktop }}";
-</script>
-
 <script type="application/json" data-images>
   {% assign product_images = product.media | where: 'media_type', 'image'  %}
 
@@ -34,24 +25,52 @@
 {% assign product_id = product.id %}
 {% assign selected_variant = product.selected_or_first_available_variant %}
 
+{% if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' %}
+  {% assign found_a_collection = false %}
+  {% for c in product.collections %}
+    {% if found_a_collection == false and c.handle != 'frontpage' and c.handle != 'all' %}
+      {% assign found_a_collection = true %}
+      {% assign collection = c %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
 {% assign selected_media = selected_variant.featured_media | default: product.featured_media %}
 
 <div
-  class="product"
+  class="
+    product
+    {% if images_layout == 'masonry' %}
+      product-masonry
+    {% endif %}
+  "
   data-ajax
-  data-images-layout="{{ images_layout_desktop }}"
-  data-images-layout-mobile="{{ images_layout_mobile }}"
+
+  {% if enable_zoom %}
+    data-zoom
+  {% endif %}
+
+  {% if enable_linked_options %}
+    data-linked-options
+  {% endif %}
+
+  {% if images_layout == 'slideshow' %}
+    data-images-slideshow
+  {% elsif images_layout == 'list' %}
+    data-images-list-view
+  {% elsif images_layout == 'masonry' %}
+  {% assign use_masonry = true %}
+    data-product-masonry
+  {% endif %}
 >
-  <div id="ProductGalleryWrapper">
-    {%
-      render 'product-gallery',
-      images_layout: images_layout_desktop,
-      use_masonry: use_masonry,
-      product: product,
-      selected_media: selected_media,
-      enable_zoom: enable_zoom,
-    %}
-  </div>
+  {%
+    render 'product-gallery',
+    images_layout: images_layout,
+    use_masonry: use_masonry,
+    product: product,
+    selected_media: selected_media,
+    enable_zoom: enable_zoom,
+  %}
 
   <div class="product-details-wrapper">
     <div class="product-details">
@@ -65,43 +84,17 @@
             show_payment_button: show_payment_button,
           %}
         {% endform %}
+      {% else %}
+        <div data-product-form>
+          {%
+            render 'product-form-content',
+            product: nil,
+            form: nil,
+            show_social_media_icons: show_social_media_icons,
+            show_payment_button: show_payment_button,
+          %}
+        </div>
       {% endif %}
     </div>
   </div>
 </div>
-
-<script>
-  (function () {
-    function forceCorrectLayout() {
-      var wrapper = document.getElementById('ProductGalleryWrapper');
-      if (!wrapper) return;
-
-      var isMobile = window.innerWidth <= 749;
-      var layout = isMobile
-        ? wrapper.closest('.product').dataset.imagesLayoutMobile
-        : wrapper.closest('.product').dataset.imagesLayout;
-
-      // destroy existing gallery content
-      wrapper.innerHTML = '';
-
-      // reload correct gallery via AJAX-like render trick
-      fetch(window.location.href)
-        .then(res => res.text())
-        .then(html => {
-          var div = document.createElement('div');
-          div.innerHTML = html;
-
-          var newGallery = div.querySelector('#ProductGalleryWrapper');
-          if (newGallery) {
-            wrapper.innerHTML = newGallery.innerHTML;
-          }
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-      if (window.innerWidth <= 749) {
-        forceCorrectLayout();
-      }
-    });
-  })();
-</script>
