@@ -3,7 +3,6 @@
 {% liquid
   assign enable_zoom = section.settings.enable_zoom
   assign enable_cart_redirection = section.settings.enable_cart_redirection
-  assign images_layout = section.settings.images_layout
   assign enable_video_autoplay = section.settings.enable_video_autoplay
   assign enable_video_looping = section.settings.enable_video_looping
   assign enable_linked_options = true
@@ -12,6 +11,8 @@
   assign show_payment_button = section.settings.show_payment_button
   assign notify_me_url = 'https://lindisimany.com/pages/notify-me'
 
+  assign images_layout = 'list'
+
   for block in section.blocks
     if block.type == 'complementary_products'
       assign product_recommendation_limit = block.settings.product_recommendation_limit
@@ -19,10 +20,6 @@
     endif
   endfor
 %}
-
-{% if images_layout == 'masonry' %}
-  {% assign related_products_position_right = false %}
-{% endif %}
 
 <script
   type="application/json"
@@ -73,11 +70,106 @@
 
 {% unless product.available %}
   <div class="product-oos-wrapper">
-    <span class="product-oos-label">Sold Out </span>
+    <span class="product-oos-label">Sold Out</span>
   </div>
 {% endunless %}
 
 <style>
+  /* =============================================
+     MOBILE ONLY (<=768px):
+     Force the list layout to behave like a
+     horizontal scroll-snap slideshow
+  ============================================= */
+  @media screen and (max-width: 768px) {
+
+    /* Make the images wrapper a horizontal scroll container */
+    .product-images--list,
+    .product-media-gallery,
+    .product__media-list,
+    [class*="product-images"],
+    [class*="product__media"] {
+      display: flex !important;
+      flex-direction: row !important;
+      overflow-x: scroll !important;
+      scroll-snap-type: x mandatory !important;
+      -webkit-overflow-scrolling: touch !important;
+      scrollbar-width: none !important;
+      gap: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+    }
+
+    /* Hide scrollbar on webkit */
+    .product-images--list::-webkit-scrollbar,
+    .product-media-gallery::-webkit-scrollbar,
+    .product__media-list::-webkit-scrollbar,
+    [class*="product-images"]::-webkit-scrollbar,
+    [class*="product__media"]::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    /* Each image item = full width slide */
+    .product-images--list > *,
+    .product-images--list li,
+    .product-images--list .product-images__slide,
+    .product-media-gallery > *,
+    .product__media-list > *,
+    .product__media-list li {
+      flex: 0 0 100% !important;
+      width: 100% !important;
+      min-width: 100% !important;
+      scroll-snap-align: start !important;
+    }
+
+    /* Each image fills its slide */
+    .product-images--list img,
+    .product-media-gallery img,
+    .product__media-list img {
+      width: 100% !important;
+      height: auto !important;
+      display: block !important;
+      object-fit: cover !important;
+    }
+
+    /* Dot pagination — injected by JS below */
+    .mobile-slideshow-dots {
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 0 4px;
+    }
+
+    .mobile-slideshow-dots span {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #ccc;
+      cursor: pointer;
+      transition: background-color 0.25s ease, transform 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .mobile-slideshow-dots span.active {
+      background-color: #000;
+      transform: scale(1.3);
+    }
+  }
+
+  /* =============================================
+     DESKTOP (>=769px): normal list, no overrides
+  ============================================= */
+  @media screen and (min-width: 769px) {
+    .mobile-slideshow-dots {
+      display: none !important;
+    }
+  }
+
+  /* =============================================
+     SOLD OUT LABEL
+  ============================================= */
+
   .product-oos-wrapper {
     display: flex;
     justify-content: flex-start;
@@ -100,6 +192,10 @@
     line-height: 1;
     pointer-events: none;
   }
+
+  /* =============================================
+     NOTIFY ME BUTTON
+  ============================================= */
 
   .product-container .notify-me-button {
     display: inline-flex !important;
@@ -128,12 +224,20 @@
     color: #fff !important;
   }
 
+  /* =============================================
+     SOLD OUT: HIDE PAYMENT BUTTON
+  ============================================= */
+
   .product-container--sold-out .shopify-payment-button,
   .product-container--sold-out .shopify-payment-button__button,
   .product-container--sold-out .shopify-payment-button__button--unbranded,
   .product-container--sold-out [data-shopify="payment-button"] {
     display: none !important;
   }
+
+  /* =============================================
+     QUICKVIEW LIGHTBOX
+  ============================================= */
 
   .product-quickview-lightbox {
     display: none;
@@ -167,9 +271,9 @@
     cursor: pointer;
   }
 
-  .product-container img {
-    cursor: zoom-in !important;
-  }
+  /* =============================================
+     ADD TO CART BUTTON
+  ============================================= */
 
   .product-container form[action*="/cart/add"] button[type="submit"],
   .product-container form[action*="/cart/add"] input[type="submit"],
@@ -245,8 +349,8 @@
       '.Primary-Btn'
     ];
 
-    selectors.forEach((selector) => {
-      productContainer.querySelectorAll(selector).forEach((el) => {
+    selectors.forEach(function(selector) {
+      productContainer.querySelectorAll(selector).forEach(function(el) {
         const text = ((el.textContent || el.value || '') + '').trim().toLowerCase();
         const isSoldOutButton =
           el.disabled ||
@@ -263,30 +367,94 @@
         notifyLink.setAttribute('role', 'button');
         notifyLink.setAttribute('aria-label', 'Notify Me');
         notifyLink.textContent = 'Notify Me';
-
         el.replaceWith(notifyLink);
       });
     });
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
-    const productContainer = document.querySelector('.product-container');
-    if (productContainer) {
-      productContainer.addEventListener('click', function(e) {
-        const target = e.target;
-        if (target.tagName === 'IMG') {
-          let imgSrc = target.currentSrc || target.src;
-          imgSrc = imgSrc.replace(/(_small|_medium|_large|_grande|_compact|_\d+x\d*)/g, '_2048x');
-          openQuickView(imgSrc);
-          e.preventDefault();
-        }
+  /* ------------------------------------------
+     Mobile dot pagination for scroll-snap slideshow
+  ------------------------------------------ */
+  function initMobileDots() {
+    if (window.innerWidth > 768) return;
+
+    // Find the image list container — try multiple selectors
+    const gallerySelectors = [
+      '.product-images--list',
+      '.product-media-gallery',
+      '.product__media-list',
+      '.product-images'
+    ];
+
+    let gallery = null;
+    for (var i = 0; i < gallerySelectors.length; i++) {
+      gallery = document.querySelector(gallerySelectors[i]);
+      if (gallery) break;
+    }
+    if (!gallery) return;
+
+    // Remove existing dots if re-initialising
+    const existingDots = document.querySelector('.mobile-slideshow-dots');
+    if (existingDots) existingDots.remove();
+
+    // Count slides (direct children)
+    const slides = Array.from(gallery.children).filter(function(el) {
+      return el.tagName !== 'SCRIPT' && el.tagName !== 'STYLE';
+    });
+    if (slides.length <= 1) return;
+
+    // Build dots container
+    const dotsContainer = document.createElement('div');
+    dotsContainer.className = 'mobile-slideshow-dots';
+
+    slides.forEach(function(_, idx) {
+      const dot = document.createElement('span');
+      if (idx === 0) dot.classList.add('active');
+      dot.addEventListener('click', function() {
+        slides[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
       });
+      dotsContainer.appendChild(dot);
+    });
+
+    // Insert dots right after the gallery
+    gallery.parentNode.insertBefore(dotsContainer, gallery.nextSibling);
+
+    // Update active dot on scroll
+    var scrollTimer;
+    gallery.addEventListener('scroll', function() {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function() {
+        const slideWidth = gallery.offsetWidth;
+        const currentIndex = Math.round(gallery.scrollLeft / slideWidth);
+        dotsContainer.querySelectorAll('span').forEach(function(dot, idx) {
+          dot.classList.toggle('active', idx === currentIndex);
+        });
+      }, 50);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+
+    // Quickview on image click — desktop only
+    if (window.innerWidth >= 769) {
+      const productContainer = document.querySelector('.product-container');
+      if (productContainer) {
+        productContainer.addEventListener('click', function(e) {
+          if (e.target.tagName === 'IMG') {
+            let imgSrc = e.target.currentSrc || e.target.src;
+            imgSrc = imgSrc.replace(/(_small|_medium|_large|_grande|_compact|_\d+x\d*)/g, '_2048x');
+            openQuickView(imgSrc);
+            e.preventDefault();
+          }
+        });
+      }
     }
 
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeQuickView();
     });
 
+    // Move OOS label above product title
     const oosWrapper = document.querySelector('.product-oos-wrapper');
     if (oosWrapper) {
       const titleSelectors = [
@@ -297,22 +465,24 @@
         '.product-container [class*="product-title"]',
         '.product-container [class*="product__title"]'
       ];
-
       let titleEl = null;
-      for (let sel of titleSelectors) {
-        titleEl = document.querySelector(sel);
+      for (var s = 0; s < titleSelectors.length; s++) {
+        titleEl = document.querySelector(titleSelectors[s]);
         if (titleEl) break;
       }
-
       if (titleEl) {
         titleEl.parentNode.insertBefore(oosWrapper, titleEl);
       }
     }
 
+    initMobileDots();
     upgradeSoldOutCta();
   });
 
-  window.addEventListener('load', upgradeSoldOutCta);
+  window.addEventListener('load', function() {
+    upgradeSoldOutCta();
+    initMobileDots();
+  });
 </script>
 
 {% schema %}
@@ -345,6 +515,7 @@
       "type": "select",
       "id": "images_layout",
       "label": "Layout",
+      "info": "Desktop layout. Mobile always uses slideshow.",
       "options": [
         {
           "label": "Slideshow",
@@ -359,7 +530,7 @@
           "value": "masonry"
         }
       ],
-      "default": "slideshow"
+      "default": "list"
     },
     {
       "type": "checkbox",
