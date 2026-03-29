@@ -3,6 +3,7 @@
 {% liquid
   assign enable_zoom = section.settings.enable_zoom
   assign enable_cart_redirection = section.settings.enable_cart_redirection
+  assign images_layout = section.settings.images_layout
   assign enable_video_autoplay = section.settings.enable_video_autoplay
   assign enable_video_looping = section.settings.enable_video_looping
   assign enable_linked_options = true
@@ -11,8 +12,6 @@
   assign show_payment_button = section.settings.show_payment_button
   assign notify_me_url = 'https://lindisimany.com/pages/notify-me'
 
-  assign images_layout = 'slideshow'
-
   for block in section.blocks
     if block.type == 'complementary_products'
       assign product_recommendation_limit = block.settings.product_recommendation_limit
@@ -20,6 +19,10 @@
     endif
   endfor
 %}
+
+{% if images_layout == 'masonry' %}
+  {% assign related_products_position_right = false %}
+{% endif %}
 
 <script
   type="application/json"
@@ -70,131 +73,11 @@
 
 {% unless product.available %}
   <div class="product-oos-wrapper">
-    <span class="product-oos-label">Sold Out</span>
+    <span class="product-oos-label">Sold Out </span>
   </div>
 {% endunless %}
 
 <style>
-  /* =============================================
-     RESPONSIVE LAYOUT: Slideshow on mobile,
-     List on tablet/desktop
-  ============================================= */
-
-  .product-container .product-images--list {
-    display: none !important;
-  }
-  .product-container .product-images--slideshow {
-    display: block !important;
-  }
-
-  @media screen and (min-width: 769px) {
-    .product-container .product-images--list {
-      display: block !important;
-    }
-    .product-container .product-images--slideshow {
-      display: none !important;
-    }
-  }
-
-  /* =============================================
-     SLIDESHOW PAGINATION — dots + arrows
-  ============================================= */
-
-  .product-images--slideshow .flickity-page-dots,
-  .product-images--slideshow [data-slideshow-dots] {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 14px 0 4px;
-    list-style: none;
-    margin: 0;
-  }
-
-  .product-images--slideshow .flickity-page-dots .dot,
-  .product-images--slideshow [data-slideshow-dots] li {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #ccc;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    transition: background-color 0.25s ease, transform 0.2s ease;
-  }
-
-  .product-images--slideshow .flickity-page-dots .dot.is-selected,
-  .product-images--slideshow .flickity-page-dots .dot--selected,
-  .product-images--slideshow [data-slideshow-dots] li.is-selected,
-  .product-images--slideshow [data-slideshow-dots] li.active {
-    background-color: #000;
-    transform: scale(1.3);
-  }
-
-  .product-images--slideshow .flickity-page-dots .dot:not(.is-selected):hover,
-  .product-images--slideshow [data-slideshow-dots] li:not(.is-selected):hover {
-    background-color: #888;
-  }
-
-  .product-images--slideshow .flickity-prev-next-button,
-  .product-images--slideshow [data-slideshow-prev],
-  .product-images--slideshow [data-slideshow-next] {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    cursor: pointer;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-    transition: background-color 0.2s ease, box-shadow 0.2s ease;
-    padding: 0;
-  }
-
-  .product-images--slideshow .flickity-prev-next-button:hover,
-  .product-images--slideshow [data-slideshow-prev]:hover,
-  .product-images--slideshow [data-slideshow-next]:hover {
-    background-color: #fff;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
-  }
-
-  .product-images--slideshow .flickity-prev-next-button.previous,
-  .product-images--slideshow [data-slideshow-prev] {
-    left: 10px;
-  }
-
-  .product-images--slideshow .flickity-prev-next-button.next,
-  .product-images--slideshow [data-slideshow-next] {
-    right: 10px;
-  }
-
-  .product-images--slideshow .flickity-prev-next-button svg {
-    width: 16px;
-    height: 16px;
-    fill: none;
-    stroke: #222;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .product-images--slideshow .flickity-prev-next-button .flickity-button-icon {
-    fill: #222 !important;
-    width: 16px;
-    height: 16px;
-  }
-
-  /* =============================================
-     SOLD OUT LABEL
-  ============================================= */
-
   .product-oos-wrapper {
     display: flex;
     justify-content: flex-start;
@@ -217,10 +100,6 @@
     line-height: 1;
     pointer-events: none;
   }
-
-  /* =============================================
-     NOTIFY ME BUTTON
-  ============================================= */
 
   .product-container .notify-me-button {
     display: inline-flex !important;
@@ -249,20 +128,12 @@
     color: #fff !important;
   }
 
-  /* =============================================
-     SOLD OUT: HIDE PAYMENT BUTTON
-  ============================================= */
-
   .product-container--sold-out .shopify-payment-button,
   .product-container--sold-out .shopify-payment-button__button,
   .product-container--sold-out .shopify-payment-button__button--unbranded,
   .product-container--sold-out [data-shopify="payment-button"] {
     display: none !important;
   }
-
-  /* =============================================
-     QUICKVIEW LIGHTBOX
-  ============================================= */
 
   .product-quickview-lightbox {
     display: none;
@@ -299,10 +170,6 @@
   .product-container img {
     cursor: zoom-in !important;
   }
-
-  /* =============================================
-     ADD TO CART BUTTON
-  ============================================= */
 
   .product-container form[action*="/cart/add"] button[type="submit"],
   .product-container form[action*="/cart/add"] input[type="submit"],
@@ -402,50 +269,10 @@
     });
   }
 
-  function applyResponsiveLayout() {
-    const isDesktop = window.innerWidth >= 769;
-    const slideshowEl = document.querySelector('.product-images--slideshow');
-    const listEl = document.querySelector('.product-images--list');
-
-    if (slideshowEl) {
-      slideshowEl.style.display = isDesktop ? 'none' : 'block';
-    }
-    if (listEl) {
-      listEl.style.display = isDesktop ? 'block' : 'none';
-    }
-  }
-
-  function enhanceSlideshowPagination() {
-    const slideshow = document.querySelector('.product-images--slideshow');
-    if (!slideshow) return;
-    if (slideshow.dataset.paginationEnhanced) return;
-    slideshow.dataset.paginationEnhanced = 'true';
-
-    const checkFlickity = setInterval(() => {
-      const prevBtn = slideshow.querySelector('.flickity-prev-next-button.previous');
-      const nextBtn = slideshow.querySelector('.flickity-prev-next-button.next');
-
-      if (prevBtn || nextBtn) {
-        clearInterval(checkFlickity);
-
-        if (prevBtn) {
-          prevBtn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>`;
-          prevBtn.setAttribute('aria-label', 'Previous image');
-        }
-        if (nextBtn) {
-          nextBtn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>`;
-          nextBtn.setAttribute('aria-label', 'Next image');
-        }
-      }
-    }, 200);
-
-    setTimeout(() => clearInterval(checkFlickity), 5000);
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function() {
     const productContainer = document.querySelector('.product-container');
     if (productContainer) {
-      productContainer.addEventListener('click', function (e) {
+      productContainer.addEventListener('click', function(e) {
         const target = e.target;
         if (target.tagName === 'IMG') {
           let imgSrc = target.currentSrc || target.src;
@@ -456,7 +283,7 @@
       });
     }
 
-    document.addEventListener('keydown', function (e) {
+    document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeQuickView();
     });
 
@@ -482,17 +309,10 @@
       }
     }
 
-    applyResponsiveLayout();
-    enhanceSlideshowPagination();
     upgradeSoldOutCta();
   });
 
-  window.addEventListener('resize', applyResponsiveLayout);
-
-  window.addEventListener('load', function () {
-    upgradeSoldOutCta();
-    enhanceSlideshowPagination();
-  });
+  window.addEventListener('load', upgradeSoldOutCta);
 </script>
 
 {% schema %}
@@ -525,7 +345,6 @@
       "type": "select",
       "id": "images_layout",
       "label": "Layout",
-      "info": "Note: on mobile the layout is always slideshow regardless of this setting.",
       "options": [
         {
           "label": "Slideshow",
@@ -540,7 +359,7 @@
           "value": "masonry"
         }
       ],
-      "default": "list"
+      "default": "slideshow"
     },
     {
       "type": "checkbox",
