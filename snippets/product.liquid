@@ -1,5 +1,7 @@
 {% assign use_masonry = false %}
 {% assign link_to = link_to | default: nil %}
+{% assign images_layout_desktop = images_layout_desktop | default: images_layout | default: 'slideshow' %}
+{% assign images_layout_mobile = images_layout_mobile | default: images_layout | default: 'slideshow' %}
 
 <script type="application/json" data-images>
   {% assign product_images = product.media | where: 'media_type', 'image'  %}
@@ -40,7 +42,7 @@
 <div
   class="
     product
-    {% if images_layout == 'masonry' %}
+    {% if images_layout_desktop == 'masonry' or images_layout_mobile == 'masonry' %}
       product-masonry
     {% endif %}
   "
@@ -53,24 +55,28 @@
   {% if enable_linked_options %}
     data-linked-options
   {% endif %}
-
-  {% if images_layout == 'slideshow' %}
-    data-images-slideshow
-  {% elsif images_layout == 'list' %}
-    data-images-list-view
-  {% elsif images_layout == 'masonry' %}
-  {% assign use_masonry = true %}
-    data-product-masonry
-  {% endif %}
 >
-  {%
-    render 'product-gallery',
-    images_layout: images_layout,
-    use_masonry: use_masonry,
-    product: product,
-    selected_media: selected_media,
-    enable_zoom: enable_zoom,
-  %}
+  <div class="product-gallery-wrapper product-gallery-wrapper--desktop">
+    {%
+      render 'product-gallery',
+      images_layout: images_layout_desktop,
+      use_masonry: use_masonry,
+      product: product,
+      selected_media: selected_media,
+      enable_zoom: enable_zoom,
+    %}
+  </div>
+
+  <div class="product-gallery-wrapper product-gallery-wrapper--mobile">
+    {%
+      render 'product-gallery',
+      images_layout: images_layout_mobile,
+      use_masonry: use_masonry,
+      product: product,
+      selected_media: selected_media,
+      enable_zoom: enable_zoom,
+    %}
+  </div>
 
   <div class="product-details-wrapper">
     <div class="product-details">
@@ -98,3 +104,29 @@
     </div>
   </div>
 </div>
+
+<style>
+  .product-gallery-wrapper--mobile {
+    display: none !important;
+  }
+
+  @media (max-width: 749px) {
+    .product-gallery-wrapper--desktop {
+      display: none !important;
+    }
+
+    .product-gallery-wrapper--mobile {
+      display: block !important;
+    }
+  }
+
+  @media (min-width: 750px) {
+    .product-gallery-wrapper--desktop {
+      display: block !important;
+    }
+
+    .product-gallery-wrapper--mobile {
+      display: none !important;
+    }
+  }
+</style>
