@@ -3,7 +3,9 @@
 {% liquid
   assign enable_zoom = section.settings.enable_zoom
   assign enable_cart_redirection = section.settings.enable_cart_redirection
-  assign images_layout = section.settings.images_layout
+  assign images_layout_desktop = section.settings.images_layout_desktop | default: section.settings.images_layout | default: 'slideshow'
+  assign images_layout_mobile = section.settings.images_layout_mobile | default: section.settings.images_layout | default: 'slideshow'
+  assign images_layout = images_layout_desktop
   assign enable_video_autoplay = section.settings.enable_video_autoplay
   assign enable_video_looping = section.settings.enable_video_looping
   assign enable_linked_options = true
@@ -41,6 +43,8 @@
       "unavailableText": {{ 'products.product.unavailable' | t | json }}
     },
     "images_layout": {{ images_layout | json }},
+    "images_layout_desktop": {{ images_layout_desktop | json }},
+    "images_layout_mobile": {{ images_layout_mobile | json }},
     "enable_zoom": {{ enable_zoom | json }},
     "enable_video_autoplay": {{ enable_video_autoplay | json }},
     "enable_video_looping": {{ enable_video_looping | json }},
@@ -48,6 +52,25 @@
     "enable_fixed_positioning": true,
     "product_recommendation_limit": {{ product_recommendation_limit | json }}
   }
+</script>
+
+<script>
+  (function () {
+    var sectionId = {{ section.id | json }};
+    var dataEl = document.querySelector('[data-section-id="' + sectionId + '"][data-section-data]');
+    if (!dataEl) return;
+
+    try {
+      var data = JSON.parse(dataEl.textContent || '{}');
+      var isMobile = window.matchMedia('(max-width: 749px)').matches;
+
+      data.images_layout = isMobile
+        ? (data.images_layout_mobile || data.images_layout)
+        : (data.images_layout_desktop || data.images_layout);
+
+      dataEl.textContent = JSON.stringify(data);
+    } catch (e) {}
+  })();
 </script>
 
 {% render 'product-success-labels' %}
@@ -339,12 +362,32 @@
     },
     {
       "type": "paragraph",
-      "content": "Learn more about [media types](https://help.shopify.com/en/manual/products/product-media/product-media-types  )"
+      "content": "Learn more about [media types](https://shopify.com/en/manual/products/product-media/product-media-types  )"
     },
     {
       "type": "select",
-      "id": "images_layout",
-      "label": "Layout",
+      "id": "images_layout_desktop",
+      "label": "Desktop layout",
+      "options": [
+        {
+          "label": "Slideshow",
+          "value": "slideshow"
+        },
+        {
+          "label": "List",
+          "value": "list"
+        },
+        {
+          "label": "Masonry",
+          "value": "masonry"
+        }
+      ],
+      "default": "slideshow"
+    },
+    {
+      "type": "select",
+      "id": "images_layout_mobile",
+      "label": "Mobile layout",
       "options": [
         {
           "label": "Slideshow",
