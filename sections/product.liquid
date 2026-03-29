@@ -3,7 +3,7 @@
 {% liquid
   assign enable_zoom = section.settings.enable_zoom
   assign enable_cart_redirection = section.settings.enable_cart_redirection
-  assign images_layout = 'list'
+  assign images_layout = section.settings.images_layout
   assign enable_video_autoplay = section.settings.enable_video_autoplay
   assign enable_video_looping = section.settings.enable_video_looping
   assign enable_linked_options = true
@@ -19,6 +19,10 @@
     endif
   endfor
 %}
+
+{% if images_layout == 'masonry' %}
+  {% assign related_products_position_right = false %}
+{% endif %}
 
 <script
   type="application/json"
@@ -59,8 +63,6 @@
     show_social_media_icons: show_social_media_icons,
     show_payment_button: show_payment_button
   %}
-
-  <div id="MobileProductSlider-{{ section.id }}" class="mobile-product-slider" data-mobile-product-slider aria-label="Product image slideshow"></div>
 
   <div
     class="product-recommendations-wrapper--right"
@@ -203,50 +205,6 @@
     box-shadow: none !important;
     text-shadow: none !important;
   }
-
-  .mobile-product-slider {
-    display: none;
-    width: 100%;
-    margin-bottom: 14px;
-  }
-
-  .mobile-product-slider__track {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    width: 100%;
-  }
-
-  .mobile-product-slider__track::-webkit-scrollbar {
-    display: none;
-  }
-
-  .mobile-product-slider__slide {
-    flex: 0 0 100%;
-    width: 100%;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-  }
-
-  .mobile-product-slider__slide img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-
-  .mobile-media-hidden {
-    display: none !important;
-  }
-
-  @media screen and (max-width: 749px) {
-    .mobile-product-slider {
-      display: block;
-    }
-  }
 </style>
 
 <div id="ProductQuickview" class="product-quickview-lightbox" onclick="closeQuickView()">
@@ -256,8 +214,6 @@
 
 <script>
   const notifyMeUrl = {{ notify_me_url | json }};
-  const sectionId = {{ section.id | json }};
-  const mobileSliderId = `MobileProductSlider-${sectionId}`;
 
   function openQuickView(src) {
     const lightbox = document.getElementById('ProductQuickview');
@@ -313,105 +269,6 @@
     });
   }
 
-  function normalizeImageSrc(src) {
-    if (!src) return '';
-    return src
-      .replace(/(_small|_medium|_large|_grande|_compact|_\d+x\d*)/g, '_2048x')
-      .split('?')[0];
-  }
-
-  function isLikelyProductImage(img) {
-    if (!img) return false;
-
-    const src = (img.currentSrc || img.src || '').toLowerCase();
-    if (!src.includes('cdn.shopify.com')) return false;
-    if (img.closest('#ProductQuickview')) return false;
-    if (img.closest('.shopify-payment-button')) return false;
-    if (img.closest('.product-recommendations-wrapper--right')) return false;
-    if (img.closest('.product-oos-wrapper')) return false;
-
-    const alt = (img.alt || '').toLowerCase();
-    if (alt.includes('logo') || alt.includes('icon')) return false;
-
-    return true;
-  }
-
-  function getUniqueProductImages() {
-    const productContainer = document.querySelector('.product-container');
-    if (!productContainer) return [];
-
-    const urls = [];
-    const imgs = Array.from(productContainer.querySelectorAll('img'));
-
-    imgs.forEach((img) => {
-      if (!isLikelyProductImage(img)) return;
-
-      const src = normalizeImageSrc(img.currentSrc || img.src);
-      if (!src) return;
-
-      if (!urls.includes(src)) {
-        urls.push(src);
-      }
-    });
-
-    return urls;
-  }
-
-  function hideOriginalMediaForMobile() {
-    const productContainer = document.querySelector('.product-container');
-    if (!productContainer) return;
-
-    const mediaBlocks = productContainer.querySelectorAll(
-      '[class*="media"], [class*="gallery"], [class*="slider"], [data-media], figure, picture'
-    );
-
-    mediaBlocks.forEach((block) => {
-      const hasProductImage = Array.from(block.querySelectorAll('img')).some(isLikelyProductImage);
-      if (hasProductImage) {
-        block.classList.add('mobile-media-hidden');
-      }
-    });
-  }
-
-  function buildMobileSlider() {
-    const slider = document.getElementById(mobileSliderId);
-    if (!slider) return;
-
-    const isMobile = window.matchMedia('(max-width: 749px)').matches;
-    if (!isMobile) {
-      slider.innerHTML = '';
-      return;
-    }
-
-    const urls = getUniqueProductImages();
-
-    if (!urls.length) {
-      slider.innerHTML = '';
-      return;
-    }
-
-    slider.innerHTML = `
-      <div class="mobile-product-slider__track">
-        ${urls
-          .map(
-            (src, index) => `
-              <div class="mobile-product-slider__slide">
-                <img src="${src}" alt="Product image ${index + 1}" loading="eager">
-              </div>
-            `
-          )
-          .join('')}
-      </div>
-    `;
-
-    hideOriginalMediaForMobile();
-  }
-
-  function refreshMobileGallery() {
-    buildMobileSlider();
-    upgradeSoldOutCta();
-  }
-
   document.addEventListener('DOMContentLoaded', function() {
     const productContainer = document.querySelector('.product-container');
     if (productContainer) {
@@ -452,17 +309,10 @@
       }
     }
 
-    refreshMobileGallery();
+    upgradeSoldOutCta();
   });
 
-  window.addEventListener('load', function() {
-    refreshMobileGallery();
-    setTimeout(refreshMobileGallery, 500);
-  });
-
-  window.addEventListener('resize', function() {
-    refreshMobileGallery();
-  });
+  window.addEventListener('load', upgradeSoldOutCta);
 </script>
 
 {% schema %}
@@ -509,7 +359,7 @@
           "value": "masonry"
         }
       ],
-      "default": "list"
+      "default": "slideshow"
     },
     {
       "type": "checkbox",
