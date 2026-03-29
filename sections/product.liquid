@@ -50,6 +50,20 @@
   }
 </script>
 
+<script>
+  (function() {
+    var isDesktop = window.matchMedia('(min-width: 768px)').matches;
+    if (!isDesktop) return;
+    var sectionData = document.querySelector('[data-section-data]');
+    if (!sectionData) return;
+    try {
+      var data = JSON.parse(sectionData.textContent);
+      data.images_layout = 'list';
+      sectionData.textContent = JSON.stringify(data);
+    } catch(e) {}
+  })();
+</script>
+
 {% render 'product-success-labels' %}
 
 <section class="product-container{% unless product.available %} product-container--sold-out{% endunless %}">
