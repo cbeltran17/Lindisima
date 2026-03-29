@@ -402,6 +402,9 @@
     }
   },
   "platform_customizations": {
-    "custom_css": []
+    "custom_css": [
+      "/* MOBILE ONLY: max-width 768px (common mobile breakpoint) */@media (max-width: 768px) {/* hide desktop grid */ .product-images-grid {display: none !important; } /* show mobile slideshow */ .product-images-slideshow {display: block !important; }}",
+      "/* DESKTOP ONLY: min-width 769px */@media (min-width: 769px) {/* hide slideshow on desktop */ .product-images-slideshow {display: none !important; } /* show grid on desktop */ .product-images-grid {display: grid !important; /* or whatever your desktop grid style is */ }}"
+    ]
   }
 }
