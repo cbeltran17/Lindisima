@@ -1,7 +1,5 @@
 {% assign use_masonry = false %}
 {% assign link_to = link_to | default: nil %}
-{% assign images_layout_desktop = images_layout_desktop | default: images_layout | default: 'slideshow' %}
-{% assign images_layout_mobile = images_layout_mobile | default: images_layout | default: 'slideshow' %}
 
 <script type="application/json" data-images>
   {% assign product_images = product.media | where: 'media_type', 'image'  %}
@@ -42,13 +40,11 @@
 <div
   class="
     product
-    {% if images_layout_desktop == 'masonry' or images_layout_mobile == 'masonry' %}
+    {% if images_layout == 'masonry' %}
       product-masonry
     {% endif %}
   "
   data-ajax
-  data-images-layout-desktop="{{ images_layout_desktop }}"
-  data-images-layout-mobile="{{ images_layout_mobile }}"
 
   {% if enable_zoom %}
     data-zoom
@@ -57,30 +53,24 @@
   {% if enable_linked_options %}
     data-linked-options
   {% endif %}
->
-  <div class="product-gallery-shell">
-    <div class="product-gallery-wrapper product-gallery-wrapper--desktop">
-      {%
-        render 'product-gallery',
-        images_layout: images_layout_desktop,
-        use_masonry: use_masonry,
-        product: product,
-        selected_media: selected_media,
-        enable_zoom: enable_zoom,
-      %}
-    </div>
 
-    <div class="product-gallery-wrapper product-gallery-wrapper--mobile">
-      {%
-        render 'product-gallery',
-        images_layout: images_layout_mobile,
-        use_masonry: use_masonry,
-        product: product,
-        selected_media: selected_media,
-        enable_zoom: enable_zoom,
-      %}
-    </div>
-  </div>
+  {% if images_layout == 'slideshow' %}
+    data-images-slideshow
+  {% elsif images_layout == 'list' %}
+    data-images-list-view
+  {% elsif images_layout == 'masonry' %}
+  {% assign use_masonry = true %}
+    data-product-masonry
+  {% endif %}
+>
+  {%
+    render 'product-gallery',
+    images_layout: images_layout,
+    use_masonry: use_masonry,
+    product: product,
+    selected_media: selected_media,
+    enable_zoom: enable_zoom,
+  %}
 
   <div class="product-details-wrapper">
     <div class="product-details">
@@ -108,95 +98,3 @@
     </div>
   </div>
 </div>
-
-<style>
-  .product-gallery-shell {
-    position: relative;
-  }
-
-  .product-gallery-wrapper {
-    width: 100%;
-  }
-
-  .product-gallery-wrapper--mobile {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .product-gallery-wrapper--desktop {
-    position: relative;
-    opacity: 1;
-    pointer-events: auto;
-    z-index: 2;
-  }
-
-  .product-gallery-shell.is-mobile .product-gallery-wrapper--desktop {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .product-gallery-shell.is-mobile .product-gallery-wrapper--mobile {
-    position: relative;
-    opacity: 1;
-    pointer-events: auto;
-    z-index: 2;
-  }
-
-  .product-gallery-shell.is-desktop .product-gallery-wrapper--desktop {
-    position: relative;
-    opacity: 1;
-    pointer-events: auto;
-    z-index: 2;
-  }
-
-  .product-gallery-shell.is-desktop .product-gallery-wrapper--mobile {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .product-gallery-wrapper .flickity-page-dots .dot,
-  .product-gallery-wrapper .swiper-pagination-bullet,
-  .product-gallery-wrapper .splide__pagination__page,
-  .product-gallery-wrapper [class*="page-dot"],
-  .product-gallery-wrapper [class*="pagination-bullet"] {
-    border-radius: 999px !important;
-    width: 8px !important;
-    height: 8px !important;
-    min-width: 8px !important;
-    min-height: 8px !important;
-    margin: 0 4px !important;
-  }
-
-  .product-gallery-wrapper .flickity-page-dots,
-  .product-gallery-wrapper .swiper-pagination,
-  .product-gallery-wrapper .splide__pagination {
-    align-items: center !important;
-  }
-</style>
-
-<script>
-  (function () {
-    function setGalleryMode() {
-      var shell = document.querySelector('.product-gallery-shell');
-      if (!shell) return;
-
-      var isMobile = window.matchMedia('(max-width: 749px)').matches;
-      shell.classList.toggle('is-mobile', isMobile);
-      shell.classList.toggle('is-desktop', !isMobile);
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-      setGalleryMode();
-      window.addEventListener('resize', setGalleryMode);
-    });
-  })();
-</script>
