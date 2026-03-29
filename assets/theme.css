@@ -12222,27 +12222,3 @@ https://apps.shopify.com/coin
 .age-gate__select-wrapper .select-wrapper {
   max-width: none;
 }
-/* Desktop: show images as list */
-@media (min-width: 750px) {
-  .product__media-list {
-    display: block !important;
-  }
-  .product__media-list .product__media-item {
-    display: block !important;
-    width: 100% !important;
-  }
-}
-
-/* Mobile: show images as slideshow */
-@media (max-width: 749px) {
-  .product__media-list {
-    display: flex !important;
-    overflow-x: scroll !important;
-    scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch !important;
-  }
-  .product__media-list .product__media-item {
-    flex: 0 0 100% !important;
-    scroll-snap-align: start !important;
-  }
-}
