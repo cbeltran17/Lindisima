@@ -43,6 +43,7 @@
     {% if images_layout == 'masonry' %}
       product-masonry
     {% endif %}
+    product-layout--{{ images_layout }}
   "
   data-ajax
 
@@ -59,8 +60,12 @@
   {% elsif images_layout == 'list' %}
     data-images-list-view
   {% elsif images_layout == 'masonry' %}
-  {% assign use_masonry = true %}
+    {% assign use_masonry = true %}
     data-product-masonry
+  {% elsif images_layout == 'adaptive' %}
+    {% comment %} En mode adaptatif, on active les deux attributs pour le JS {% endcomment %}
+    data-images-slideshow
+    data-images-list-view
   {% endif %}
 >
   {%
