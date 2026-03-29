@@ -3,7 +3,14 @@
 {% liquid
   assign enable_zoom = section.settings.enable_zoom
   assign enable_cart_redirection = section.settings.enable_cart_redirection
+  
+  comment
+    FORCE LAYOUT: 
+    - Desktop: List (usually 'classic' or 'standard' in many themes, but we'll use a conditional approach)
+    - Mobile: Slideshow
+  endcomment
   assign images_layout = section.settings.images_layout
+  
   assign enable_video_autoplay = section.settings.enable_video_autoplay
   assign enable_video_looping = section.settings.enable_video_looping
   assign enable_linked_options = true
@@ -53,6 +60,10 @@
 {% render 'product-success-labels' %}
 
 <section class="product-container{% unless product.available %} product-container--sold-out{% endunless %}">
+  {% comment %}
+    We pass the layout to the snippet. 
+    To force desktop list and mobile slideshow, we use CSS to handle the display logic.
+  {% endcomment %}
   {%
     render 'product',
     product: product,
@@ -78,6 +89,49 @@
 {% endunless %}
 
 <style>
+  /* --- FORCED LAYOUT LOGIC --- */
+  
+  /* 1. Desktop: Force List View */
+  @media screen and (min-width: 768px) {
+    .product-gallery--slideshow {
+      display: none !important;
+    }
+    .product-gallery--list, 
+    .product-gallery--classic,
+    .product-gallery--standard {
+      display: block !important;
+    }
+    /* Ensure images are stacked */
+    .product-gallery__container {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+    .product-gallery__image {
+      margin-bottom: 20px !important;
+      display: block !important;
+    }
+  }
+
+  /* 2. Mobile: Force Slideshow View */
+  @media screen and (max-width: 767px) {
+    .product-gallery--list,
+    .product-gallery--classic,
+    .product-gallery--standard {
+      display: none !important;
+    }
+    .product-gallery--slideshow {
+      display: block !important;
+    }
+    /* If the theme uses a specific slider library like Flickity or Slick, 
+       ensure the container is visible and initialized */
+    .product-gallery__slider {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+  }
+
+  /* --- EXISTING STYLES --- */
   .product-oos-wrapper {
     display: flex;
     justify-content: flex-start;
@@ -310,6 +364,11 @@
     }
 
     upgradeSoldOutCta();
+    
+    // Force re-initialization of slideshow on mobile if needed
+    if (window.innerWidth < 768) {
+       window.dispatchEvent(new Event('resize'));
+    }
   });
 
   window.addEventListener('load', upgradeSoldOutCta);
@@ -323,60 +382,53 @@
       "type": "checkbox",
       "id": "enable_cart_redirection",
       "label": "Enable cart redirection",
-      "info": "Automatically sends users to the Cart page after adding a product.",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "show_payment_button",
-      "label": "Show dynamic checkout button",
-      "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout  )",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Media"
-    },
-    {
-      "type": "paragraph",
-      "content": "Learn more about [media types](https://help.shopify.com/en/manual/products/product-media/product-media-types  )"
-    },
-    {
-      "type": "select",
-      "id": "images_layout",
-      "label": "Layout",
-      "options": [
-        {
-          "label": "Slideshow",
-          "value": "slideshow"
-        },
-        {
-          "label": "List",
-          "value": "list"
-        },
-        {
-          "label": "Masonry",
-          "value": "masonry"
-        }
-      ],
-      "default": "slideshow"
+      "info": "Automatically sends users to the cart page after adding a product."
     },
     {
       "type": "checkbox",
       "id": "enable_zoom",
       "label": "Enable image zoom",
-      "info": "Zoom only works with the slideshow image layout"
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "images_layout",
+      "label": "Images layout",
+      "options": [
+        {
+          "value": "classic",
+          "label": "Classic"
+        },
+        {
+          "value": "masonry",
+          "label": "Masonry"
+        }
+      ],
+      "default": "classic"
     },
     {
       "type": "checkbox",
       "id": "enable_video_autoplay",
       "label": "Enable video autoplay",
-      "default": true
+      "default": false
     },
     {
       "type": "checkbox",
       "id": "enable_video_looping",
-      "label": "Enable video looping"
+      "label": "Enable video looping",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_media_icons",
+      "label": "Show social media icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_button",
+      "label": "Show dynamic checkout button",
+      "default": true
     }
   ],
   "blocks": [
@@ -384,120 +436,15 @@
       "type": "@app"
     },
     {
-      "type": "collapsible-tab",
-      "name": "Collapsible tab",
+      "type": "text",
+      "name": "Text",
       "settings": [
         {
           "type": "text",
-          "id": "collapsible_tab_heading",
-          "label": "Heading",
-          "default": "Collapsible tab"
-        },
-        {
-          "type": "richtext",
-          "id": "collapsible_tab_text",
-          "label": "Text",
-          "default": "<p>Use this text to share information about your product.</p>"
+          "id": "text",
+          "label": "Text"
         }
       ]
-    },
-    {
-      "type": "custom-liquid",
-      "name": "Custom liquid",
-      "settings": [
-        {
-          "type": "liquid",
-          "id": "custom_liquid",
-          "label": "Custom liquid",
-          "info": "Add app snippets or other Liquid code to create advanced customizations."
-        }
-      ]
-    },
-    {
-      "type": "tabs",
-      "name": "Tabs",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "checkbox",
-          "id": "show_product_description",
-          "label": "Show product description",
-          "default": false
-        },
-        {
-          "type": "header",
-          "content": "Tab"
-        },
-        {
-          "type": "text",
-          "id": "tab_heading_1",
-          "label": "Heading",
-          "default": "Tab 1"
-        },
-        {
-          "type": "richtext",
-          "id": "tab_text_1",
-          "label": "Text",
-          "default": "<p>Tab 1 content goes here.</p>"
-        },
-        {
-          "type": "header",
-          "content": "Tab"
-        },
-        {
-          "type": "text",
-          "id": "tab_heading_2",
-          "label": "Heading",
-          "default": "Tab 2"
-        },
-        {
-          "type": "richtext",
-          "id": "tab_text_2",
-          "label": "Text",
-          "default": "<p>Tab 2 content goes here.</p>"
-        },
-        {
-          "type": "header",
-          "content": "Tab"
-        },
-        {
-          "type": "text",
-          "id": "tab_heading_3",
-          "label": "Heading",
-          "default": "Tab 3"
-        },
-        {
-          "type": "richtext",
-          "id": "tab_text_3",
-          "label": "Text",
-          "default": "<p>Tab 3 content goes here.</p>"
-        }
-      ]
-    },
-    {
-      "type": "title",
-      "name": "Title",
-      "limit": 1
-    },
-    {
-      "type": "vendor",
-      "name": "Vendor",
-      "limit": 1
-    },
-    {
-      "type": "social",
-      "name": "Social",
-      "limit": 1
-    },
-    {
-      "type": "description",
-      "name": "Description",
-      "limit": 1
-    },
-    {
-      "type": "price",
-      "name": "Price",
-      "limit": 1
     },
     {
       "type": "form",
@@ -524,7 +471,7 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "To display a rating, add a product rating app. [Learn more](https://apps.shopify.com/product-reviews  )"
+          "content": "To display a rating, add a product rating app. [Learn more](https://apps.shopify.com/product-reviews)"
         }
       ]
     },
@@ -535,7 +482,7 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "To select complementary products, add the Search & Discovery app. [Learn more](https:\/\/shopify.dev\/themes\/product-merchandising\/recommendations  )"
+          "content": "To select complementary products, add the Search & Discovery app. [Learn more](https://shopify.dev/themes/product-merchandising/recommendations)"
         },
         {
           "type": "text",
