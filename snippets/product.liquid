@@ -1,12 +1,5 @@
 {% assign use_masonry = false %}
 {% assign link_to = link_to | default: nil %}
-{% liquid
-  assign active_layout = images_layout
-
-  if images_layout_mobile != blank and request.design_mode == false
-    assign active_layout = images_layout
-  endif
-%}
 
 <script type="application/json" data-images>
   {% assign product_images = product.media | where: 'media_type', 'image'  %}
