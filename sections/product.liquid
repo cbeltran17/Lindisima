@@ -3,9 +3,7 @@
 {% liquid
   assign enable_zoom = section.settings.enable_zoom
   assign enable_cart_redirection = section.settings.enable_cart_redirection
-  assign images_layout_desktop = section.settings.images_layout_desktop | default: 'slideshow'
-  assign images_layout_mobile = section.settings.images_layout_mobile | default: 'slideshow'
-  assign images_layout = images_layout_desktop
+  assign images_layout = section.settings.images_layout
   assign enable_video_autoplay = section.settings.enable_video_autoplay
   assign enable_video_looping = section.settings.enable_video_looping
   assign enable_linked_options = true
@@ -43,8 +41,6 @@
       "unavailableText": {{ 'products.product.unavailable' | t | json }}
     },
     "images_layout": {{ images_layout | json }},
-    "images_layout_desktop": {{ images_layout_desktop | json }},
-    "images_layout_mobile": {{ images_layout_mobile | json }},
     "enable_zoom": {{ enable_zoom | json }},
     "enable_video_autoplay": {{ enable_video_autoplay | json }},
     "enable_video_looping": {{ enable_video_looping | json }},
@@ -56,19 +52,12 @@
 
 {% render 'product-success-labels' %}
 
-<section
-  class="product-container{% unless product.available %} product-container--sold-out{% endunless %}"
-  data-section-id="{{ section.id }}"
-  data-images-layout-desktop="{{ images_layout_desktop }}"
-  data-images-layout-mobile="{{ images_layout_mobile }}"
->
+<section class="product-container{% unless product.available %} product-container--sold-out{% endunless %}">
   {%
     render 'product',
     product: product,
     enable_zoom: enable_zoom,
-    images_layout: images_layout_desktop,
-    images_layout_desktop: images_layout_desktop,
-    images_layout_mobile: images_layout_mobile,
+    images_layout: images_layout,
     enable_linked_options: enable_linked_options,
     show_vendor: show_vendor,
     show_social_media_icons: show_social_media_icons,
@@ -225,7 +214,6 @@
 
 <script>
   const notifyMeUrl = {{ notify_me_url | json }};
-  const sectionId = {{ section.id | json }};
 
   function openQuickView(src) {
     const lightbox = document.getElementById('ProductQuickview');
@@ -281,22 +269,7 @@
     });
   }
 
-  function applyResponsiveLayoutFlag() {
-    const root = document.querySelector('[data-section-id="' + sectionId + '"]');
-    if (!root) return;
-
-    const isMobile = window.matchMedia('(max-width: 749px)').matches;
-    const desktopLayout = root.getAttribute('data-images-layout-desktop') || 'slideshow';
-    const mobileLayout = root.getAttribute('data-images-layout-mobile') || desktopLayout;
-
-    root.setAttribute('data-images-layout-active', isMobile ? mobileLayout : desktopLayout);
-    root.classList.remove('layout-slideshow', 'layout-list', 'layout-masonry');
-    root.classList.add('layout-' + (isMobile ? mobileLayout : desktopLayout));
-  }
-
   document.addEventListener('DOMContentLoaded', function() {
-    applyResponsiveLayoutFlag();
-
     const productContainer = document.querySelector('.product-container');
     if (productContainer) {
       productContainer.addEventListener('click', function(e) {
@@ -339,7 +312,6 @@
     upgradeSoldOutCta();
   });
 
-  window.addEventListener('resize', applyResponsiveLayoutFlag);
   window.addEventListener('load', upgradeSoldOutCta);
 </script>
 
@@ -367,27 +339,25 @@
     },
     {
       "type": "paragraph",
-      "content": "Learn more about [media types](https://shopify.com/en/manual/products/product-media/product-media-types  )"
+      "content": "Learn more about [media types](https://help.shopify.com/en/manual/products/product-media/product-media-types  )"
     },
     {
       "type": "select",
-      "id": "images_layout_desktop",
-      "label": "Desktop layout",
+      "id": "images_layout",
+      "label": "Layout",
       "options": [
-        { "label": "Slideshow", "value": "slideshow" },
-        { "label": "List", "value": "list" },
-        { "label": "Masonry", "value": "masonry" }
-      ],
-      "default": "slideshow"
-    },
-    {
-      "type": "select",
-      "id": "images_layout_mobile",
-      "label": "Mobile layout",
-      "options": [
-        { "label": "Slideshow", "value": "slideshow" },
-        { "label": "List", "value": "list" },
-        { "label": "Masonry", "value": "masonry" }
+        {
+          "label": "Slideshow",
+          "value": "slideshow"
+        },
+        {
+          "label": "List",
+          "value": "list"
+        },
+        {
+          "label": "Masonry",
+          "value": "masonry"
+        }
       ],
       "default": "slideshow"
     },
@@ -410,7 +380,9 @@
     }
   ],
   "blocks": [
-    { "type": "@app" },
+    {
+      "type": "@app"
+    },
     {
       "type": "collapsible-tab",
       "name": "Collapsible tab",
