@@ -52,7 +52,7 @@
 
 {% render 'product-success-labels' %}
 
-<section class="product-container{% unless product.available %} product-container--sold-out{% endunless %}">
+<section class="product-container{% unless product.available %} product-container--sold-out{% endunless %} product-layout--{{ images_layout }}">
   {%
     render 'product',
     product: product,
@@ -78,6 +78,28 @@
 {% endunless %}
 
 <style>
+  /* --- NOUVELLE OPTION : MISE EN PAGE ADAPTATIVE --- */
+  /* Sur mobile (max 767px ) : On cache la liste et on affiche le diaporama */
+  @media screen and (max-width: 767px) {
+    .product-layout--adaptive [data-product-images-list] {
+      display: none !important;
+    }
+    .product-layout--adaptive [data-product-images-slideshow] {
+      display: block !important;
+    }
+  }
+
+  /* Sur bureau (min 768px) : On cache le diaporama et on affiche la liste */
+  @media screen and (min-width: 768px) {
+    .product-layout--adaptive [data-product-images-slideshow] {
+      display: none !important;
+    }
+    .product-layout--adaptive [data-product-images-list] {
+      display: block !important;
+    }
+  }
+  /* ------------------------------------------------ */
+
   .product-oos-wrapper {
     display: flex;
     justify-content: flex-start;
@@ -330,7 +352,7 @@
       "type": "checkbox",
       "id": "show_payment_button",
       "label": "Show dynamic checkout button",
-      "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout  )",
+      "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay.",
       "default": true
     },
     {
@@ -339,7 +361,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Learn more about [media types](https://help.shopify.com/en/manual/products/product-media/product-media-types  )"
+      "content": "Learn more about [media types](https://help.shopify.com/en/manual/products/product-media/product-media-types )"
     },
     {
       "type": "select",
@@ -357,6 +379,10 @@
         {
           "label": "Masonry",
           "value": "masonry"
+        },
+        {
+          "label": "Adaptive (Mobile Slideshow / Desktop List)",
+          "value": "adaptive"
         }
       ],
       "default": "slideshow"
@@ -524,7 +550,7 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "To display a rating, add a product rating app. [Learn more](https://apps.shopify.com/product-reviews  )"
+          "content": "To display a rating, add a product rating app."
         }
       ]
     },
@@ -535,7 +561,7 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "To select complementary products, add the Search & Discovery app. [Learn more](https:\/\/shopify.dev\/themes\/product-merchandising\/recommendations  )"
+          "content": "To select complementary products, add the Search & Discovery app."
         },
         {
           "type": "text",
