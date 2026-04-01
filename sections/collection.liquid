@@ -84,17 +84,18 @@
     position: absolute;
     top: 8px;
     left: 8px;
-    background-color: #e02020;
-    color: #fff;
+    background-color: #000000 !important;
+    color: #fff !important;
     font-size: 9px;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     padding: 4px 8px;
     border-radius: 4px;
-    z-index: 10;
+    z-index: 20;
     line-height: 1;
-    pointer-events: none;
+    pointer-events: auto;
+    text-decoration: none;
   }
 
   .collection-product-card__info {
@@ -481,7 +482,7 @@
             <a href="{{ product.url }}" class="collection-product-card__link">
               <div class="collection-product-card__image-wrapper">
                 {% unless product.available %}
-                  <span class="out-of-stock-label">Sold Out </span>
+                  <a href="https://lindisimany.com/pages/notify-me" class="out-of-stock-label">Notify Me</a>
                 {% endunless %}
                 {% if product.featured_image != blank %}
                   <img
