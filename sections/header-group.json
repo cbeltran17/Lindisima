@@ -16,11 +16,11 @@
       "settings": {
         "show_announcement": true,
         "announcement_home_only": true,
-        "announcement_text": "FREE SHIPPING FOR ORDERS $150+ •\nALL PRODUCTS ARE CURRENTLY 15% OFF FOR MOTHER'S DAY!",
+        "announcement_text": "— For the Woman Who Deserves the Finest! Limited-Time Mother’s Day Event — 15% OFF",
         "announcement_text_mobile": "FREE SHIPPING FOR ORDERS $150+ •\nALL PRODUCTS ARE CURRENTLY 15% OFF FOR MOTHER'S DAY!",
         "announcement_link": "shopify://collections/all",
-        "announcement_color": "#ebebeb",
-        "announcement_background": "#262626"
+        "announcement_color": "#5a435a",
+        "announcement_background": "#e3d1e3"
       }
     },
     "updated_header_Y8Wwrg": {
