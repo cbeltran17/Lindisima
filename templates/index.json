@@ -259,13 +259,13 @@
       "name": "Split Image & Text",
       "settings": {
         "bg_color": "#f9f1e7",
-        "border_radius": 20,
+        "border_radius": 15,
         "v_align": "center",
         "h_align": "left",
-        "padding_top": 30,
-        "padding_bottom": 30,
-        "padding_left": 30,
-        "padding_right": 30
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "padding_left": 20,
+        "padding_right": 20
       }
     },
     "updated_featured_collection_P4yjij": {
