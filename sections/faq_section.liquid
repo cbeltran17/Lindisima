@@ -3,10 +3,13 @@
 {% endcomment %}
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@400;500;600;700&display=swap');
+
   .faq-section-{{ section.id }} {
     max-width: 1820px;
     padding: 60px 20px;
     margin: auto;
+    font-family: 'Arimo', sans-serif;
   }
 
   .faq-container {
@@ -30,6 +33,7 @@
 
   .faq-header-title {
     margin: 0 0 16px 0;
+    font-family: 'Poppins', sans-serif;
     font-weight: 700;
     font-size: 34px;
     line-height: 100%;
@@ -38,6 +42,7 @@
   }
 
   .faq-header-desc {
+    font-family: 'Arimo', sans-serif;
     font-size: 16px;
     line-height: 1.6;
     color: white;
@@ -63,10 +68,12 @@
     cursor: pointer;
     font-size: 16px;
     text-align: left;
+    font-family: 'Arimo', sans-serif;
   }
 
   .faq-question {
     margin: 0;
+    font-family: 'Arimo', sans-serif;
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
@@ -85,6 +92,7 @@
     text-align: center;
     flex-shrink: 0;
     margin-left: 15px;
+    font-family: 'Arimo', sans-serif;
   }
 
   .faq-content {
@@ -95,6 +103,7 @@
 
   .faq-inner-desc {
     padding-bottom: 25px;
+    font-family: 'Arimo', sans-serif;
     font-size: 15px;
     line-height: 1.6;
     color: white;
@@ -102,6 +111,7 @@
 
   .faq-inner-desc p {
     margin: 0;
+    font-family: 'Arimo', sans-serif;
   }
 
   .faq-item.is-active .faq-content {
@@ -117,6 +127,7 @@
     cursor: pointer;
     margin: 20px auto;
     display: block;
+    font-family: 'Arimo', sans-serif;
     font-size: 16px;
     text-decoration: none;
     text-align: center;
@@ -145,12 +156,15 @@
     }
     .faq-header-title {
       font-size: 28px;
+      font-family: 'Poppins', sans-serif;
     }
     .faq-header-desc {
       font-weight: 400;
+      font-family: 'Arimo', sans-serif;
     }
     .faq-trigger {
       padding: 11px 0 10px 0;
+      font-family: 'Arimo', sans-serif;
     }
     .faq-info {
       max-width: 100%;
@@ -199,7 +213,7 @@
 </div>
 
 <script>
-  function toggleFaq(element ) {
+  function toggleFaq(element) {
     const parent = element.parentElement;
     const icon = element.querySelector(".faq-icon");
     const isActive = parent.classList.contains("is-active");
