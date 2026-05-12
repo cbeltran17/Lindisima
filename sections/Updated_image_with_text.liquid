@@ -3,17 +3,20 @@
 {% endcomment %}
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@400;500;600;700&display=swap');
+
   .split-section-{{ section.id }} {
     max-width: 1820px;
     margin: 40px auto;
     padding: 0 10px;
+    font-family: 'Arimo', sans-serif;
   }
 
   .split-container-inner {
     display: flex;
     flex-wrap: wrap;
     background-color: {{ section.settings.bg_color }};
-    border-radius: {{ section.settings.border_radius }}px; /* Desktop Border Radius */
+    border-radius: {{ section.settings.border_radius }}px;
     overflow: hidden;
     min-height: 500px;
   }
@@ -51,6 +54,7 @@
 
   .split-title {
     margin: 0 0 7px 0;
+    font-family: 'Poppins', sans-serif;
     font-weight: 700;
     font-size: 34px;
     line-height: 100%;
@@ -59,6 +63,7 @@
   } 
 
   .split-desc p {
+    font-family: 'Arimo', sans-serif;
     font-weight: 400;
     font-size: 22px;
     line-height: 32px;
@@ -67,7 +72,6 @@
     color: #8f9c87;
   }
 
-  /* Styles pour le contenu repliable */
   .split-desc.is-collapsed p:nth-of-type(n+2) {
     display: none;
   }
@@ -75,6 +79,7 @@
   .read-more-toggle {
     cursor: pointer;
     color: #8f9c87;
+    font-family: 'Arimo', sans-serif;
     font-weight: 600;
     margin: 10px 0 20px 0;
     background: none;
@@ -82,8 +87,7 @@
     padding: 0;
     font-size: 18px;
     text-decoration: underline;
-    font-family: inherit;
-    display: none; /* Affiché via JS si plusieurs paragraphes existent */
+    display: none;
   }
 
   .split-btn {
@@ -93,16 +97,17 @@
     border-radius: 0px;
     text-decoration: none;
     color: #8f9c87;
+    font-family: 'Arimo', sans-serif;
     font-weight: 500;
     transition: 0.3s;
   }
 
-  .split-btn:hover{
+  .split-btn:hover {
     color: black;
     font-weight: 700;
     background-color: #8f9c87;
   }
-  /* Styles mobiles (Moins de 768px) */
+
   @media (max-width: 767px) {
     .split-container-inner {
       flex-direction: column;
@@ -124,8 +129,19 @@
     .split-text-content {
       padding: 60px 15px;
     }
+
     .split-section-{{ section.id }} {
       margin: 0 0 22px 0;
+    }
+
+    .split-title {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .split-desc p,
+    .read-more-toggle,
+    .split-btn {
+      font-family: 'Arimo', sans-serif;
     }
   }
 </style> 
@@ -166,7 +182,6 @@
       sections.forEach(section => {
         const descContainers = section.querySelectorAll('.split-desc');
         descContainers.forEach(container => {
-          // Éviter les doublons dans l'éditeur de thème
           if (container.nextElementSibling && container.nextElementSibling.classList.contains('read-more-toggle')) return;
 
           const paragraphs = container.querySelectorAll('p');
