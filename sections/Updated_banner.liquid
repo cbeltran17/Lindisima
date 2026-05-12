@@ -1,8 +1,11 @@
 {%- style -%}
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
   .banner-id-{{ section.id }} {
     max-width: {{ section.settings.max_width }}px;
     margin: 0 auto;
     padding: {{ section.settings.padding_vertical_desktop }}px {{ section.settings.padding_horizontal_desktop }}px;
+    font-family: 'Poppins', sans-serif;
   }
 
   .banner-wrapper-{{ section.id }} {
@@ -39,15 +42,20 @@
   .pos-bottom-center { justify-content: center; align-items: flex-end; }
   .pos-bottom-right { justify-content: flex-end; align-items: flex-end; }
 
-  .text-box-{{ section.id }} { max-width: 770px; color: {{ section.settings.text_color }}; }
+  .text-box-{{ section.id }} { max-width: 770px; color: {{ section.settings.text_color }}; font-family: 'Poppins', sans-serif; }
   .text-box-{{ section.id }} h2 {
     font-size: 44px;
     margin: 0 0 10px 0;
     line-height: 100%;
     letter-spacing: 2%;
+    font-family: 'Poppins', sans-serif;
   }
 
-  /* Button: transparent background by default, border and text use btn_text_color setting */
+  .text-box-{{ section.id }} p {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* Button */
   .btn-{{ section.id }} {
     display: inline-block;
     padding: 10px 45px;
@@ -59,6 +67,7 @@
     font-size: 18px;
     font-weight: 500;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
   }
 
   .btn-{{ section.id }}:hover {
@@ -69,14 +78,12 @@
     opacity: 1;
   }
 
-  /* Mobile Positioning Classes */
+  /* Mobile */
   @media (max-width: 767px) {
     .banner-id-{{ section.id }} { padding: 0 15px; }
 
-    /* stacking so the image is on top and overlay flows below */
     .banner-wrapper-{{ section.id }} { flex-direction: column; }
 
-    /* overlay becomes part of the flow (not absolute) so it appears under the image */
     .overlay-{{ section.id }} {
       position: static !important;
       height: auto !important;
@@ -100,9 +107,8 @@
     .m-pos-bottom-right { justify-content: flex-end !important; align-items: flex-end !important; }
 
     .text-box-{{ section.id }} { max-width: 100%; text-align: {{ section.settings.mobile_text_align }} !important; }
-    .text-box-{{ section.id }} h2 { font-size: 40px !important; }
+    .text-box-{{ section.id }} h2 { font-size: 40px !important; font-family: 'Poppins', sans-serif; }
 
-    /* Keep background transparent, force black text & border on mobile so button is visible on white pages */
     .btn-{{ section.id }} {
       font-size: 26px !important;
       padding: 14px 58px !important;
@@ -114,6 +120,7 @@
       background-color: #E2CFCE !important;
       font-weight: bold !important;
       border-radius: 0 !important;
+      font-family: 'Poppins', sans-serif;
     }
   }
 {%- endstyle -%}
