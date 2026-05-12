@@ -3,6 +3,8 @@
 {% endcomment %}
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400;0,700;1,400&display=swap');
+
   .icon-ticker-wrapper-{{ section.id }} {
     background: {{ section.settings.bg_color }};
     padding: 15px 0;
@@ -45,7 +47,7 @@
   }
 
   .icon-ticker-text {
-    font-family: inherit;
+    font-family: 'Arimo', sans-serif;
     font-weight: 400;
     font-size: 18px;
     color: {{ section.settings.text_color }};
@@ -63,6 +65,7 @@
 
     .icon-ticker-text {
       font-size: 14px;
+      font-family: 'Arimo', sans-serif;
     }
 
     .icon-ticker-item img {
