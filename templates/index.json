@@ -137,6 +137,14 @@
         "video_url": ""
       }
     },
+    "updated_featured_collection_nU96dt": {
+      "type": "UpdatedFeaturedCollection",
+      "name": "Bestsellers Collection",
+      "settings": {
+        "title": "Shop signature formulas (Skin Ritual Kits)",
+        "collection": "bundles"
+      }
+    },
     "1778941500bd1d6da9": {
       "type": "apps",
       "blocks": {
@@ -176,14 +184,6 @@
         "judge_me_reviews_cards_carousel_XVHRyA"
       ],
       "settings": {}
-    },
-    "updated_featured_collection_nU96dt": {
-      "type": "UpdatedFeaturedCollection",
-      "name": "Bestsellers Collection",
-      "settings": {
-        "title": "Shop signature formulas (Skin Ritual Kits)",
-        "collection": "bundles"
-      }
     },
     "updated_image_with_text_9rHQBP": {
       "type": "Updated_image_with_text",
@@ -547,8 +547,8 @@
     "updated_banner_kX38tm",
     "icon_ticker_3N7kdL",
     "updated_videosection_gzg74F",
-    "1778941500bd1d6da9",
     "updated_featured_collection_nU96dt",
+    "1778941500bd1d6da9",
     "updated_image_with_text_9rHQBP",
     "product_image_card_YqBdUj",
     "17789391927640f9fe",
