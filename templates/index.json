@@ -176,7 +176,8 @@
             "arrows_color": "#000000",
             "transition_speed": 5,
             "header_text": "Glow Stories From Real Customers",
-            "show_average_rating": true
+            "show_average_rating": true,
+            "rating_display": "default"
           }
         }
       },
@@ -541,6 +542,23 @@
       "settings": {
         "custom_liquid": "<style>\n  .home-blog .article-card__title {\n    display: -webkit-box;\n    -webkit-line-clamp: 2;\n    -webkit-box-orient: vertical;\n    overflow: hidden;\n    word-wrap: break-word;\n  }\n  \n  .home-blog .article-card__excerpt {\n    display: none;\n  }\n</style>"
       }
+    },
+    "1784029445b5af6dcb": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_homepage_rjGJYH": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget_homepage/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "product": "",
+            "review_data": "real_data",
+            "max_width": 1200
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_homepage_rjGJYH"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -560,6 +578,7 @@
     "instagram_section_6RDbg4",
     "updated_videosection_fcqKV3",
     "home_blog_39feH9",
-    "custom_liquid_XbJmMp"
+    "custom_liquid_XbJmMp",
+    "1784029445b5af6dcb"
   ]
 }
