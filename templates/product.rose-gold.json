@@ -182,12 +182,31 @@
         "link": "shopify://products/daily-radiance-collection-box",
         "button_text": "Shop Now"
       }
+    },
+    "178403007662145cdb": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_EiGwmE": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "real_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_EiGwmE"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "main",
     "icon_ticker_6Nzt3w",
     "recommendations",
-    "1634913777acb08a07"
+    "1634913777acb08a07",
+    "178403007662145cdb"
   ]
 }
