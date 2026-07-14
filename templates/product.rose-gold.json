@@ -168,21 +168,6 @@
         "related_products_position_right": false
       }
     },
-    "1634913777acb08a07": {
-      "type": "pxs-image-with-text-overlay",
-      "settings": {
-        "section_height": "small",
-        "image": "shopify://shop_images/making-funny-faces-during-skincare-routine.jpg",
-        "title": "Give the gift of great skin",
-        "text": "<p>Browse our best-selling face and body sets</p>",
-        "content_position": "center-center",
-        "color": "#262626",
-        "overlay_background": "#e2cfce",
-        "overlay_opacity": 15,
-        "link": "shopify://products/daily-radiance-collection-box",
-        "button_text": "Shop Now"
-      }
-    },
     "178403007662145cdb": {
       "type": "apps",
       "blocks": {
@@ -200,13 +185,28 @@
         "judge_me_reviews_review_widget_EiGwmE"
       ],
       "settings": {}
+    },
+    "1634913777acb08a07": {
+      "type": "pxs-image-with-text-overlay",
+      "settings": {
+        "section_height": "small",
+        "image": "shopify://shop_images/making-funny-faces-during-skincare-routine.jpg",
+        "title": "Give the gift of great skin",
+        "text": "<p>Browse our best-selling face and body sets</p>",
+        "content_position": "center-center",
+        "color": "#262626",
+        "overlay_background": "#e2cfce",
+        "overlay_opacity": 15,
+        "link": "shopify://products/daily-radiance-collection-box",
+        "button_text": "Shop Now"
+      }
     }
   },
   "order": [
     "main",
     "icon_ticker_6Nzt3w",
+    "178403007662145cdb",
     "recommendations",
-    "1634913777acb08a07",
-    "178403007662145cdb"
+    "1634913777acb08a07"
   ]
 }
