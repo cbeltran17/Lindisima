@@ -146,12 +146,18 @@
     {% for link in linklists[section.settings.main_menu].links %}
       {% if link.links.size > 0 %}
         <div class="mobile-dropdown">
-          <a href="{{ link.url }}" class="mobile-dropdown-toggle" onclick="toggleMobileDropdown(event)">{{ link.title }}<span class="dropdown-arrow">▼</span></a>
+          <div class="mobile-dropdown-toggle">
+            <a href="{{ link.url }}" class="mobile-dropdown-link">{{ link.title }}</a>
+            <span class="dropdown-arrow" onclick="toggleMobileDropdown(event)">▼</span>
+          </div>
           <div class="mobile-dropdown-content" style="display: none;">
             {% for sublink in link.links %}
               {% if sublink.links.size > 0 %}
                 <div class="mobile-submenu-item">
-                  <a href="{{ sublink.url }}" class="mobile-submenu-toggle" onclick="toggleMobileSubdropdown(event)">{{ sublink.title }}<span class="submenu-arrow">▼</span></a>
+                  <div class="mobile-submenu-toggle">
+                    <a href="{{ sublink.url }}" class="mobile-submenu-link-text">{{ sublink.title }}</a>
+                    <span class="submenu-arrow" onclick="toggleMobileSubdropdown(event)">▼</span>
+                  </div>
                   <div class="mobile-subsubmenu-content" style="display: none;">
                     {% for subsublink in sublink.links %}
                       <a href="{{ subsublink.url }}" class="mobile-subsublink">{{ subsublink.title }}</a>
@@ -351,14 +357,17 @@
   .close-icon { font-size: 35px; cursor: pointer; color: {{ section.settings.text_color }}; }
   .sidebar-navigation a { display: block; padding: 15px 0; font-size: 18px; text-decoration: none; color: {{ section.settings.text_color }}; border-bottom: 1px solid #eee; }
   .mobile-dropdown { position: relative; }
-  .mobile-dropdown-toggle { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 15px 0 !important; cursor: pointer; }
-  .dropdown-arrow { font-size: 12px; transition: transform 0.3s ease; margin-left: 10px; }
-  .mobile-dropdown-toggle.active .dropdown-arrow { transform: rotate(180deg); }
+  .mobile-dropdown-toggle { display: flex; justify-content: space-between; align-items: center; width: 100%; border-bottom: 1px solid #eee; }
+  .mobile-dropdown-link { display: block; flex: 1; padding: 15px 0; font-size: 18px; text-decoration: none; color: {{ section.settings.text_color }}; }
+  .dropdown-arrow { font-size: 12px; transition: transform 0.3s ease; margin-left: 10px; cursor: pointer; padding: 15px 0 15px 15px; }
+  .dropdown-arrow.active { transform: rotate(180deg); }
   .mobile-dropdown-content { background-color: #f9f9f9; border-left: 3px solid {{ section.settings.text_color }}; margin-left: 10px; }
   .mobile-sublink { display: block; padding: 12px 15px !important; font-size: 16px; border-bottom: 1px solid #eee !important; margin: 0 !important; }
   .mobile-submenu-item { position: relative; }
-  .mobile-submenu-toggle { display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; padding: 12px 15px !important; cursor: pointer; font-size: 16px !important; margin: 0 !important; border-bottom: 1px solid #eee !important; }
-  .mobile-submenu-toggle.active .submenu-arrow { transform: rotate(180deg); }
+  .mobile-submenu-toggle { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0 15px; margin: 0; border-bottom: 1px solid #eee; }
+  .mobile-submenu-link-text { display: block; flex: 1; padding: 12px 0; font-size: 16px; text-decoration: none; color: {{ section.settings.text_color }}; }
+  .mobile-submenu-toggle .submenu-arrow { cursor: pointer; padding: 12px 0 12px 12px; }
+  .mobile-submenu-toggle .submenu-arrow.active { transform: rotate(180deg); }
   .mobile-subsubmenu-content { background-color: #f0f0f0; border-left: 3px solid {{ section.settings.text_color }}; margin-left: 15px; }
   .mobile-subsublink { display: block; padding: 10px 15px !important; font-size: 14px; border-bottom: 1px solid #ddd !important; margin: 0 !important; color: {{ section.settings.text_color }} !important; }
   .mobile-menu-trigger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
@@ -814,17 +823,21 @@
 
   function toggleMobileDropdown(event) {
     event.preventDefault();
-    const toggle  = event.currentTarget;
+    event.stopPropagation();
+    const arrow   = event.currentTarget;
+    const toggle  = arrow.closest('.mobile-dropdown-toggle');
     const content = toggle.nextElementSibling;
-    toggle.classList.toggle('active');
+    arrow.classList.toggle('active');
     content.style.display = (content.style.display === 'none' || content.style.display === '') ? 'block' : 'none';
   }
 
   function toggleMobileSubdropdown(event) {
     event.preventDefault();
-    const toggle  = event.currentTarget;
+    event.stopPropagation();
+    const arrow   = event.currentTarget;
+    const toggle  = arrow.closest('.mobile-submenu-toggle');
     const content = toggle.nextElementSibling;
-    toggle.classList.toggle('active');
+    arrow.classList.toggle('active');
     content.style.display = (content.style.display === 'none' || content.style.display === '') ? 'block' : 'none';
   }
 </script>
