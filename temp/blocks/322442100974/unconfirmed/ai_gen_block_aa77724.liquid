@@ -1,6 +1,200 @@
+{% doc %}
+  @prompt
+    Add a promotional banner inside the cart drawer/cart page that displays a BOGO upsell message. When the cart has 1 or more items, show a notification banner that says "Add a second product and get 15% off!" styled to match the store's clean, minimal aesthetic. The banner should appear at the top of the cart item list, be dismissible or persistent, and use the store's existing font and color scheme. It should be visible whenever the cart is open, not just on page load.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-bogo-banner-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 0 {{ block.settings.bottom_spacing }}px;
+    padding: 14px 16px;
+    background: {{ block.settings.background_color }};
+    border: 1px solid {{ block.settings.border_color }};
+    color: {{ block.settings.text_color }};
+    font-family: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .ai-bogo-banner-{{ ai_gen_id }}[hidden] {
+    display: none;
+  }
+
+  .ai-bogo-banner__content-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .ai-bogo-banner__message-{{ ai_gen_id }} {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .ai-bogo-banner__close-{{ ai_gen_id }} {
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: {{ block.settings.text_color }};
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .ai-bogo-banner__close-{{ ai_gen_id }}:focus-visible {
+    outline: 2px solid {{ block.settings.text_color }};
+    outline-offset: 2px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-bogo-banner-{{ ai_gen_id }} {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<cart-bogo-banner-{{ ai_gen_id }}
+  class="ai-bogo-banner-{{ ai_gen_id }}"
+  data-dismissible="{{ block.settings.dismissible }}"
+  data-cart-count="{{ cart.item_count }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-bogo-banner__content-{{ ai_gen_id }}">
+    <p class="ai-bogo-banner__message-{{ ai_gen_id }}">{{ block.settings.message }}</p>
+    {% if block.settings.dismissible %}
+      <button
+        type="button"
+        class="ai-bogo-banner__close-{{ ai_gen_id }}"
+        aria-label="Dismiss promotion"
+      >×</button>
+    {% endif %}
+  </div>
+</cart-bogo-banner-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class CartBogoBanner{{ ai_gen_id }} extends HTMLElement {
+      connectedCallback() {
+        this.storageKey = 'cart-bogo-banner-dismissed-{{ ai_gen_id }}';
+        this.dismissible = this.dataset.dismissible === 'true';
+        this.closeButton = this.querySelector('.ai-bogo-banner__close-{{ ai_gen_id }}');
+        if (this.closeButton) {
+          this.closeButton.addEventListener('click', () => {
+            this.setAttribute('hidden', 'hidden');
+            if (this.dismissible) {
+              try { sessionStorage.setItem(this.storageKey, 'true'); } catch (error) {}
+            }
+          });
+        }
+        this.refresh();
+        this.refreshTimer = window.setInterval(() => this.refresh(), 2500);
+        this.boundRefresh = () => this.refresh();
+        ['cart:updated', 'cart:refresh', 'ajaxProduct:added', 'shopify:section:load'].forEach((eventName) => {
+          document.addEventListener(eventName, this.boundRefresh);
+        });
+      }
+
+      disconnectedCallback() {
+        window.clearInterval(this.refreshTimer);
+        if (this.boundRefresh) {
+          ['cart:updated', 'cart:refresh', 'ajaxProduct:added', 'shopify:section:load'].forEach((eventName) => {
+            document.removeEventListener(eventName, this.boundRefresh);
+          });
+        }
+      }
+
+      refresh() {
+        fetch('/cart.js', { credentials: 'same-origin', headers: { Accept: 'application/json' } })
+          .then((response) => response.json())
+          .then((cartData) => {
+            if (cartData.item_count < 1) {
+              this.setAttribute('hidden', 'hidden');
+              return;
+            }
+            let dismissed = false;
+            if (this.dismissible) {
+              try { dismissed = sessionStorage.getItem(this.storageKey) === 'true'; } catch (error) {}
+            }
+            if (!dismissed) this.removeAttribute('hidden');
+          })
+          .catch(() => {});
+      }
+    }
+
+    if (!customElements.get('cart-bogo-banner-{{ ai_gen_id }}')) {
+      customElements.define('cart-bogo-banner-{{ ai_gen_id }}', CartBogoBanner{{ ai_gen_id }});
+    }
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Cart BOGO banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "message",
+      "label": "Message",
+      "default": "Add a second product and get 15% off!"
+    },
+    {
+      "type": "checkbox",
+      "id": "dismissible",
+      "label": "Allow dismissal",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "bottom_spacing",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#262626"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#e4e4e4"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cart BOGO banner"
+    }
+  ],
+  "tag": null,
+  "class": "cart-bogo-banner-block"
+}
 {% endschema %}
