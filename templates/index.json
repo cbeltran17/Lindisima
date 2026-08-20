@@ -154,6 +154,9 @@
             "show_sample_reviews": true,
             "reviews_selection": "all",
             "products": [],
+            "filter_pinned": false,
+            "filter_featured": false,
+            "filter_custom_tags": "",
             "star_rating": "all",
             "show_review_media": true,
             "display_order": "media_first",
@@ -560,6 +563,28 @@
       ],
       "disabled": true,
       "settings": {}
+    },
+    "1787207038f3482a14": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_aa77724_AkMQir": {
+          "type": "ai_gen_block_aa77724",
+          "settings": {
+            "message": "Add a second product and get 15% off!",
+            "dismissible": true,
+            "desktop_width_percent": 100,
+            "bottom_spacing": 16,
+            "background_color": "#ffffff",
+            "text_color": "#262626",
+            "border_color": "#e4e4e4"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_aa77724_AkMQir"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -580,6 +605,7 @@
     "updated_videosection_fcqKV3",
     "home_blog_39feH9",
     "custom_liquid_XbJmMp",
-    "1784029445b5af6dcb"
+    "1784029445b5af6dcb",
+    "1787207038f3482a14"
   ]
 }
