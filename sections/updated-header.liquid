@@ -17,7 +17,7 @@
         <span></span>
         <span></span>
       </div>
-      
+
       <nav class="navigation desktop-only">
         {% for link in linklists[section.settings.main_menu].links %}
           {% if link.links.size > 0 %}
@@ -27,7 +27,7 @@
                 {% for sublink in link.links %}
                   {% if sublink.links.size > 0 %}
                     <div class="submenu-item">
-                      <a href="{{ sublink.url }}" class="submenu-toggle">{{ sublink.title }}<span class="submenu-arrow">▶</span></a>
+                      <a href="{{ sublink.url }}" class="submenu-toggle">{{ sublink.title }}<span class="submenu-arrow">&#9654;</span></a>
                       <div class="subsubmenu-content">
                         {% for subsublink in sublink.links %}
                           <a href="{{ subsublink.url }}" class="subsubmenu-link">{{ subsublink.title }}</a>
@@ -52,7 +52,7 @@
         <span></span>
         <span></span>
       </div>
-      
+
       <nav class="navigation desktop-only">
         {% for link in linklists[section.settings.main_menu].links %}
           {% if link.links.size > 0 %}
@@ -62,7 +62,7 @@
                 {% for sublink in link.links %}
                   {% if sublink.links.size > 0 %}
                     <div class="submenu-item">
-                      <a href="{{ sublink.url }}" class="submenu-toggle">{{ sublink.title }}<span class="submenu-arrow">▶</span></a>
+                      <a href="{{ sublink.url }}" class="submenu-toggle">{{ sublink.title }}<span class="submenu-arrow">&#9654;</span></a>
                       <div class="subsubmenu-content">
                         {% for subsublink in sublink.links %}
                           <a href="{{ subsublink.url }}" class="subsubmenu-link">{{ subsublink.title }}</a>
@@ -98,7 +98,7 @@
           <img src="https://cdn.shopify.com/s/files/1/0790/8232/4206/files/Vector.png?v=1773398481" alt="Search" class="custom-icon">
         </a>
       {% endif %}
-      
+
       {% if section.settings.show_account %}
         <a href="/account" class="icon-account desktop-only" style="display: flex; width: 20px;">
           <img src="https://cdn.shopify.com/s/files/1/0790/8232/4206/files/Group.png?v=1773398480" alt="Account" class="custom-icon">
@@ -148,7 +148,7 @@
         <div class="mobile-dropdown">
           <div class="mobile-dropdown-toggle">
             <a href="{{ link.url }}" class="mobile-dropdown-link">{{ link.title }}</a>
-            <span class="dropdown-arrow" onclick="toggleMobileDropdown(event)">▼</span>
+            <span class="dropdown-arrow" onclick="toggleMobileDropdown(event)">&#9660;</span>
           </div>
           <div class="mobile-dropdown-content" style="display: none;">
             {% for sublink in link.links %}
@@ -156,7 +156,7 @@
                 <div class="mobile-submenu-item">
                   <div class="mobile-submenu-toggle">
                     <a href="{{ sublink.url }}" class="mobile-submenu-link-text">{{ sublink.title }}</a>
-                    <span class="submenu-arrow" onclick="toggleMobileSubdropdown(event)">▼</span>
+                    <span class="submenu-arrow" onclick="toggleMobileSubdropdown(event)">&#9660;</span>
                   </div>
                   <div class="mobile-subsubmenu-content" style="display: none;">
                     {% for subsublink in sublink.links %}
@@ -585,6 +585,61 @@
   }
   @keyframes cd-spin { to { transform: rotate(360deg); } }
 
+  /* ════════════════════════════════════════
+     AUTOMATIC DISCOUNTS
+  ════════════════════════════════════════ */
+  .cart-item-price-wrap { text-align: right; flex-shrink: 0; padding-top: 2px; }
+  .cart-item-price-original {
+    display: block;
+    font-size: 12px;
+    color: #aaa;
+    text-decoration: line-through;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+  .cart-item-discount {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #e00000;
+    background: #ffecec;
+    border: 1px solid #ffd2d2;
+    border-radius: 4px;
+    padding: 3px 7px;
+    margin-top: 8px;
+    margin-right: 6px;
+    letter-spacing: 0.2px;
+  }
+  .cart-drawer-discounts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .cart-drawer-discount-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #e00000;
+    background: #ffecec;
+    border: 1px solid #ffd2d2;
+    border-radius: 6px;
+    padding: 9px 12px;
+  }
+  .cart-drawer-savings {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 600;
+    color: #e00000;
+    margin-bottom: 10px;
+  }
+  .cart-drawer-subtotal-original {
+    font-size: 14px;
+    color: #aaa;
+    text-decoration: line-through;
+    font-weight: 500;
+    margin-right: 8px;
+  }
+
   /* ── Responsive ── */
   @media (max-width: 768px) {
     .header-left { display: none !important; }
@@ -627,6 +682,15 @@
     return (cents / 100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
+  function escapeHtml(str) {
+    return String(str == null ? '' : str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   /* ════════════════════════════════════════
      CART DRAWER
   ════════════════════════════════════════ */
@@ -654,7 +718,7 @@
     body.innerHTML   = '<div class="cart-drawer-loading"><div class="cart-drawer-spinner"></div></div>';
     footer.innerHTML = '';
 
-    fetch('/cart.js')
+    fetch('/cart.js', { cache: 'no-store', headers: { 'Accept': 'application/json' } })
       .then(function(r) { return r.json(); })
       .then(function(cart) {
         updateCartBadge(cart.item_count);
@@ -671,17 +735,35 @@
         var itemsHtml = '';
         cart.items.forEach(function(item) {
           var imgHtml = item.image
-            ? '<img class="cart-item-image" src="' + item.image + '" alt="' + item.product_title + '">'
+            ? '<img class="cart-item-image" src="' + item.image + '" alt="' + escapeHtml(item.product_title) + '">'
             : '<div class="cart-item-image-placeholder"></div>';
 
           var variantHtml = (item.variant_title && item.variant_title !== 'Default Title')
-            ? '<p class="cart-item-variant">' + item.variant_title + '</p>'
+            ? '<p class="cart-item-variant">' + escapeHtml(item.variant_title) + '</p>'
             : '';
+
+          /* ── line-level automatic discounts ── */
+          var allocs = item.line_level_discount_allocations || [];
+          var discountHtml = '';
+          allocs.forEach(function(d) {
+            var title = (d.discount_application && d.discount_application.title) || 'Discount';
+            discountHtml += '<span class="cart-item-discount">'
+              + escapeHtml(title) + ' &minus;' + formatMoney(d.amount) + ' ' + cart.currency
+              + '</span>';
+          });
+
+          var hasLineDiscount = item.original_line_price > item.final_line_price;
+          var priceHtml = '<div class="cart-item-price-wrap">'
+            + (hasLineDiscount
+                ? '<span class="cart-item-price-original">' + formatMoney(item.original_line_price) + ' ' + cart.currency + '</span>'
+                : '')
+            + '<span class="cart-item-price">' + formatMoney(item.final_line_price) + ' ' + cart.currency + '</span>'
+            + '</div>';
 
           itemsHtml += '<div class="cart-drawer-item" data-key="' + item.key + '">'
             + imgHtml
             + '<div class="cart-item-details">'
-            +   '<p class="cart-item-title">' + item.product_title + '</p>'
+            +   '<p class="cart-item-title">' + escapeHtml(item.product_title) + '</p>'
             +   variantHtml
             +   '<div class="cart-item-qty-row">'
             +     '<button class="cart-item-qty-btn" onclick="changeQty(\'' + item.key + '\',' + (item.quantity - 1) + ')">&#8722;</button>'
@@ -689,15 +771,46 @@
             +     '<button class="cart-item-qty-btn" onclick="changeQty(\'' + item.key + '\',' + (item.quantity + 1) + ')">&#43;</button>'
             +     '<button class="cart-item-remove" onclick="changeQty(\'' + item.key + '\',0)">Remove</button>'
             +   '</div>'
+            +   discountHtml
             + '</div>'
-            + '<span class="cart-item-price">' + formatMoney(item.line_price) + ' ' + cart.currency + '</span>'
+            + priceHtml
             + '</div>';
         });
         body.innerHTML = itemsHtml;
 
-        footer.innerHTML = '<div class="cart-drawer-subtotal">'
-          + '<span class="cart-drawer-subtotal-label">Subtotal</span>'
-          + '<span class="cart-drawer-subtotal-price">' + formatMoney(cart.total_price) + ' ' + cart.currency + '</span>'
+        /* ── cart-level automatic discounts ── */
+        var cartDiscounts = cart.cart_level_discount_applications || [];
+        var discountsBlock = '';
+        if (cartDiscounts.length) {
+          discountsBlock += '<div class="cart-drawer-discounts">';
+          cartDiscounts.forEach(function(d) {
+            discountsBlock += '<div class="cart-drawer-discount-row">'
+              + '<span>' + escapeHtml(d.title || 'Discount') + '</span>'
+              + '<span>&minus;' + formatMoney(d.total_allocated_amount) + ' ' + cart.currency + '</span>'
+              + '</div>';
+          });
+          discountsBlock += '</div>';
+        }
+
+        var savingsBlock = '';
+        if (cart.total_discount > 0) {
+          savingsBlock = '<div class="cart-drawer-savings">'
+            + '<span>You save</span>'
+            + '<span>&minus;' + formatMoney(cart.total_discount) + ' ' + cart.currency + '</span>'
+            + '</div>';
+        }
+
+        var originalPrice = (cart.original_total_price > cart.total_price)
+          ? '<span class="cart-drawer-subtotal-original">' + formatMoney(cart.original_total_price) + ' ' + cart.currency + '</span>'
+          : '';
+
+        footer.innerHTML = discountsBlock
+          + savingsBlock
+          + '<div class="cart-drawer-subtotal">'
+          +   '<span class="cart-drawer-subtotal-label">Subtotal</span>'
+          +   '<span>' + originalPrice
+          +     '<span class="cart-drawer-subtotal-price">' + formatMoney(cart.total_price) + ' ' + cart.currency + '</span>'
+          +   '</span>'
           + '</div>'
           + '<a href="/checkout" class="cart-drawer-btn-checkout">Checkout</a>'
           + '<a href="/cart" class="cart-drawer-btn-view" onclick="closeCartDrawer()">View Cart</a>';
@@ -714,17 +827,15 @@
       body: JSON.stringify({ id: key, quantity: qty })
     })
     .then(function(r) { return r.json(); })
-    .then(function(cart) {
-      updateCartBadge(cart.item_count);
-      renderCartDrawer();
-    });
+    .then(function() { renderCartDrawer(); })
+    .catch(function() { renderCartDrawer(); });
   }
 
   /* ════════════════════════════════════════
      INTERCEPT ADD-TO-CART → OPEN DRAWER
   ════════════════════════════════════════ */
   function fetchCartCount() {
-    fetch('/cart.js')
+    fetch('/cart.js', { cache: 'no-store' })
       .then(function(r) { return r.json(); })
       .then(function(cart) { updateCartBadge(cart.item_count); })
       .catch(function() {});
@@ -739,7 +850,9 @@
   (function() {
     var _fetch = window.fetch;
     window.fetch = function() {
-      var url  = arguments[0];
+      var url = arguments[0];
+      if (url && typeof url === 'object' && url.url) url = url.url;
+
       var isAdd    = typeof url === 'string' && url.indexOf('/cart/add') !== -1;
       var isChange = typeof url === 'string' && (
         url.indexOf('/cart/change') !== -1 ||
@@ -753,12 +866,7 @@
         result.then(function(response) {
           var clone = response.clone();
           clone.json().then(function() {
-            fetch('/cart.js')
-              .then(function(r) { return r.json(); })
-              .then(function(cart) {
-                updateCartBadge(cart.item_count);
-                openCartDrawer();
-              });
+            openCartDrawer();
           }).catch(function() { fetchCartCount(); });
         }).catch(function() {});
       } else if (isChange) {
@@ -791,14 +899,7 @@
         url.indexOf('/cart/clear')  !== -1
       );
       if (isAdd) {
-        this.addEventListener('load', function() {
-          fetch('/cart.js')
-            .then(function(r) { return r.json(); })
-            .then(function(cart) {
-              updateCartBadge(cart.item_count);
-              openCartDrawer();
-            });
-        });
+        this.addEventListener('load', function() { openCartDrawer(); });
       } else if (isChange) {
         this.addEventListener('load', function() { fetchCartCount(); });
       }
