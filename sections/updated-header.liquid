@@ -640,6 +640,46 @@
     margin-right: 8px;
   }
 
+  /* ════════════════════════════════════════
+     UPSELL / PROGRESS NOTE
+  ════════════════════════════════════════ */
+  .cart-upsell-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #fff8e6;
+    border: 1px solid #ffe2a8;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin: 0 0 6px;
+  }
+  .cart-upsell-icon { font-size: 15px; line-height: 1.3; flex-shrink: 0; }
+  .cart-upsell-body { flex: 1; min-width: 0; }
+  .cart-upsell-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: #7a5b00;
+    line-height: 1.45;
+    margin: 0;
+  }
+  .cart-upsell-text strong { color: #b37700; font-weight: 800; }
+  .cart-upsell-bar {
+    height: 5px;
+    background: #ffe2a8;
+    border-radius: 3px;
+    margin-top: 9px;
+    overflow: hidden;
+  }
+  .cart-upsell-bar-fill {
+    height: 100%;
+    background: #e0a11a;
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .cart-upsell-note.is-unlocked { background: #eaf8ee; border-color: #bfe6ca; }
+  .cart-upsell-note.is-unlocked .cart-upsell-text { color: #1c7a3c; }
+  .cart-upsell-note.is-unlocked .cart-upsell-text strong { color: #14622f; }
+
   /* ── Responsive ── */
   @media (max-width: 768px) {
     .header-left { display: none !important; }
@@ -689,6 +729,47 @@
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;');
+  }
+
+  /* ════════════════════════════════════════
+     UPSELL NOTE
+  ════════════════════════════════════════ */
+  var UPSELL = {
+    enabled:   {{ section.settings.upsell_enabled | json }},
+    threshold: {{ section.settings.upsell_threshold | default: 2 | json }},
+    discount:  {{ section.settings.upsell_discount_label | json }},
+    message:   {{ section.settings.upsell_message | json }},
+    unlocked:  {{ section.settings.upsell_unlocked_message | json }}
+  };
+
+  function buildUpsellNote(cart) {
+    if (!UPSELL.enabled) return '';
+
+    var threshold = parseInt(UPSELL.threshold, 10);
+    if (!threshold || threshold < 2) return '';
+
+    var count     = cart.item_count || 0;
+    var remaining = threshold - count;
+    var isUnlocked = remaining <= 0;
+
+    var template = isUnlocked ? UPSELL.unlocked : UPSELL.message;
+    if (!template) return '';
+
+    var text = escapeHtml(template)
+      .split('{remaining}').join('<strong>' + Math.max(remaining, 0) + '</strong>')
+      .split('{discount}').join('<strong>' + escapeHtml(UPSELL.discount || '') + '</strong>')
+      .split('{s}').join(remaining > 1 ? 's' : '');
+
+    var percent = Math.min(Math.round((count / threshold) * 100), 100);
+
+    return '<div class="cart-upsell-note' + (isUnlocked ? ' is-unlocked' : '') + '">'
+      + '<span class="cart-upsell-icon">' + (isUnlocked ? '&#10003;' : '&#127873;') + '</span>'
+      + '<div class="cart-upsell-body">'
+      +   '<p class="cart-upsell-text">' + text + '</p>'
+      +   (isUnlocked ? '' :
+            '<div class="cart-upsell-bar"><div class="cart-upsell-bar-fill" style="width:' + percent + '%"></div></div>')
+      + '</div>'
+      + '</div>';
   }
 
   /* ════════════════════════════════════════
@@ -776,7 +857,7 @@
             + priceHtml
             + '</div>';
         });
-        body.innerHTML = itemsHtml;
+        body.innerHTML = buildUpsellNote(cart) + itemsHtml;
 
         /* ── cart-level automatic discounts ── */
         var cartDiscounts = cart.cart_level_discount_applications || [];
@@ -967,7 +1048,13 @@
     { "type": "header", "content": "Icons" },
     { "type": "checkbox", "id": "show_search", "label": "Show Search Icon", "default": true },
     { "type": "checkbox", "id": "show_account", "label": "Show Account Icon", "default": true },
-    { "type": "checkbox", "id": "show_cart", "label": "Show Cart Icon", "default": true }
+    { "type": "checkbox", "id": "show_cart", "label": "Show Cart Icon", "default": true },
+    { "type": "header", "content": "Cart Upsell Note" },
+    { "type": "checkbox", "id": "upsell_enabled", "label": "Show upsell note in cart drawer", "default": true },
+    { "type": "number", "id": "upsell_threshold", "label": "Items needed to unlock", "default": 2, "info": "Counts total quantity in the cart, not distinct products." },
+    { "type": "text", "id": "upsell_discount_label", "label": "Discount label", "default": "15%" },
+    { "type": "text", "id": "upsell_message", "label": "Message before unlocking", "default": "Add {remaining} more item{s} and get {discount} off your order!", "info": "Placeholders: {remaining}, {s} for the plural, {discount}." },
+    { "type": "text", "id": "upsell_unlocked_message", "label": "Message after unlocking", "info": "Leave empty so the note disappears once unlocked. Fill it in to show a green confirmation instead." }
   ],
   "presets": [{ "name": "Header Custom" }]
 }
